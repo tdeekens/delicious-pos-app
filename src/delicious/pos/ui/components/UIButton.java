@@ -1,4 +1,4 @@
-package deliciousPOSCreator.ui.components;
+package delicious.pos.ui.components;
 
 import javax.swing.JButton;
 

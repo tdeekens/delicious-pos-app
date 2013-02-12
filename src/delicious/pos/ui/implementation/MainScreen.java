@@ -1,4 +1,4 @@
-package deliciousPOSCreator.ui.implementation;
+package delicious.pos.ui.implementation;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -6,9 +6,9 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import deliciousPOSCreator.ui.components.UIButton;
-import deliciousPOSCreator.ui.components.UIFrame;
-import deliciousPOSCreator.ui.components.UIPanel;
+import delicious.pos.ui.components.UIButton;
+import delicious.pos.ui.components.UIFrame;
+import delicious.pos.ui.components.UIPanel;
 
 public class MainScreen extends UIFrame {
 
