@@ -35,9 +35,8 @@ public class MainScreen extends UIFrame {
 		UIPanel btnPanel = new UIPanel();
 		btnPanel.setLayout(null);
 		
-		UIButton adminBtn = new UIButton();
+		UIButton adminBtn = new UIButton("Admin");
 		adminBtn.setBounds(177, 58, 85, 54);
-		adminBtn.setText("Admin");
 		btnPanel.add(adminBtn);
 		adminBtn.addActionListener(new ActionListener() {
 			@Override
@@ -46,9 +45,8 @@ public class MainScreen extends UIFrame {
 			}
 		});
 		
-		UIButton menuBtn = new UIButton();
+		UIButton menuBtn = new UIButton("Menu");
 		menuBtn.setBounds(177, 143, 85, 54);
-		menuBtn.setText("Menu");
 		btnPanel.add(menuBtn);
 		menuBtn.addActionListener(new ActionListener() {
 			@Override

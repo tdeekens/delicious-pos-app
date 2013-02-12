@@ -1,6 +1,6 @@
 package delicious.pos.ui.components.menu.item;
 
-import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.components.*;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
@@ -23,7 +23,7 @@ public class MenuItem extends UIPanel {
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblItemName = new JLabel("Item Name");
+		JLabel lblItemName = new UILabel("Item Name");
 		GridBagConstraints gbc_lblItemName = new GridBagConstraints();
 		gbc_lblItemName.insets = new Insets(0, 0, 0, 5);
 		gbc_lblItemName.fill = GridBagConstraints.VERTICAL;

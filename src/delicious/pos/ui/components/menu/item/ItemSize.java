@@ -1,7 +1,7 @@
 package delicious.pos.ui.components.menu.item;
 
 
-import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.components.*;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,11 +18,11 @@ public class ItemSize extends UIPanel {
 	public ItemSize() {
 		setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblSize = new JLabel("Size");
+		JLabel lblSize = new UILabel("Size");
 		lblSize.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblSize, BorderLayout.NORTH);
 		
-		JButton button = new JButton("7.99");
+		JButton button = new UIButton("7.99");
 		add(button, BorderLayout.SOUTH);
 
 	}
