@@ -18,6 +18,8 @@ import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import delicious.pos.ui.*;
@@ -33,6 +35,9 @@ public class MenuItemPanel extends UIPanel {
 	private OrderPanel orderPanel;
 	private Object itemImpl;
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public MenuItemPanel(Object itemImpl, MenuScreen parentPanel) {
 		this.menuScreen = parentPanel;
 		this.itemImpl = itemImpl;
@@ -56,6 +61,7 @@ public class MenuItemPanel extends UIPanel {
 		setLayout(gridBagLayout);
 		
 		JLabel lblItemName = new UILabel("Item Name");
+		lblItemName.setVerticalAlignment(SwingConstants.TOP);
 		GridBagConstraints gbc_lblItemName = new GridBagConstraints();
 		gbc_lblItemName.insets = new Insets(0, 0, 0, 5);
 		gbc_lblItemName.fill = GridBagConstraints.VERTICAL;
@@ -63,20 +69,37 @@ public class MenuItemPanel extends UIPanel {
 		gbc_lblItemName.gridy = 0;
 		add(lblItemName, gbc_lblItemName);
 		
-		itemPricesPanel = new ItemPricesPanel(new ArrayList(), this);
+		ArrayList<Object> itemPrices = new ArrayList();
+		itemPrices.add(new Object());
+		itemPrices.add(new Object());
+		
+		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		add(itemPricesPanel, gbc_panel);		
+		add(itemPricesPanel, gbc_panel);	
+		
+		itemPricesPanel.getRemmoveBtn().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removeOrderedItem();
+			}
+		});
 	}
 	
-	public void setOrdered(boolean isOrdered) {
-		itemPricesPanel.setOrdered(isOrdered);
+	public void setOrdered(boolean isOrdered, Object price) {
+		itemPricesPanel.setOrdered(isOrdered, price);
+	}
+	
+	public void removeOrderedItem() {
+		this.orderPanel.removeOrderedItem(this);		
 	}
 
-	public void orderItem(Object priceImpl) {
-		itemPricesPanel.deselectPrices();
-		this.menuScreen.orderItem(this.itemImpl, priceImpl);
+	public void orderItem(Object price) {
+		if(menuScreen != null) {
+			itemPricesPanel.deselectPrices();
+			this.menuScreen.orderItem(this.itemImpl, price);
+		}
 	}
 }

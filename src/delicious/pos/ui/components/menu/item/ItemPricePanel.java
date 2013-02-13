@@ -24,7 +24,7 @@ import com.adamtaft.eb.EventBusService;
 public class ItemPricePanel extends UIPanel {
 	
 	private UILabel sizeLbl;
-	private PriceImpl price;
+	private Object price;
 	private UIButton priceBtn;
 	private ItemPricesPanel parentPanel;
 	
@@ -32,7 +32,7 @@ public class ItemPricePanel extends UIPanel {
 		this.init();
 	}
 	
-	public ItemPricePanel(PriceImpl price, ItemPricesPanel parentPanel) {
+	public ItemPricePanel(Object price, ItemPricesPanel parentPanel) {
 		super();
 		this.price = price;
 		this.parentPanel = parentPanel;
@@ -69,8 +69,22 @@ public class ItemPricePanel extends UIPanel {
 		this.setBackground(Color.green);
 	}
 	
+	public UIButton getPriceBtn() {
+		return this.priceBtn;
+	}
+	
+	public Object getPrice() {
+		return this.price;
+	}
+	
 	public void deselect() {
 		this.setBackground(UIManager.getColor("Button.background"));
 		this.repaint();
+	}
+
+	public void hidePrices(Object except) {
+		if ( ! except.equals(this.price) ) {
+			this.setVisible(false);
+		}
 	}
 }

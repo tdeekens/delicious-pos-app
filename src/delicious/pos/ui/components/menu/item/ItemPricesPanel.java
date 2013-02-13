@@ -25,7 +25,7 @@ public class ItemPricesPanel extends UIPanel {
 	
 	private List<ItemPricePanel> itemPricePanels = null;
 	private List<Object> itemPrices = null;
-	private JButton removeBtn = null;
+	private UIButton removeBtn = null;
 	private MenuItemPanel parentPanel;
 	
 	public ItemPricesPanel(List<Object> itemPrices, MenuItemPanel parentPanel) {
@@ -43,13 +43,6 @@ public class ItemPricesPanel extends UIPanel {
 		
 		this.removeBtn = new UIButton("-");
 		
-		this.removeBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
 		this.removeBtn.setVisible(false);		
 		add(removeBtn);
 	}
@@ -62,14 +55,23 @@ public class ItemPricesPanel extends UIPanel {
 		itemPricePanel.select();
 	}
 	
-	public void setOrdered(boolean isOrdered) {
+	@SuppressWarnings("deprecation")
+	public void setOrdered(boolean isOrdered, Object price) {
 		this.removeBtn.setVisible(isOrdered);
+		
+		if(isOrdered) {
+			for(ItemPricePanel itemPricePanel : this.itemPricePanels) {
+				itemPricePanel.getPriceBtn().disable();
+				itemPricePanel.hidePrices(price);
+			}
+		}
+	}
+	
+	public UIButton getRemmoveBtn() {
+		return this.removeBtn;
 	}
 	
 	public void setupMenuItems() {
-		//Just to something
-		this.itemPrices.add(new Object());
-		this.itemPrices.add(new Object());
 		
 		for(Object price : this.itemPrices) {
 			ItemPricePanel itemPricePanel = new ItemPricePanel(null, this);

@@ -67,9 +67,9 @@ public class MenuScreen extends UIFrame {
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 	}
 	
-	public void orderItem(Object itemImpl, Object priceImpl) {
+	public void orderItem(Object itemImpl, Object price) {
 		MenuItemPanel orderItemPanel = new MenuItemPanel(new Object(), orderPanel);
-		orderItemPanel.setOrdered(true);
+		orderItemPanel.setOrdered(true, price);
 		
 		orderPanel.addItem(orderItemPanel);
 	}

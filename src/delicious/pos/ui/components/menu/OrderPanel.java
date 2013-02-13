@@ -21,5 +21,12 @@ public class OrderPanel extends UIPanel {
 	public void addItem(MenuItemPanel orderItemPanel) {
 		this.add(orderItemPanel);
 		this.validate();
+		this.repaint();
+	}
+
+	public void removeOrderedItem(MenuItemPanel orderItemPanel) {
+		this.remove(orderItemPanel);
+		this.validate();
+		this.repaint();
 	}
 }
