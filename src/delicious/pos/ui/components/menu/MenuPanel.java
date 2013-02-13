@@ -24,4 +24,11 @@ public class MenuPanel extends UIPanel {
 	public UIScrollPane getScrollPane() {
 		return this.scrollPane;
 	}
+	
+	private void redraw() {
+		this.scrollPane.validate();
+		this.scrollPane.repaint();
+		this.validate();
+		this.repaint();
+	}
 }
