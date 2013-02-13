@@ -10,17 +10,17 @@ import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ItemSizes extends UIPanel {	
+public class ItemSizesPanel extends UIPanel {	
 	
-	private List<ItemSize> itemSizes = null;
+	private List<ItemSizePanel> itemSizes = null;
 	
-	public ItemSizes() {
+	public ItemSizesPanel() {
 		setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		this.itemSizes = new ArrayList<ItemSize>();
+		this.itemSizes = new ArrayList<ItemSizePanel>();
 		
 		//Just to something
-		this.add(new ItemSize());
-		this.add(new ItemSize());
+		this.add(new ItemSizePanel());
+		this.add(new ItemSizePanel());
 		
 		UIButton button = new UIButton("-");
 		button.addActionListener(new ActionListener() {
@@ -32,17 +32,17 @@ public class ItemSizes extends UIPanel {
 		add(button);
 	}
 	
-	public void addItem(ItemSize itemSize) {
+	public void addItem(ItemSizePanel itemSize) {
 		this.add(itemSize);
 	}
 	
-	public void selectSize(ItemSize itemSize) {
+	public void selectSize(ItemSizePanel itemSize) {
 		itemSize.select();
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void deselectSizes() {
-		for(ItemSize itemSize : this.itemSizes) {
+		for(ItemSizePanel itemSize : this.itemSizes) {
 			itemSize.disable();
 		}
 	}

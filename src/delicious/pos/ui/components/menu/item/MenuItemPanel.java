@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
@@ -13,9 +15,15 @@ import java.awt.Insets;
 import delicious.pos.ui.*;
 
 
-public class MenuItem extends UIPanel {
+public class MenuItemPanel extends UIPanel {
 
-	public MenuItem() {
+	public MenuItemPanel() {
+		this.init();
+	}
+	
+	public void init() {
+		this.setPreferredSize(new Dimension(400, 50));
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
@@ -31,13 +39,12 @@ public class MenuItem extends UIPanel {
 		gbc_lblItemName.gridy = 0;
 		add(lblItemName, gbc_lblItemName);
 		
-		JPanel panel = new ItemSizes();
+		JPanel panel = new ItemSizesPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
 		add(panel, gbc_panel);
-
 	}
 
 }

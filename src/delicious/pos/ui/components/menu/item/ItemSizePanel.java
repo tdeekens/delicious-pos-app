@@ -14,9 +14,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ItemSize extends UIPanel {
+public class ItemSizePanel extends UIPanel {
 
-	public ItemSize() {
+	public ItemSizePanel() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblSize = new UILabel("Size");
