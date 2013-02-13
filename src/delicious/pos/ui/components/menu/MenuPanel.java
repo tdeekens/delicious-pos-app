@@ -1,19 +1,27 @@
 package delicious.pos.ui.components.menu;
 
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.implementation.MenuScreen;
 import javax.swing.BoxLayout;
+
+import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.components.UIScrollPane;
+import delicious.pos.ui.implementation.MenuScreen;
 
 public class MenuPanel extends UIPanel {
 	private MenuScreen parentPanel;
+	private UIScrollPane scrollPane;
 	
 	public MenuPanel(MenuScreen menuScreen) {
 		this.parentPanel = menuScreen;
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.init();
 	}
 	
 	public void init() {
+		scrollPane = new UIScrollPane(this);
+		
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+	}
 	
+	public UIScrollPane getScrollPane() {
+		return this.scrollPane;
 	}
 }

@@ -1,25 +1,17 @@
 package delicious.pos.ui.components.menu.item;
 
 
-import delicious.pos.ui.components.*;
-import delicious.pos.ui.implementation.App;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import delicious.pos.creator.datastructure.model.datastructure.impl.*;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import com.adamtaft.eb.EventBusService;
+import delicious.pos.ui.components.UIButton;
+import delicious.pos.ui.components.UILabel;
+import delicious.pos.ui.components.UIPanel;
 
 public class ItemPricePanel extends UIPanel {
 	
@@ -53,9 +45,9 @@ public class ItemPricePanel extends UIPanel {
 				select();
 			}
 		});
-		
+
 		add(priceBtn, BorderLayout.SOUTH);
-		
+				
 		this.setupLabels();
 	}
 	
@@ -79,10 +71,13 @@ public class ItemPricePanel extends UIPanel {
 	
 	public void deselect() {
 		this.setBackground(UIManager.getColor("Button.background"));
+		this.validate();
 		this.repaint();
 	}
 
 	public void hidePrices(Object except) {
+		this.priceBtn.setEnabled(false);
+		
 		if ( ! except.equals(this.price) ) {
 			this.setVisible(false);
 		}

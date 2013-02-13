@@ -1,25 +1,12 @@
 package delicious.pos.ui.components.menu.item;
 
 
-import delicious.pos.creator.datastructure.model.datastructure.impl.ItemImpl;
-import delicious.pos.creator.datastructure.model.datastructure.impl.PriceImpl;
-import delicious.pos.ui.components.UIButton;
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.implementation.App;
-
 import java.awt.FlowLayout;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.UIManager;
-
-import com.adamtaft.eb.EventBusService;
-import com.adamtaft.eb.EventHandler;
+import delicious.pos.ui.components.UIButton;
+import delicious.pos.ui.components.UIPanel;
 
 public class ItemPricesPanel extends UIPanel {	
 	
@@ -39,9 +26,10 @@ public class ItemPricesPanel extends UIPanel {
 	public void init() {
 		setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		this.setupMenuItems();
+		this.setupPrices();
 		
-		this.removeBtn = new UIButton("-");
+		this.removeBtn = new UIButton();
+		this.removeBtn.setIcon("delete_16");
 		
 		this.removeBtn.setVisible(false);		
 		add(removeBtn);
@@ -71,10 +59,9 @@ public class ItemPricesPanel extends UIPanel {
 		return this.removeBtn;
 	}
 	
-	public void setupMenuItems() {
-		
+	public void setupPrices() {
 		for(Object price : this.itemPrices) {
-			ItemPricePanel itemPricePanel = new ItemPricePanel(null, this);
+			ItemPricePanel itemPricePanel = new ItemPricePanel(price, this);
 			this.itemPricePanels.add(itemPricePanel);
 			this.add(itemPricePanel);
 		}
@@ -87,6 +74,6 @@ public class ItemPricesPanel extends UIPanel {
 	}
 
 	public void orderItem(ItemPricePanel itemPricePanel) {
-		this.parentPanel.orderItem(itemPricePanel);
+		this.parentPanel.orderItem(this, itemPricePanel);
 	}
 }

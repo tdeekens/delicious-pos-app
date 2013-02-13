@@ -1,32 +1,26 @@
 package delicious.pos.ui.implementation;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JSplitPane;
+import javax.swing.border.EmptyBorder;
 
+import delicious.pos.ui.components.UIContentPanel;
 import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.UISplitPane;
 import delicious.pos.ui.components.menu.MenuPanel;
 import delicious.pos.ui.components.menu.OrderPanel;
-import delicious.pos.ui.components.menu.item.ItemPricePanel;
-import delicious.pos.ui.components.menu.item.ItemPricesPanel;
 import delicious.pos.ui.components.menu.item.MenuItemPanel;
-
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 
 public class MenuScreen extends UIFrame {
 
-	private JPanel contentPane;
 	private JSplitPane splitPane;
 	private OrderPanel orderPanel;
 	private MenuPanel menuPanel;
+	private UIContentPanel contentPanel;
 
 	public MenuScreen() {
 		this.init();
@@ -35,15 +29,18 @@ public class MenuScreen extends UIFrame {
 	public void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new UIPanel();
+		UIPanel contentPane = new UIPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
 		
 		this.splitPane = new UISplitPane();
 		splitPane.setDividerLocation(0.5);
 		
 		contentPane.add(splitPane, BorderLayout.CENTER);
+		
+		this.contentPanel = new UIContentPanel("Greek Paradise", "The menu, place order...", "welcome_64", contentPane);
+		
+		setContentPane(this.contentPanel);
 		
 		this.setupMenu();
 		this.setupOrderList();
@@ -51,7 +48,7 @@ public class MenuScreen extends UIFrame {
 	
 	private void setupMenu() {
 		menuPanel = new MenuPanel(this);
-		this.splitPane.setLeftComponent(menuPanel);
+		this.splitPane.setLeftComponent(menuPanel.getScrollPane());
 		
 		menuPanel.add(new MenuItemPanel(new Object(), this));
 		menuPanel.add(new MenuItemPanel(new Object(), this));
@@ -63,12 +60,12 @@ public class MenuScreen extends UIFrame {
 	
 	private void setupOrderList() {
 		orderPanel = new OrderPanel(this);
-		splitPane.setRightComponent(orderPanel);
+		splitPane.setRightComponent(orderPanel.getScrollPane());
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 	}
 	
-	public void orderItem(Object itemImpl, Object price) {
-		MenuItemPanel orderItemPanel = new MenuItemPanel(new Object(), orderPanel);
+	public void orderItem(Object item, Object price) {
+		MenuItemPanel orderItemPanel = new MenuItemPanel(item, orderPanel);
 		orderItemPanel.setOrdered(true, price);
 		
 		orderPanel.addItem(orderItemPanel);

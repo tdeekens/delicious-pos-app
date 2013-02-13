@@ -1,28 +1,18 @@
 package delicious.pos.ui.components.menu.item;
 
-import delicious.pos.creator.datastructure.model.datastructure.impl.ItemImpl;
-import delicious.pos.creator.datastructure.model.datastructure.impl.PriceImpl;
-import delicious.pos.ui.components.*;
-import delicious.pos.ui.components.menu.OrderPanel;
-import delicious.pos.ui.implementation.App;
-import delicious.pos.ui.implementation.MenuScreen;
-
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.SwingConstants;
-import javax.swing.JPanel;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import delicious.pos.ui.*;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import delicious.pos.ui.components.UILabel;
+import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.components.menu.OrderPanel;
+import delicious.pos.ui.implementation.MenuScreen;
 
 
 public class MenuItemPanel extends UIPanel {
@@ -52,33 +42,20 @@ public class MenuItemPanel extends UIPanel {
 
 	public void init() {
 		this.setPreferredSize(new Dimension(400, 50));
-		
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
+		this.setMinimumSize(this.getPreferredSize());
+		this.setMaximumSize(this.getPreferredSize());
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		JLabel lblItemName = new UILabel("Item Name");
-		lblItemName.setVerticalAlignment(SwingConstants.TOP);
-		GridBagConstraints gbc_lblItemName = new GridBagConstraints();
-		gbc_lblItemName.insets = new Insets(0, 0, 0, 5);
-		gbc_lblItemName.fill = GridBagConstraints.VERTICAL;
-		gbc_lblItemName.gridx = 0;
-		gbc_lblItemName.gridy = 0;
-		add(lblItemName, gbc_lblItemName);
+		lblItemName.setVerticalAlignment(SwingConstants.CENTER);
+		add(lblItemName);
 		
-		ArrayList<Object> itemPrices = new ArrayList();
+		ArrayList<Object> itemPrices = new ArrayList<Object>();
 		itemPrices.add(new Object());
 		itemPrices.add(new Object());
 		
 		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 0;
-		add(itemPricesPanel, gbc_panel);	
+		add(itemPricesPanel);	
 		
 		itemPricesPanel.getRemmoveBtn().addActionListener(new ActionListener() {
 			@Override
@@ -96,10 +73,10 @@ public class MenuItemPanel extends UIPanel {
 		this.orderPanel.removeOrderedItem(this);		
 	}
 
-	public void orderItem(Object price) {
+	public void orderItem(ItemPricesPanel price, ItemPricePanel itemPricePanel) {
 		if(menuScreen != null) {
 			itemPricesPanel.deselectPrices();
-			this.menuScreen.orderItem(this.itemImpl, price);
+			this.menuScreen.orderItem(this.itemImpl, itemPricePanel.getPrice());
 		}
 	}
 }
