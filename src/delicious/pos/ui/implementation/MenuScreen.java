@@ -12,6 +12,10 @@ import javax.swing.JSplitPane;
 import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.UISplitPane;
+import delicious.pos.ui.components.menu.MenuPanel;
+import delicious.pos.ui.components.menu.OrderPanel;
+import delicious.pos.ui.components.menu.item.ItemPricePanel;
+import delicious.pos.ui.components.menu.item.ItemPricesPanel;
 import delicious.pos.ui.components.menu.item.MenuItemPanel;
 
 import java.awt.FlowLayout;
@@ -21,8 +25,8 @@ public class MenuScreen extends UIFrame {
 
 	private JPanel contentPane;
 	private JSplitPane splitPane;
-	private JPanel orderPanel;
-	private JPanel menuPanel;
+	private OrderPanel orderPanel;
+	private MenuPanel menuPanel;
 
 	public MenuScreen() {
 		this.init();
@@ -46,21 +50,27 @@ public class MenuScreen extends UIFrame {
 	}
 	
 	private void setupMenu() {
-		menuPanel = new JPanel();
+		menuPanel = new MenuPanel(this);
 		this.splitPane.setLeftComponent(menuPanel);
-		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 		
-		menuPanel.add(new MenuItemPanel());
-		menuPanel.add(new MenuItemPanel());
-		menuPanel.add(new MenuItemPanel());
-		menuPanel.add(new MenuItemPanel());
-		menuPanel.add(new MenuItemPanel());
-		menuPanel.add(new MenuItemPanel());
+		menuPanel.add(new MenuItemPanel(new Object(), this));
+		menuPanel.add(new MenuItemPanel(new Object(), this));
+		menuPanel.add(new MenuItemPanel(new Object(), this));
+		menuPanel.add(new MenuItemPanel(new Object(), this));
+		menuPanel.add(new MenuItemPanel(new Object(), this));
+		menuPanel.add(new MenuItemPanel(new Object(), this));
 	}
 	
 	private void setupOrderList() {
-		orderPanel = new JPanel();
+		orderPanel = new OrderPanel(this);
 		splitPane.setRightComponent(orderPanel);
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
+	}
+	
+	public void orderItem(Object itemImpl, Object priceImpl) {
+		MenuItemPanel orderItemPanel = new MenuItemPanel(new Object(), orderPanel);
+		orderItemPanel.setOrdered(true);
+		
+		orderPanel.addItem(orderItemPanel);
 	}
 }

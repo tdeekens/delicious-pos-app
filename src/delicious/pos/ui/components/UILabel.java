@@ -9,6 +9,10 @@ public class UILabel extends JLabel {
 		init();
 	}
 	
+	public UILabel() {
+		init();
+	}
+	
 	private void init() {
 		
 	}

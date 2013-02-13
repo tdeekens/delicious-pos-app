@@ -9,6 +9,10 @@ public class UIButton extends JButton {
 		this.init();
 	}
 	
+	public UIButton() {		
+		this.init();
+	}
+	
 	private void init() {
 		
 	}

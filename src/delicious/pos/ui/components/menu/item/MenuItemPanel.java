@@ -1,6 +1,12 @@
 package delicious.pos.ui.components.menu.item;
 
+import delicious.pos.creator.datastructure.model.datastructure.impl.ItemImpl;
+import delicious.pos.creator.datastructure.model.datastructure.impl.PriceImpl;
 import delicious.pos.ui.components.*;
+import delicious.pos.ui.components.menu.OrderPanel;
+import delicious.pos.ui.implementation.App;
+import delicious.pos.ui.implementation.MenuScreen;
+
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
@@ -18,11 +24,27 @@ import delicious.pos.ui.*;
 
 
 public class MenuItemPanel extends UIPanel {
-
-	public MenuItemPanel() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private ItemPricesPanel itemPricesPanel = null;
+	private MenuScreen menuScreen;
+	private OrderPanel orderPanel;
+	private Object itemImpl;
+	
+	public MenuItemPanel(Object itemImpl, MenuScreen parentPanel) {
+		this.menuScreen = parentPanel;
+		this.itemImpl = itemImpl;
 		this.init();
 	}
 	
+	public MenuItemPanel(Object itemImpl, OrderPanel orderPanel) {
+		this.orderPanel = orderPanel;
+		this.itemImpl = itemImpl;
+		this.init();
+	}
+
 	public void init() {
 		this.setPreferredSize(new Dimension(400, 50));
 		
@@ -41,12 +63,20 @@ public class MenuItemPanel extends UIPanel {
 		gbc_lblItemName.gridy = 0;
 		add(lblItemName, gbc_lblItemName);
 		
-		JPanel panel = new ItemSizesPanel(new ArrayList());
+		itemPricesPanel = new ItemPricesPanel(new ArrayList(), this);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		add(panel, gbc_panel);
+		add(itemPricesPanel, gbc_panel);		
+	}
+	
+	public void setOrdered(boolean isOrdered) {
+		itemPricesPanel.setOrdered(isOrdered);
 	}
 
+	public void orderItem(Object priceImpl) {
+		itemPricesPanel.deselectPrices();
+		this.menuScreen.orderItem(this.itemImpl, priceImpl);
+	}
 }
