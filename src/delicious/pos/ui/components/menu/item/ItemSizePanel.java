@@ -14,9 +14,22 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ItemSizePanel extends UIPanel {
+import delicious.pos.creator.datastructure.model.datastructure.impl.*;
 
+public class ItemSizePanel extends UIPanel {
+	
+	private ItemImpl item;
+	
 	public ItemSizePanel() {
+		this.init();
+	}
+	
+	public ItemSizePanel(ItemImpl item) {
+		this.item = item;
+		this.init();
+	}
+	
+	public void init() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblSize = new UILabel("Size");

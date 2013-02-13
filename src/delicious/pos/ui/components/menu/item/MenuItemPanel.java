@@ -12,6 +12,8 @@ import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 import javax.swing.JPanel;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import delicious.pos.ui.*;
 
 
@@ -39,7 +41,7 @@ public class MenuItemPanel extends UIPanel {
 		gbc_lblItemName.gridy = 0;
 		add(lblItemName, gbc_lblItemName);
 		
-		JPanel panel = new ItemSizesPanel();
+		JPanel panel = new ItemSizesPanel(new ArrayList());
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;

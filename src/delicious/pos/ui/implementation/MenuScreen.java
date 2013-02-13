@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.menu;
+package delicious.pos.ui.implementation;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,14 +17,14 @@ import delicious.pos.ui.components.menu.item.MenuItemPanel;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 
-public class MenuFrame extends UIFrame {
+public class MenuScreen extends UIFrame {
 
 	private JPanel contentPane;
 	private JSplitPane splitPane;
 	private JPanel orderPanel;
 	private JPanel menuPanel;
 
-	public MenuFrame() {
+	public MenuScreen() {
 		this.init();
 	}
 
