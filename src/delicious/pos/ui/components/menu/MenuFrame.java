@@ -52,6 +52,10 @@ public class MenuFrame extends UIFrame {
 		
 		menuPanel.add(new MenuItemPanel());
 		menuPanel.add(new MenuItemPanel());
+		menuPanel.add(new MenuItemPanel());
+		menuPanel.add(new MenuItemPanel());
+		menuPanel.add(new MenuItemPanel());
+		menuPanel.add(new MenuItemPanel());
 	}
 	
 	private void setupOrderList() {
