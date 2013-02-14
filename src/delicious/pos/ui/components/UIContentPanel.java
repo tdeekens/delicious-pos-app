@@ -5,16 +5,17 @@ import javax.swing.ImageIcon;
 
 public class UIContentPanel extends UIPanel {
 	private UIHeaderPanel headerPanel;
-	private UIPanel bottomPanel;
+	private UIPanel contentPanel;
+	private UIFooterPanel footerPanel;
 	private String h1;
 	private String h2;
 	private String icon;
 	private ImageIcon iconRessource;
 	
-	public UIContentPanel(String h1, String h2, String icon, UIPanel bottomPanel) {
+	public UIContentPanel(String h1, String h2, String icon, UIPanel contentPanel) {
 		super();
 		
-		this.bottomPanel = bottomPanel;
+		this.contentPanel = contentPanel;
 		this.h1 = h1;
 		this.h2 = h2;
 		this.icon = icon;
@@ -32,11 +33,18 @@ public class UIContentPanel extends UIPanel {
 			this.iconRessource
 		);
 		
+		this.footerPanel = new UIFooterPanel(
+			new ImageIcon(this.getClass().getResource("icons/left_32.png")),
+			new ImageIcon(this.getClass().getResource("icons/right_32.png")),
+			"1 of 3"
+		);
+		
 		add(headerPanel, BorderLayout.NORTH);
-		add(bottomPanel, BorderLayout.CENTER);
+		add(contentPanel, BorderLayout.CENTER);
+		add(footerPanel, BorderLayout.SOUTH);
 	}
 	
 	public UIPanel getBottomPanel() {
-		return this.bottomPanel;
+		return this.contentPanel;
 	}
 }

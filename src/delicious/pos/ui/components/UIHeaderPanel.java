@@ -12,13 +12,13 @@ import javax.swing.JLabel;
 public class UIHeaderPanel extends UIPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel firstHeader;
-	private JLabel secondHeader;
+	private UILabel firstHeader;
+	private UILabel secondHeader;
 	private JLabel headerIcon;
 	
 	public UIHeaderPanel(String firstHeader, String secondHeader, Icon icon) {
-		this.firstHeader = new JLabel(firstHeader);
-		this.secondHeader = new JLabel(secondHeader);
+		this.firstHeader = new UILabel(firstHeader);
+		this.secondHeader = new UILabel(secondHeader);
 		this.headerIcon = new JLabel(icon);
 		
 		this.firstHeader.setFont(new Font("Palatino", Font.BOLD, 22));
