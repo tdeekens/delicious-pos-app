@@ -5,7 +5,6 @@ import javax.swing.JPanel;
 public class UIPanel extends JPanel implements Cloneable {
 
 	public UIPanel() {
-		
 		init();
 	}
 	

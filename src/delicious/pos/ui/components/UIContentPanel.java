@@ -7,15 +7,17 @@ public class UIContentPanel extends UIPanel {
 	private UIHeaderPanel headerPanel;
 	private UIPanel contentPanel;
 	private UIFooterPanel footerPanel;
+	private boolean enableFooter;
 	private String h1;
 	private String h2;
 	private String icon;
 	private ImageIcon iconRessource;
 	
-	public UIContentPanel(String h1, String h2, String icon, UIPanel contentPanel) {
+	public UIContentPanel(String h1, String h2, String icon, UIPanel contentPanel, boolean enableFooter) {
 		super();
 		
 		this.contentPanel = contentPanel;
+		this.enableFooter = enableFooter;
 		this.h1 = h1;
 		this.h2 = h2;
 		this.icon = icon;
@@ -33,15 +35,19 @@ public class UIContentPanel extends UIPanel {
 			this.iconRessource
 		);
 		
-		this.footerPanel = new UIFooterPanel(
-			new ImageIcon(this.getClass().getResource("icons/left_32.png")),
-			new ImageIcon(this.getClass().getResource("icons/right_32.png")),
-			"1 of 3"
-		);
+		if(this.enableFooter) {
+			this.footerPanel = new UIFooterPanel(
+				new ImageIcon(this.getClass().getResource("icons/left_32.png")),
+				new ImageIcon(this.getClass().getResource("icons/right_32.png")),
+				"1 of 3"
+			);
+			
+			add(footerPanel, BorderLayout.SOUTH);
+		}
+		
 		
 		add(headerPanel, BorderLayout.NORTH);
 		add(contentPanel, BorderLayout.CENTER);
-		add(footerPanel, BorderLayout.SOUTH);
 	}
 	
 	public UIPanel getBottomPanel() {

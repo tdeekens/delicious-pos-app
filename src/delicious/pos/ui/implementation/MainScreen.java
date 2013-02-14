@@ -7,11 +7,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import delicious.pos.ui.components.UIButton;
+import delicious.pos.ui.components.UIContentPanel;
 import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
+import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
 
 public class MainScreen extends UIFrame {
-
+	private UIPanel mainPanel;
+	private UIContentPanel contentPanel;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -30,15 +35,14 @@ public class MainScreen extends UIFrame {
 	}
 	
 	private void init() {
-		UIPanel mainPanel = new UIPanel();
-		mainPanel.setLayout(new BorderLayout());
-
-		UIPanel btnPanel = new UIPanel();
-		btnPanel.setLayout(null);
+		this.mainPanel = new UIPanel();
+		
+		this.contentPanel = new UIContentPanel("Greek Paradise", "...you're at home!", "geek-paradise-logo_64", this.mainPanel, false);
 		
 		UIButton adminBtn = new UIButton("Admin");
 		adminBtn.setBounds(177, 58, 85, 54);
-		btnPanel.add(adminBtn);
+		adminBtn.setIcon("suggesstions_64");
+		adminBtn.setPreferredSize(new Dimension(200, 100));
 		adminBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -47,8 +51,9 @@ public class MainScreen extends UIFrame {
 		});
 		
 		UIButton menuBtn = new UIButton("Menu");
+		menuBtn.setPreferredSize(new Dimension(200, 100));
 		menuBtn.setBounds(177, 143, 85, 54);
-		btnPanel.add(menuBtn);
+		menuBtn.setIcon("welcome_64");
 		menuBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -56,9 +61,10 @@ public class MainScreen extends UIFrame {
 			}
 		});
 		
-		mainPanel.add(btnPanel, BorderLayout.CENTER);
+		mainPanel.add(menuBtn);
+		mainPanel.add(adminBtn);
 		
-		getContentPane().add(mainPanel);
+		getContentPane().add(contentPanel);
 		basicIntialization();
 		
 	}

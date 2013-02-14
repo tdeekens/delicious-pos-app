@@ -38,7 +38,7 @@ public class MenuScreen extends UIFrame {
 		
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
-		this.contentPanel = new UIContentPanel("Greek Paradise", "The menu, place order...", "welcome_64", contentPane);
+		this.contentPanel = new UIContentPanel("Greek Paradise", "The menu, place order...", "welcome_64", contentPane, true);
 		
 		setContentPane(this.contentPanel);
 		
