@@ -9,23 +9,32 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import delicious.pos.ui.event.SwitchPanel;
+
 public class UIFooterPanel extends UIPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel iconRight;
-	private JLabel iconLeft;
+	private UIButton iconRight;
+	private SwitchPanel switchPanel;
+	private UIButton iconLeft;
 	private JLabel stateCenter;
 	
-	public UIFooterPanel(ImageIcon iconLeft, ImageIcon iconRight, String stateText) {
-		this.iconRight = new JLabel(iconLeft);
-		this.iconLeft = new JLabel(iconRight);
+	public UIFooterPanel(ImageIcon iconLeft, ImageIcon iconRight, String stateText, SwitchPanel switchPanel) {
+		this.iconRight = new UIButton(iconLeft);
+		this.iconLeft = new UIButton(iconRight);
 		this.stateCenter = new JLabel(stateText);
+		
+		this.switchPanel = switchPanel;
 		stateCenter.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		EmptyBorder eBorder = new EmptyBorder(10, 10, 10, 10); 
@@ -47,5 +56,25 @@ public class UIFooterPanel extends UIPanel {
 		this.add(this.iconRight, BorderLayout.WEST);
 		this.add(this.stateCenter, BorderLayout.CENTER);
 		this.add(this.iconLeft, BorderLayout.EAST);
+		
+		if(this.switchPanel != null) {
+			this.setupSwitchPanelActions();
+		}
+	}
+	
+	private void setupSwitchPanelActions() {
+		this.iconRight.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchPanel.previous();
+			}
+		});
+		
+		this.iconLeft.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchPanel.next();
+			}
+		});
 	}
 }

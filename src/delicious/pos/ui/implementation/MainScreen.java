@@ -12,6 +12,7 @@ import delicious.pos.ui.components.UIContentPanel;
 import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.menu.MenuPanel;
+import delicious.pos.ui.event.SwitchPanel;
 
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
@@ -60,6 +61,21 @@ public class MainScreen extends UIFrame {
 		this.getContentPane().repaint();
 	}
 	
+	private void showMain() {
+		if(this.contentPanelMenu != null) {
+			this.getContentPane().remove(this.contentPanelMenu);
+		}
+		
+		if(this.contentPanelAdmin != null) {
+			this.getContentPane().remove(this.contentPanelAdmin);
+		}
+		
+		this.getContentPane().add(this.contentPanelMain);
+		
+		this.getContentPane().validate();
+		this.getContentPane().repaint();
+	}
+	
 	private void setupMainPanel() {
 		UIPanel mainPanel = new UIPanel();
 				
@@ -88,13 +104,35 @@ public class MainScreen extends UIFrame {
 		mainPanel.add(menuBtn);
 		mainPanel.add(adminBtn);
 		
-		this.contentPanelMain = new UIContentPanel("Greek Paradise", "...you're at home!", "geek-paradise-logo_64", mainPanel, false);
+		this.contentPanelMain = new UIContentPanel(
+			"Greek Paradise",
+			"...you're at home!", 
+			"geek-paradise-logo_64", 
+			mainPanel, 
+			false,
+			null
+		);
 	}
 	
 	private void setupMenuPanel() {
 		UIPanel mainPanel = new MenuScreen();
 		
-		this.contentPanelMenu = new UIContentPanel("Greek Paradise", "The menu, place order...", "welcome_64", mainPanel, true);
+		this.contentPanelMenu = new UIContentPanel(
+			"Greek Paradise", 
+			"The menu, place order...", 
+			"welcome_64", 
+			mainPanel, 
+			true,
+			new SwitchPanel() {
+				public void next() {
+					System.out.println("next menu");
+				}
+				
+				public void previous() {
+					showMain();
+				}
+			}
+		);
 	}
 	
 	private void setupAdminPanel() {

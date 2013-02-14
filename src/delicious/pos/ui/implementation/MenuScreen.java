@@ -32,14 +32,14 @@ public class MenuScreen extends UIPanel {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		this.splitPane = new UISplitPane();
-		splitPane.setDividerLocation(0.5);
-		
+		this.splitPane = new UISplitPane();		
 		contentPane.add(splitPane, BorderLayout.CENTER);
-		
 		this.add(contentPane, BorderLayout.CENTER);
+		
 		this.setupMenu();
 		this.setupOrderList();
+		
+		splitPane.setResizeWeight(0.2);
 	}
 	
 	private void setupMenu() {

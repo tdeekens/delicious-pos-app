@@ -10,6 +10,12 @@ public class UIButton extends JButton {
 		this.init();
 	}
 	
+	public UIButton(ImageIcon imageIcon) {
+		super(imageIcon);
+		
+		this.init();
+	}
+	
 	public UIButton() {		
 		this.init();
 	}
