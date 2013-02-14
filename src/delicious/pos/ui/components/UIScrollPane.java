@@ -12,6 +12,10 @@ public class UIScrollPane extends JScrollPane {
 		super(panel);
 		this.init();
 	}
+	
+	public UIScrollPane(UITable table) {
+		super(table);
+	}
 
 	public void init() {
 		
