@@ -15,19 +15,17 @@ import delicious.pos.ui.components.menu.MenuPanel;
 import delicious.pos.ui.components.menu.OrderPanel;
 import delicious.pos.ui.components.menu.item.MenuItemPanel;
 
-public class MenuScreen extends UIFrame {
+public class MenuScreen extends UIPanel {
 
 	private JSplitPane splitPane;
 	private OrderPanel orderPanel;
 	private MenuPanel menuPanel;
-	private UIContentPanel contentPanel;
 
 	public MenuScreen() {
 		this.init();
 	}
 
 	public void init() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		UIPanel contentPane = new UIPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -37,11 +35,7 @@ public class MenuScreen extends UIFrame {
 		splitPane.setDividerLocation(0.5);
 		
 		contentPane.add(splitPane, BorderLayout.CENTER);
-		
-		this.contentPanel = new UIContentPanel("Greek Paradise", "The menu, place order...", "welcome_64", contentPane, true);
-		
-		setContentPane(this.contentPanel);
-		
+						
 		this.setupMenu();
 		this.setupOrderList();
 	}

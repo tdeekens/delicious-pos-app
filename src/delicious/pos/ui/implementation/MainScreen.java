@@ -10,35 +10,52 @@ import delicious.pos.ui.components.UIButton;
 import delicious.pos.ui.components.UIContentPanel;
 import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.components.menu.MenuPanel;
+
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 
 public class MainScreen extends UIFrame {
-	private UIPanel mainPanel;
-	private UIContentPanel contentPanel;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					new MainScreen();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private UIContentPanel contentPanelMain;
+	private UIContentPanel contentPanelMenu;
+	private UIContentPanel contentPanelAdmin;
 
 	public MainScreen() {
 		init();
 	}
 	
 	private void init() {
-		this.mainPanel = new UIPanel();
+		setSize(new Dimension(420, 300));
+		setTitle("Greek Paradise - a place greeks love!");
 		
-		this.contentPanel = new UIContentPanel("Greek Paradise", "...you're at home!", "geek-paradise-logo_64", this.mainPanel, false);
+		this.setupMainPanel();
+		this.setupMenuPanel();
+		this.setupAdminPanel();
 		
+		getContentPane().add(contentPanelMain);
+	}
+	
+	private void showMenu() {
+		this.getContentPane().remove(this.contentPanelMain);
+		
+		this.getContentPane().add(this.contentPanelMenu);
+		
+		this.getContentPane().validate();
+		this.getContentPane().repaint();
+	}
+	
+	private void showAdmin() {
+		this.getContentPane().remove(this.contentPanelMain);
+		
+		this.getContentPane().add(this.contentPanelAdmin);
+		
+		this.getContentPane().validate();
+		this.getContentPane().repaint();
+	}
+	
+	private void setupMainPanel() {
+		UIPanel mainPanel = new UIPanel();
+				
 		UIButton adminBtn = new UIButton("Admin");
 		adminBtn.setBounds(177, 58, 85, 54);
 		adminBtn.setIcon("suggesstions_64");
@@ -57,22 +74,23 @@ public class MainScreen extends UIFrame {
 		menuBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Menu");
+				showMenu();
 			}
 		});
 		
 		mainPanel.add(menuBtn);
 		mainPanel.add(adminBtn);
 		
-		getContentPane().add(contentPanel);
-		basicIntialization();
+		this.contentPanelMain = new UIContentPanel("Greek Paradise", "...you're at home!", "geek-paradise-logo_64", mainPanel, false);
+	}
+	
+	private void setupMenuPanel() {
+		UIPanel mainPanel = new MenuScreen();
+		
+		this.contentPanelMenu = new UIContentPanel("Greek Paradise", "The menu, place order...", "welcome_64", mainPanel, true);
+	}
+	
+	private void setupAdminPanel() {
 		
 	}
-	
-	private void basicIntialization() {
-		setSize(new Dimension(420, 300));
-		setTitle("Main Screen");
-	}
-	
-
 }
