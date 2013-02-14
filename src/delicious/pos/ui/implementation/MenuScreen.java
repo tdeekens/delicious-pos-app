@@ -26,7 +26,8 @@ public class MenuScreen extends UIPanel {
 	}
 
 	public void init() {
-		setBounds(100, 100, 450, 300);
+		this.setLayout(new BorderLayout());
+		
 		UIPanel contentPane = new UIPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -35,7 +36,8 @@ public class MenuScreen extends UIPanel {
 		splitPane.setDividerLocation(0.5);
 		
 		contentPane.add(splitPane, BorderLayout.CENTER);
-						
+		
+		this.add(contentPane, BorderLayout.CENTER);
 		this.setupMenu();
 		this.setupOrderList();
 	}
