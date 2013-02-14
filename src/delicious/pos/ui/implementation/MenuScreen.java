@@ -1,14 +1,17 @@
 package delicious.pos.ui.implementation;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import delicious.pos.ui.components.UIContentPanel;
 import delicious.pos.ui.components.UIFrame;
+import delicious.pos.ui.components.UIHeaderPanel;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.UISplitPane;
 import delicious.pos.ui.components.menu.MenuPanel;
@@ -46,6 +49,11 @@ public class MenuScreen extends UIPanel {
 		menuPanel = new MenuPanel(this);
 		this.splitPane.setLeftComponent(menuPanel.getScrollPane());
 		
+		UIHeaderPanel menuHeader = new UIHeaderPanel("Our menu...", null, null);
+		menuHeader.setBackground(UIManager.getColor("Button.background"));
+		menuHeader.setSize(new Dimension(400, 50));
+		menuPanel.add(menuHeader);
+		
 		menuPanel.add(new MenuItemPanel(new Object(), this));
 		menuPanel.add(new MenuItemPanel(new Object(), this));
 		menuPanel.add(new MenuItemPanel(new Object(), this));
@@ -58,6 +66,12 @@ public class MenuScreen extends UIPanel {
 		orderPanel = new OrderPanel(this);
 		splitPane.setRightComponent(orderPanel.getScrollPane());
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
+		
+		UIHeaderPanel orderHeader = new UIHeaderPanel("Ordered items...", null, null);
+		orderHeader.setBackground(UIManager.getColor("Button.background"));
+		orderHeader.setSize(new Dimension(400, 50));
+		
+		orderPanel.add(orderHeader);
 	}
 	
 	public void orderItem(Object item, Object price) {

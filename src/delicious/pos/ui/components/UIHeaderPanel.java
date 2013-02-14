@@ -1,6 +1,7 @@
 package delicious.pos.ui.components;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -49,5 +50,14 @@ public class UIHeaderPanel extends UIPanel {
 		this.add(this.firstHeader, firstHeaderConstraints);
 		this.add(this.secondHeader, secondHeaderConstraints);
 		this.add(this.headerIcon, iconConstraints);
+	}
+	
+	public void setSize(Dimension dimension) {
+		this.setPreferredSize(dimension);
+		this.setMinimumSize(this.getPreferredSize());
+		this.setMaximumSize(this.getPreferredSize());
+		
+		this.revalidate();
+		this.repaint();
 	}
 }
