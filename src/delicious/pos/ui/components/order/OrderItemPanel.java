@@ -1,21 +1,21 @@
-package delicious.pos.ui.components.menu.order;
+package delicious.pos.ui.components.order;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import delicious.pos.ui.components.UILabel;
-import delicious.pos.ui.components.UIPanel;
-import java.awt.Component;
+import delicious.pos.business.logic.view.ItemView;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.ui.components.extensions.UILabel;
+import delicious.pos.ui.components.extensions.UIPanel;
 
 public class OrderItemPanel extends UIPanel {
-	private Object price;
-	private Object item;
+	private PriceView price;
+	private ItemView item;
 	
-	public OrderItemPanel(Object item, Object price) {
+	public OrderItemPanel(ItemView item, PriceView price) {
 		super();
 		
 		this.price = price;
@@ -31,7 +31,7 @@ public class OrderItemPanel extends UIPanel {
 		
 		setLayout(new BorderLayout());
 		
-		JLabel lblItem = new UILabel("Item Name: Price 'n size");
+		JLabel lblItem = new UILabel(this.item.getName() + " " + this.price.getSize().getValue() + this.price.getValue() + " Û");
 		lblItem.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		add(lblItem, BorderLayout.CENTER);

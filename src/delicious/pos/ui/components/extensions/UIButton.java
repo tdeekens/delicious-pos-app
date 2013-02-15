@@ -1,6 +1,4 @@
-package delicious.pos.ui.components;
-
-import java.awt.Font;
+package delicious.pos.ui.components.extensions;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,6 +24,6 @@ public class UIButton extends JButton {
 	}
 	
 	public void setIcon(String icon) {
-		super.setIcon(new ImageIcon(this.getClass().getResource("icons/" + icon + ".png")));
+		super.setIcon(new ImageIcon(this.getClass().getResource("../icons/" + icon + ".png")));
 	}
 }

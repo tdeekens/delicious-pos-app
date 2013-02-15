@@ -1,11 +1,13 @@
-package delicious.pos.ui.components.menu;
+package delicious.pos.ui.components.order;
 
 import javax.swing.BoxLayout;
 
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.components.UIScrollPane;
-import delicious.pos.ui.components.menu.item.MenuItemPanel;
-import delicious.pos.ui.implementation.MenuScreen;
+import delicious.pos.business.logic.view.ItemView;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.components.extensions.UIScrollPane;
+import delicious.pos.ui.components.menu.MenuItemPanel;
+import delicious.pos.ui.implementation.screens.MenuScreen;
 
 public class OrderPanel extends UIPanel {
 	private MenuScreen parentPanel;
@@ -27,8 +29,8 @@ public class OrderPanel extends UIPanel {
 		this.redraw();
 	}
 
-	public void removeOrderedItem(MenuItemPanel orderItemPanel, Object itemImpl, Object priceImpl) {
-		this.parentPanel.removeItem(itemImpl, priceImpl);
+	public void removeOrderedItem(MenuItemPanel orderItemPanel, ItemView item, PriceView price) {
+		this.parentPanel.removeItem(item, price);
 		this.remove(orderItemPanel);
 		this.redraw();
 	}

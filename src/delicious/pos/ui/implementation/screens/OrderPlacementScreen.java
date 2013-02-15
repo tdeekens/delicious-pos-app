@@ -1,16 +1,9 @@
-package delicious.pos.ui.implementation;
+package delicious.pos.ui.implementation.screens;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
-import javax.swing.JSplitPane;
-import javax.swing.UIManager;
-
-import delicious.pos.ui.components.UIHeaderPanel;
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.components.menu.MenuPanel;
-import delicious.pos.ui.components.menu.OrderPanel;
-import delicious.pos.ui.components.menu.order.OrderedItemsPanel;
+import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.components.order.OrderedItemsPanel;
 
 public class OrderPlacementScreen extends UIPanel {
 

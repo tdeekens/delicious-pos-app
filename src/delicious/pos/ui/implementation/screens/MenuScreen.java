@@ -1,4 +1,4 @@
-package delicious.pos.ui.implementation;
+package delicious.pos.ui.implementation.screens;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,12 +8,15 @@ import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import delicious.pos.ui.components.UIHeaderPanel;
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.components.UISplitPane;
+import delicious.pos.business.logic.view.ItemView;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.ui.components.extensions.UIHeaderPanel;
+import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.components.extensions.UISplitPane;
+import delicious.pos.ui.components.menu.MenuItemPanel;
 import delicious.pos.ui.components.menu.MenuPanel;
-import delicious.pos.ui.components.menu.OrderPanel;
-import delicious.pos.ui.components.menu.item.MenuItemPanel;
+import delicious.pos.ui.components.order.OrderPanel;
+import delicious.pos.ui.implementation.App;
 
 public class MenuScreen extends UIPanel {
 
@@ -51,12 +54,7 @@ public class MenuScreen extends UIPanel {
 		menuHeader.setSize(new Dimension(400, 50));
 		menuPanel.add(menuHeader);
 		
-		menuPanel.add(new MenuItemPanel(new Object(), this));
-		menuPanel.add(new MenuItemPanel(new Object(), this));
-		menuPanel.add(new MenuItemPanel(new Object(), this));
-		menuPanel.add(new MenuItemPanel(new Object(), this));
-		menuPanel.add(new MenuItemPanel(new Object(), this));
-		menuPanel.add(new MenuItemPanel(new Object(), this));
+		//TODO: Init menu here
 	}
 	
 	private void setupOrderList() {
@@ -71,7 +69,7 @@ public class MenuScreen extends UIPanel {
 		orderPanel.add(orderHeader);
 	}
 	
-	public void orderItem(Object item, Object price) {
+	public void orderItem(ItemView item, PriceView price) {
 		MenuItemPanel orderItemPanel = new MenuItemPanel(item, orderPanel);
 		orderItemPanel.setOrdered(true, price);
 		
@@ -80,7 +78,7 @@ public class MenuScreen extends UIPanel {
 		App.orderState.addOrderItem(item, price);
 	}
 
-	public void removeItem(Object itemImpl, Object priceImpl) {
-		App.orderState.removeOrderItem(itemImpl, priceImpl);
+	public void removeItem(ItemView item, PriceView price) {
+		App.orderState.removeOrderItem(item, price);
 	}
 }

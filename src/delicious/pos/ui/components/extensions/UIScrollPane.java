@@ -1,4 +1,4 @@
-package delicious.pos.ui.components;
+package delicious.pos.ui.components.extensions;
 
 import javax.swing.JScrollPane;
 

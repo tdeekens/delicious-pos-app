@@ -1,4 +1,4 @@
-package delicious.pos.ui.components;
+package delicious.pos.ui.components.extensions;
 import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
@@ -27,7 +27,7 @@ public class UIContentPanel extends UIPanel {
 		this.h2 = h2;
 		this.footerText = footerText;
 		this.icon = icon;
-		this.iconRessource = new ImageIcon(this.getClass().getResource("icons/" + icon + ".png"));
+		this.iconRessource = new ImageIcon(this.getClass().getResource("../icons/" + icon + ".png"));
 		
 		this.init();
 	}
@@ -43,8 +43,8 @@ public class UIContentPanel extends UIPanel {
 		
 		if(this.enableFooter) {
 			this.footerPanel = new UIFooterPanel(
-				new ImageIcon(this.getClass().getResource("icons/left_32.png")),
-				new ImageIcon(this.getClass().getResource("icons/right_32.png")),
+				new ImageIcon(this.getClass().getResource("../icons/left_32.png")),
+				new ImageIcon(this.getClass().getResource("../icons/right_32.png")),
 				this.footerText,
 				this.switchPanel
 			);

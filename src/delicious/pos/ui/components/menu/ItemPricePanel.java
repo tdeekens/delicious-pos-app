@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.menu.item;
+package delicious.pos.ui.components.menu;
 
 
 import java.awt.BorderLayout;
@@ -9,14 +9,15 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import delicious.pos.ui.components.UIButton;
-import delicious.pos.ui.components.UILabel;
-import delicious.pos.ui.components.UIPanel;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.ui.components.extensions.UIButton;
+import delicious.pos.ui.components.extensions.UILabel;
+import delicious.pos.ui.components.extensions.UIPanel;
 
 public class ItemPricePanel extends UIPanel {
 	
 	private UILabel sizeLbl;
-	private Object price;
+	private PriceView price;
 	private UIButton priceBtn;
 	private ItemPricesPanel parentPanel;
 	
@@ -24,7 +25,7 @@ public class ItemPricePanel extends UIPanel {
 		this.init();
 	}
 	
-	public ItemPricePanel(Object price, ItemPricesPanel parentPanel) {
+	public ItemPricePanel(PriceView price, ItemPricesPanel parentPanel) {
 		super();
 		this.price = price;
 		this.parentPanel = parentPanel;
@@ -52,8 +53,8 @@ public class ItemPricePanel extends UIPanel {
 	}
 	
 	private void setupLabels() {
-		priceBtn.setText("7.99");
-		sizeLbl.setText("Size");
+		priceBtn.setText(Float.toString(this.price.getValue()));
+		sizeLbl.setText(this.price.getSize().getValue());
 	}
 	
 	public void select() {
@@ -65,7 +66,7 @@ public class ItemPricePanel extends UIPanel {
 		return this.priceBtn;
 	}
 	
-	public Object getPrice() {
+	public PriceView getPrice() {
 		return this.price;
 	}
 	

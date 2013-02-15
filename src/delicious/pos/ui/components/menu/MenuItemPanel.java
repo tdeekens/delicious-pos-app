@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.menu.item;
+package delicious.pos.ui.components.menu;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,10 +9,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import delicious.pos.ui.components.UILabel;
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.components.menu.OrderPanel;
-import delicious.pos.ui.implementation.MenuScreen;
+import delicious.pos.business.logic.view.ItemView;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.business.logic.view.SizeView;
+import delicious.pos.ui.components.extensions.UILabel;
+import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.components.order.OrderPanel;
+import delicious.pos.ui.implementation.screens.MenuScreen;
 
 
 public class MenuItemPanel extends UIPanel {
@@ -23,18 +26,18 @@ public class MenuItemPanel extends UIPanel {
 	private ItemPricesPanel itemPricesPanel = null;
 	private MenuScreen menuScreen;
 	private OrderPanel orderPanel;
-	private Object itemImpl;
-	private Object priceImpl;
+	private ItemView item;
+	private PriceView price;
 	
-	public MenuItemPanel(Object itemImpl, MenuScreen parentPanel) {
+	public MenuItemPanel(ItemView item, MenuScreen parentPanel) {
 		this.menuScreen = parentPanel;
-		this.itemImpl = itemImpl;
+		this.item = item;
 		this.init();
 	}
 	
-	public MenuItemPanel(Object itemImpl, OrderPanel orderPanel) {
+	public MenuItemPanel(ItemView item, OrderPanel orderPanel) {
 		this.orderPanel = orderPanel;
-		this.itemImpl = itemImpl;
+		this.item = item;
 		this.init();
 	}
 
@@ -48,9 +51,10 @@ public class MenuItemPanel extends UIPanel {
 		lblItemName.setVerticalAlignment(SwingConstants.CENTER);
 		add(lblItemName);
 		
-		ArrayList<Object> itemPrices = new ArrayList<Object>();
-		itemPrices.add(new Object());
-		itemPrices.add(new Object());
+		//TODO
+		ArrayList<PriceView> itemPrices = new ArrayList<PriceView>();
+		itemPrices.add(new PriceView(new Float(2.2), new SizeView("XL")));
+		itemPrices.add(new PriceView(new Float(2.2), new SizeView("XL")));
 		
 		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
 		add(itemPricesPanel);	
@@ -63,20 +67,20 @@ public class MenuItemPanel extends UIPanel {
 		});
 	}
 	
-	public void setOrdered(boolean isOrdered, Object price) {
-		this.priceImpl = price;
+	public void setOrdered(boolean isOrdered, PriceView price) {
+		this.price = price;
 		
 		itemPricesPanel.setOrdered(isOrdered, price);
 	}
 	
 	public void removeOrderedItem() {
-		this.orderPanel.removeOrderedItem(this, this.itemImpl, this.priceImpl);		
+		this.orderPanel.removeOrderedItem(this, this.item, this.price);		
 	}
 
 	public void orderItem(ItemPricesPanel price, ItemPricePanel itemPricePanel) {
 		if(menuScreen != null) {
 			itemPricesPanel.deselectPrices();
-			this.menuScreen.orderItem(this.itemImpl, itemPricePanel.getPrice());
+			this.menuScreen.orderItem(this.item, itemPricePanel.getPrice());
 		}
 	}
 }

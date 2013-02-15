@@ -1,6 +1,4 @@
-package delicious.pos.ui.components;
-
-import java.awt.Font;
+package delicious.pos.ui.components.extensions;
 
 import javax.swing.JLabel;
 

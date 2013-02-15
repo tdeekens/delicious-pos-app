@@ -1,21 +1,22 @@
-package delicious.pos.ui.components.menu.item;
+package delicious.pos.ui.components.menu;
 
 
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import delicious.pos.ui.components.UIButton;
-import delicious.pos.ui.components.UIPanel;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.ui.components.extensions.UIButton;
+import delicious.pos.ui.components.extensions.UIPanel;
 
 public class ItemPricesPanel extends UIPanel {	
 	
 	private List<ItemPricePanel> itemPricePanels = null;
-	private List<Object> itemPrices = null;
+	private List<PriceView> itemPrices = null;
 	private UIButton removeBtn = null;
 	private MenuItemPanel parentPanel;
 	
-	public ItemPricesPanel(List<Object> itemPrices, MenuItemPanel parentPanel) {
+	public ItemPricesPanel(List<PriceView> itemPrices, MenuItemPanel parentPanel) {
 		this.itemPrices = itemPrices;
 		this.itemPricePanels = new ArrayList<ItemPricePanel>();
 		this.parentPanel = parentPanel;
@@ -44,7 +45,7 @@ public class ItemPricesPanel extends UIPanel {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void setOrdered(boolean isOrdered, Object price) {
+	public void setOrdered(boolean isOrdered, PriceView price) {
 		this.removeBtn.setVisible(isOrdered);
 		
 		if(isOrdered) {
@@ -60,7 +61,7 @@ public class ItemPricesPanel extends UIPanel {
 	}
 	
 	public void setupPrices() {
-		for(Object price : this.itemPrices) {
+		for(PriceView price : this.itemPrices) {
 			ItemPricePanel itemPricePanel = new ItemPricePanel(price, this);
 			this.itemPricePanels.add(itemPricePanel);
 			this.add(itemPricePanel);

@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.menu.order;
+package delicious.pos.ui.components.order;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -10,9 +10,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 
-import delicious.pos.ui.components.UIHeaderPanel;
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.implementation.App;
+import delicious.pos.ui.components.extensions.UIHeaderPanel;
+import delicious.pos.ui.components.extensions.UIPanel;
 
 public class OrderTypePanel extends UIPanel {
 	private UIPanel orderTypePanel;
@@ -88,6 +87,6 @@ public class OrderTypePanel extends UIPanel {
 	}
 	
 	private void setOrderType(String orderType) {
-		App.orderState.setOrderType(orderType);
+		//App.orderState.setOrderType(orderType);
 	}
 }

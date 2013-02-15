@@ -1,4 +1,4 @@
-package delicious.pos.ui.implementation.admin;
+package delicious.pos.ui.implementation.screens;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -11,14 +11,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import delicious.pos.ui.components.UIButton;
-import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.components.UIScrollPane;
-import delicious.pos.ui.components.UITable;
+import delicious.pos.ui.components.extensions.UIButton;
+import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.components.extensions.UIScrollPane;
+import delicious.pos.ui.components.extensions.UITable;
 
-public class DBEditor extends UIPanel {
+public class AdminScreen extends UIPanel {
 
-	public DBEditor() {
+	public AdminScreen() {
 		super();
 		init();
 	}

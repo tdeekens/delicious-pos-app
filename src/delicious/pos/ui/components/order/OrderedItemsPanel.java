@@ -1,6 +1,5 @@
-package delicious.pos.ui.components.menu.order;
+package delicious.pos.ui.components.order;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,13 +11,15 @@ import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
-import delicious.pos.ui.components.UIHeaderPanel;
-import delicious.pos.ui.components.UILabel;
-import delicious.pos.ui.components.UIPanel;
+import delicious.pos.business.logic.view.ItemView;
+import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.ui.components.extensions.UIHeaderPanel;
+import delicious.pos.ui.components.extensions.UILabel;
+import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.implementation.App;
 
 public class OrderedItemsPanel extends UIPanel {
-	private HashMap<Object, Object> orderedItems;
+	private HashMap<PriceView, ItemView> orderedItems;
 	
 	public OrderedItemsPanel() {
 		super();
@@ -41,15 +42,15 @@ public class OrderedItemsPanel extends UIPanel {
 		this.init();
 		
 		this.orderedItems = App.orderState.getOrderedItems();
-		Integer completePrice = 0;
+		Float completePrice = new Float(0.0);
 
-		for (Map.Entry<Object, Object> entry : this.orderedItems.entrySet()) {
-		    Object price = entry.getKey();
-		    Object item = entry.getValue();
+		for (Map.Entry<PriceView, ItemView> entry : this.orderedItems.entrySet()) {
+			PriceView price = entry.getKey();
+			ItemView item = entry.getValue();
 
 		    this.add(new OrderItemPanel(item, price));
 
-		    //completePrice =+ price;
+		    completePrice =+ price.getValue();
 		}
 		
 		UILabel orderSummaryLabel = new UILabel(this.orderedItems.size() + " items for: " + completePrice + " Û");

@@ -1,4 +1,4 @@
-package delicious.pos.ui.implementation;
+package delicious.pos.ui.implementation.screens;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -6,12 +6,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import delicious.pos.ui.components.UIButton;
-import delicious.pos.ui.components.UIContentPanel;
-import delicious.pos.ui.components.UIFrame;
-import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.components.extensions.UIButton;
+import delicious.pos.ui.components.extensions.UIContentPanel;
+import delicious.pos.ui.components.extensions.UIFrame;
+import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.event.SwitchPanel;
-import delicious.pos.ui.implementation.admin.DBEditor;
 
 public class MainScreen extends UIFrame {
 	private UIContentPanel contentPanelMain;
@@ -227,7 +226,7 @@ public class MainScreen extends UIFrame {
 	}
 	
 	private void setupAdminPanel() {
-		UIPanel mainPanel = new DBEditor();
+		UIPanel mainPanel = new AdminScreen();
 		
 		this.contentPanelAdmin = new UIContentPanel(
 			"Greek Paradise", 

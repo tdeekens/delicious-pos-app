@@ -1,6 +1,7 @@
 package delicious.pos.business.logic.dao;
 
 import java.util.ArrayList;
+
 import delicious.pos.business.logic.view.SizeView;
 
 public class SizeDAO
