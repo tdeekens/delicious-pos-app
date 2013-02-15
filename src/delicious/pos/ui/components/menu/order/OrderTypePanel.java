@@ -2,6 +2,8 @@ package delicious.pos.ui.components.menu.order;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -10,6 +12,7 @@ import javax.swing.UIManager;
 
 import delicious.pos.ui.components.UIHeaderPanel;
 import delicious.pos.ui.components.UIPanel;
+import delicious.pos.ui.implementation.App;
 
 public class OrderTypePanel extends UIPanel {
 	private UIPanel orderTypePanel;
@@ -47,14 +50,34 @@ public class OrderTypePanel extends UIPanel {
 		add(this.customerPanel, BorderLayout.SOUTH);
 	}
 
-	public void setupOrderTypes() {
+	private void setupOrderTypes() {
 		JRadioButton rdbtn1 = new JRadioButton("Take away");
-		this.orderTypePanel.add(rdbtn1);
-
 		JRadioButton rdbtn2 = new JRadioButton("Eat here");
-		this.orderTypePanel.add(rdbtn2);
-
 		JRadioButton rdbtn3 = new JRadioButton("Delivery");
+		
+		rdbtn1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setOrderType("Take away");
+			}
+		});
+		
+		rdbtn2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setOrderType("Eat here");
+			}
+		});
+		
+		rdbtn3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setOrderType("Delivery");
+			}
+		});
+		
+		this.orderTypePanel.add(rdbtn1);
+		this.orderTypePanel.add(rdbtn2);
 		this.orderTypePanel.add(rdbtn3);
 
 		ButtonGroup bg1 = new ButtonGroup();
@@ -62,13 +85,9 @@ public class OrderTypePanel extends UIPanel {
 		bg1.add(rdbtn1);
 		bg1.add(rdbtn2);
 		bg1.add(rdbtn3);
-
-		if (rdbtn1.isSelected())
-			this.selectedOrderType = rdbtn1.getText();
-		if (rdbtn2.isSelected())
-			this.selectedOrderType = rdbtn2.getText();
-		if (rdbtn3.isSelected())
-			this.selectedOrderType = rdbtn3.getText();
-
+	}
+	
+	private void setOrderType(String orderType) {
+		App.orderState.setOrderType(orderType);
 	}
 }

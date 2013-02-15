@@ -1,5 +1,7 @@
 package delicious.pos.ui.components;
 
+import java.awt.Font;
+
 import javax.swing.JLabel;
 
 public class UILabel extends JLabel {
@@ -14,7 +16,6 @@ public class UILabel extends JLabel {
 	}
 	
 	private void init() {
-		
 	}
 
 }

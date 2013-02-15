@@ -1,5 +1,6 @@
 package delicious.pos.ui.components.menu.order;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
@@ -28,12 +29,11 @@ public class OrderItemPanel extends UIPanel {
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
 		
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setLayout(new BorderLayout());
 		
-		JLabel lblItemName = new UILabel("Item Name: ");
-		JLabel lblItemPrice = new UILabel("Price 'n size");
+		JLabel lblItem = new UILabel("Item Name: Price 'n size");
+		lblItem.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		add(lblItemName);
-		add(lblItemPrice);
+		add(lblItem, BorderLayout.CENTER);
 	}
 }

@@ -1,5 +1,6 @@
 package delicious.pos.ui.implementation;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ public class MainScreen extends UIFrame {
 	private UIContentPanel contentPanelAdmin;
 	private UIContentPanel contentPanelOrderValidation;
 	private OrderValidationScreen orderValidationScreen;
+	private OrderPlacementScreen orderPlacementScreen;
 	private UIContentPanel contentPanelOrderPlacement;
 
 	public MainScreen() {
@@ -89,6 +91,8 @@ public class MainScreen extends UIFrame {
 			this.getContentPane().remove(this.contentPanelOrderValidation);
 		}
 		
+		this.orderPlacementScreen.renderChildren();
+		
 		this.getContentPane().add(this.contentPanelOrderPlacement);
 		
 		this.getContentPane().validate();
@@ -112,11 +116,15 @@ public class MainScreen extends UIFrame {
 	
 	private void setupMainPanel() {
 		UIPanel mainPanel = new UIPanel();
+		mainPanel.setLayout(new BorderLayout());
 				
 		UIButton adminBtn = new UIButton("Admin");
-		adminBtn.setBounds(177, 58, 85, 54);
+		
+		adminBtn.setPreferredSize(new Dimension(500, 700));
+		adminBtn.setMinimumSize(this.getPreferredSize());
+		adminBtn.setMaximumSize(this.getPreferredSize());
+		
 		adminBtn.setIcon("suggesstions_64");
-		adminBtn.setPreferredSize(new Dimension(200, 100));
 		adminBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -125,8 +133,11 @@ public class MainScreen extends UIFrame {
 		});
 		
 		UIButton menuBtn = new UIButton("Menu");
-		menuBtn.setPreferredSize(new Dimension(200, 100));
-		menuBtn.setBounds(177, 143, 85, 54);
+		
+		menuBtn.setPreferredSize(new Dimension(500, 700));
+		menuBtn.setMinimumSize(this.getPreferredSize());
+		menuBtn.setMaximumSize(this.getPreferredSize());
+		
 		menuBtn.setIcon("welcome_64");
 		menuBtn.addActionListener(new ActionListener() {
 			@Override
@@ -135,8 +146,8 @@ public class MainScreen extends UIFrame {
 			}
 		});
 		
-		mainPanel.add(menuBtn);
-		mainPanel.add(adminBtn);
+		mainPanel.add(menuBtn, BorderLayout.CENTER);
+		mainPanel.add(adminBtn, BorderLayout.WEST);
 		
 		this.contentPanelMain = new UIContentPanel(
 			"Greek Paradise",
@@ -194,13 +205,13 @@ public class MainScreen extends UIFrame {
 	}
 	
 	private void setupOrderPlacementPanel() {
-		UIPanel mainPanel = new OrderPlacementScreen();
+		this.orderPlacementScreen = new OrderPlacementScreen();
 		
 		this.contentPanelOrderPlacement = new UIContentPanel(
 			"Greek Paradise", 
-			"Place order...", 
+			"Please verify si bloody order...", 
 			"welcome_64", 
-			mainPanel, 
+			this.orderPlacementScreen, 
 			true,
 			"3 of 3",
 			new SwitchPanel() {

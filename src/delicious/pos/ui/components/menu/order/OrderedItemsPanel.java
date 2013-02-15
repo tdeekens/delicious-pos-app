@@ -1,11 +1,15 @@
 package delicious.pos.ui.components.menu.order;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import delicious.pos.ui.components.UIHeaderPanel;
@@ -48,6 +52,11 @@ public class OrderedItemsPanel extends UIPanel {
 		    //completePrice =+ price;
 		}
 		
-		this.add(new UILabel(completePrice + " Û"));
+		UILabel orderSummaryLabel = new UILabel(this.orderedItems.size() + " items for: " + completePrice + " Û");
+		orderSummaryLabel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.black));
+		orderSummaryLabel.setFont(new Font("Palatino", Font.BOLD, 20));
+		
+		orderSummaryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		this.add(orderSummaryLabel);
 	}
 }

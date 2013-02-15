@@ -6,6 +6,7 @@ import delicious.pos.ui.implementation.App;
 
 public class OrderState {
 	private Object customer;
+	private String orderType;
 	private Object deliveryType;
 	private HashMap<Object, Object> orderItems;
 	
@@ -41,5 +42,15 @@ public class OrderState {
 	
 	public Object getDeliveryType() {
 		return this.deliveryType;
+	}
+	
+	public void setOrderType(String orderType) {
+		App.put("Set ordertype: " + orderType);
+		
+		this.orderType = orderType;
+	}
+	
+	public String getOrderType() {
+		return this.orderType;
 	}
 }

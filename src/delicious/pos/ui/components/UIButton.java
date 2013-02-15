@@ -1,5 +1,7 @@
 package delicious.pos.ui.components;
 
+import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -21,7 +23,6 @@ public class UIButton extends JButton {
 	}
 	
 	private void init() {
-		
 	}
 	
 	public void setIcon(String icon) {

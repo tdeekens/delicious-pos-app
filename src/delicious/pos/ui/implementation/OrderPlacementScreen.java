@@ -10,12 +10,11 @@ import delicious.pos.ui.components.UIHeaderPanel;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.menu.MenuPanel;
 import delicious.pos.ui.components.menu.OrderPanel;
+import delicious.pos.ui.components.menu.order.OrderedItemsPanel;
 
 public class OrderPlacementScreen extends UIPanel {
 
-	private JSplitPane splitPane;
-	private OrderPanel orderPanel;
-	private MenuPanel menuPanel;
+	private OrderedItemsPanel orderItemsPanel;
 
 	public OrderPlacementScreen() {
 		this.init();
@@ -24,10 +23,12 @@ public class OrderPlacementScreen extends UIPanel {
 	public void init() {
 		this.setLayout(new BorderLayout());
 		
-		UIHeaderPanel orderPlacementHeader = new UIHeaderPanel("Please verify si bloody order!", null, null);
-		orderPlacementHeader.setBackground(UIManager.getColor("Button.background"));
-		orderPlacementHeader.setSize(new Dimension(1024, 50));
+		this.orderItemsPanel = new OrderedItemsPanel();
 		
-		this.add(orderPlacementHeader, BorderLayout.NORTH);
+		this.add(this.orderItemsPanel, BorderLayout.EAST);
+	}
+	
+	public void renderChildren() {
+		this.orderItemsPanel.renderOrderedItems();
 	}
 }
