@@ -25,7 +25,7 @@ public class OrderPlacementScreen extends UIPanel {
 		
 		this.orderItemsPanel = new OrderedItemsPanel();
 		
-		this.add(this.orderItemsPanel, BorderLayout.EAST);
+		this.add(this.orderItemsPanel, BorderLayout.CENTER);
 	}
 	
 	public void renderChildren() {
