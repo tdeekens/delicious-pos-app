@@ -13,6 +13,7 @@ import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.menu.MenuPanel;
 import delicious.pos.ui.event.SwitchPanel;
+import delicious.pos.ui.implementation.admin.DBEditor;
 
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
@@ -21,6 +22,8 @@ public class MainScreen extends UIFrame {
 	private UIContentPanel contentPanelMain;
 	private UIContentPanel contentPanelMenu;
 	private UIContentPanel contentPanelAdmin;
+	private UIContentPanel contentPanelOrderValidation;
+	private UIContentPanel contentPanelOrderPlacement;
 
 	public MainScreen() {
 		init();
@@ -39,12 +42,20 @@ public class MainScreen extends UIFrame {
 		this.setupMainPanel();
 		this.setupMenuPanel();
 		this.setupAdminPanel();
+		this.setupOrderPlacementPanel();
+		this.setupOrderValidationPanel();
 		
 		getContentPane().add(contentPanelMain);
 	}
 	
 	private void showMenu() {
-		this.getContentPane().remove(this.contentPanelMain);
+		if(this.contentPanelMain != null) {
+			this.getContentPane().remove(this.contentPanelMain);
+		}
+		
+		if(this.contentPanelOrderValidation != null) {
+			this.getContentPane().remove(this.contentPanelOrderValidation);
+		}
 		
 		this.getContentPane().add(this.contentPanelMenu);
 		
@@ -56,6 +67,32 @@ public class MainScreen extends UIFrame {
 		this.getContentPane().remove(this.contentPanelMain);
 		
 		this.getContentPane().add(this.contentPanelAdmin);
+		
+		this.getContentPane().validate();
+		this.getContentPane().repaint();
+	}
+	
+	private void showOrderValidation() {
+		if(this.contentPanelMenu != null) {
+			this.getContentPane().remove(this.contentPanelMenu);
+		}
+		
+		if(this.contentPanelOrderPlacement != null) {
+			this.getContentPane().remove(this.contentPanelOrderPlacement);
+		}
+		
+		this.getContentPane().add(this.contentPanelOrderValidation);
+		
+		this.getContentPane().validate();
+		this.getContentPane().repaint();
+	}
+	
+	private void showOrderPlacement() {
+		if(this.contentPanelOrderValidation != null) {
+			this.getContentPane().remove(this.contentPanelOrderValidation);
+		}
+		
+		this.getContentPane().add(this.contentPanelOrderPlacement);
 		
 		this.getContentPane().validate();
 		this.getContentPane().repaint();
@@ -86,7 +123,7 @@ public class MainScreen extends UIFrame {
 		adminBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Admin");
+				showAdmin();
 			}
 		});
 		
@@ -110,6 +147,7 @@ public class MainScreen extends UIFrame {
 			"geek-paradise-logo_64", 
 			mainPanel, 
 			false,
+			null,
 			null
 		);
 	}
@@ -123,9 +161,10 @@ public class MainScreen extends UIFrame {
 			"welcome_64", 
 			mainPanel, 
 			true,
+			"1 of 3",
 			new SwitchPanel() {
 				public void next() {
-					System.out.println("next menu");
+					showOrderValidation();
 				}
 				
 				public void previous() {
@@ -135,7 +174,69 @@ public class MainScreen extends UIFrame {
 		);
 	}
 	
-	private void setupAdminPanel() {
+	private void setupOrderValidationPanel() {
+		UIPanel mainPanel = new OrderValidationScreen();
 		
+		this.contentPanelOrderValidation = new UIContentPanel(
+			"Greek Paradise", 
+			"Please verify order...", 
+			"welcome_64", 
+			mainPanel, 
+			true,
+			"2 of 3",
+			new SwitchPanel() {
+				public void next() {
+					showOrderPlacement();
+				}
+				
+				public void previous() {
+					showMenu();
+				}
+			}
+		);
+	}
+	
+	private void setupOrderPlacementPanel() {
+		UIPanel mainPanel = new OrderPlacementScreen();
+		
+		this.contentPanelOrderPlacement = new UIContentPanel(
+			"Greek Paradise", 
+			"Place order...", 
+			"welcome_64", 
+			mainPanel, 
+			true,
+			"3 of 3",
+			new SwitchPanel() {
+				public void next() {
+					
+				}
+				
+				public void previous() {
+					showOrderValidation();
+				}
+			}
+		);
+	}
+	
+	private void setupAdminPanel() {
+		UIPanel mainPanel = new DBEditor();
+		
+		this.contentPanelAdmin = new UIContentPanel(
+			"Greek Paradise", 
+			"Administer the shit out of YOUR data!", 
+			"suggesstions_64", 
+			mainPanel, 
+			true,
+			null,
+			new SwitchPanel() {
+				public void next() {
+					
+				}
+				
+				public void previous() {
+					showMain();
+				}
+			}
+		);
 	}
 }
