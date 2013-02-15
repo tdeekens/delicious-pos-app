@@ -24,10 +24,8 @@ public class MenuItemPanel extends UIPanel {
 	private MenuScreen menuScreen;
 	private OrderPanel orderPanel;
 	private Object itemImpl;
+	private Object priceImpl;
 	
-	/**
-	 * @wbp.parser.constructor
-	 */
 	public MenuItemPanel(Object itemImpl, MenuScreen parentPanel) {
 		this.menuScreen = parentPanel;
 		this.itemImpl = itemImpl;
@@ -66,11 +64,13 @@ public class MenuItemPanel extends UIPanel {
 	}
 	
 	public void setOrdered(boolean isOrdered, Object price) {
+		this.priceImpl = price;
+		
 		itemPricesPanel.setOrdered(isOrdered, price);
 	}
 	
 	public void removeOrderedItem() {
-		this.orderPanel.removeOrderedItem(this);		
+		this.orderPanel.removeOrderedItem(this, this.itemImpl, this.priceImpl);		
 	}
 
 	public void orderItem(ItemPricesPanel price, ItemPricePanel itemPricePanel) {

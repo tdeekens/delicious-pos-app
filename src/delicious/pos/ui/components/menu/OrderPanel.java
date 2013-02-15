@@ -27,7 +27,8 @@ public class OrderPanel extends UIPanel {
 		this.redraw();
 	}
 
-	public void removeOrderedItem(MenuItemPanel orderItemPanel) {
+	public void removeOrderedItem(MenuItemPanel orderItemPanel, Object itemImpl, Object priceImpl) {
+		this.parentPanel.removeItem(itemImpl, priceImpl);
 		this.remove(orderItemPanel);
 		this.redraw();
 	}

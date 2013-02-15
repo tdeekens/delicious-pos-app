@@ -79,5 +79,11 @@ public class MenuScreen extends UIPanel {
 		orderItemPanel.setOrdered(true, price);
 		
 		orderPanel.addItem(orderItemPanel);
+		
+		App.orderState.addOrderItem(item, price);
+	}
+
+	public void removeItem(Object itemImpl, Object priceImpl) {
+		App.orderState.removeOrderItem(itemImpl, priceImpl);
 	}
 }
