@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
 import javax.swing.UIManager;
 
 import delicious.pos.ui.components.UIHeaderPanel;
@@ -22,26 +23,29 @@ public class OrderedItemsPanel extends UIPanel {
 	}
 	
 	public void init() {
-		this.setLayout(new BorderLayout());
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		UIHeaderPanel orderSummaryHeader = new UIHeaderPanel("Order summary", null, null);
 		orderSummaryHeader.setBackground(UIManager.getColor("Button.background"));
 		orderSummaryHeader.setSize(new Dimension(400, 50));
+		
 		this.add(orderSummaryHeader);
 	}
 	
-	private void showOrderedItems() {
+	public void renderOrderedItems() {
+		this.removeAll();
+		this.init();
+		
 		this.orderedItems = App.orderState.getOrderedItems();
-		
 		Integer completePrice = 0;
-		
+
 		for (Map.Entry<Object, Object> entry : this.orderedItems.entrySet()) {
 		    Object price = entry.getKey();
 		    Object item = entry.getValue();
-		    
+
 		    this.add(new OrderItemPanel(item, price));
-		    
-		    completePrice =+ (Integer) price;
+
+		    //completePrice =+ price;
 		}
 		
 		this.add(new UILabel(completePrice + " Û"));

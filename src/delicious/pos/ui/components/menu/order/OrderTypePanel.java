@@ -40,14 +40,14 @@ public class OrderTypePanel extends UIPanel {
 		orderTypeHeader.setBackground(UIManager.getColor("Button.background"));
 		orderTypeHeader.setSize(new Dimension(400, 50));
 		
+		this.setupOrderTypes();
+		
 		add(orderTypeHeader, BorderLayout.NORTH);
 		add(this.orderTypePanel, BorderLayout.CENTER);
 		add(this.customerPanel, BorderLayout.SOUTH);
-
-		setupOrderTypes();
 	}
 
-	private void setupOrderTypes() {
+	public void setupOrderTypes() {
 		JRadioButton rdbtn1 = new JRadioButton("Take away");
 		this.orderTypePanel.add(rdbtn1);
 

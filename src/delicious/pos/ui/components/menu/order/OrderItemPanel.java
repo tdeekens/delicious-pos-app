@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 
 import delicious.pos.ui.components.UILabel;
 import delicious.pos.ui.components.UIPanel;
+import java.awt.Component;
 
 public class OrderItemPanel extends UIPanel {
 	private Object price;
@@ -27,13 +28,10 @@ public class OrderItemPanel extends UIPanel {
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
 		
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
-		JLabel lblItemName = new UILabel((String) this.item);
-		lblItemName.setVerticalAlignment(SwingConstants.CENTER);
-		
-		JLabel lblItemPrice = new UILabel((String) this.price + " Û");
-		lblItemPrice.setVerticalAlignment(SwingConstants.CENTER);
+		JLabel lblItemName = new UILabel("Item Name: ");
+		JLabel lblItemPrice = new UILabel("Price 'n size");
 		
 		add(lblItemName);
 		add(lblItemPrice);

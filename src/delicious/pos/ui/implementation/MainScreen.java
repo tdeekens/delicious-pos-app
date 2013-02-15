@@ -17,6 +17,7 @@ public class MainScreen extends UIFrame {
 	private UIContentPanel contentPanelMenu;
 	private UIContentPanel contentPanelAdmin;
 	private UIContentPanel contentPanelOrderValidation;
+	private OrderValidationScreen orderValidationScreen;
 	private UIContentPanel contentPanelOrderPlacement;
 
 	public MainScreen() {
@@ -74,6 +75,8 @@ public class MainScreen extends UIFrame {
 		if(this.contentPanelOrderPlacement != null) {
 			this.getContentPane().remove(this.contentPanelOrderPlacement);
 		}
+		
+		this.orderValidationScreen.renderChildren();
 		
 		this.getContentPane().add(this.contentPanelOrderValidation);
 		
@@ -169,13 +172,13 @@ public class MainScreen extends UIFrame {
 	}
 	
 	private void setupOrderValidationPanel() {
-		UIPanel mainPanel = new OrderValidationScreen();
+		this.orderValidationScreen = new OrderValidationScreen();
 		
 		this.contentPanelOrderValidation = new UIContentPanel(
 			"Greek Paradise", 
 			"Please verify order...", 
 			"welcome_64", 
-			mainPanel, 
+			this.orderValidationScreen, 
 			true,
 			"2 of 3",
 			new SwitchPanel() {

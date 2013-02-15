@@ -12,9 +12,8 @@ import delicious.pos.ui.components.menu.order.OrderedItemsPanel;
 
 public class OrderValidationScreen extends UIPanel {
 
-	private JSplitPane splitPane;
-	private OrderPanel orderPanel;
-	private MenuPanel menuPanel;
+	private OrderedItemsPanel orderItemsPanel;
+	private OrderTypePanel orderTypePanel;
 
 	public OrderValidationScreen() {
 		this.init();
@@ -23,7 +22,14 @@ public class OrderValidationScreen extends UIPanel {
 	public void init() {
 		this.setLayout(new BorderLayout());
 		
-		this.add(new OrderedItemsPanel(), BorderLayout.EAST);
-		this.add(new OrderTypePanel(), BorderLayout.CENTER);
+		this.orderItemsPanel = new OrderedItemsPanel();
+		this.orderTypePanel = new OrderTypePanel();
+		
+		this.add(this.orderItemsPanel, BorderLayout.EAST);
+		this.add(this.orderTypePanel, BorderLayout.CENTER);
+	}
+	
+	public void renderChildren() {
+		this.orderItemsPanel.renderOrderedItems();
 	}
 }
