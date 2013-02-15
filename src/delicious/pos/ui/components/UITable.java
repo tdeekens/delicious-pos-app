@@ -1,7 +1,5 @@
 package delicious.pos.ui.components;
 
-import java.awt.Dimension;
-
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;

@@ -1,8 +1,6 @@
 package delicious.pos.ui.implementation.admin;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +12,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
 import delicious.pos.ui.components.UIButton;
-import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
 import delicious.pos.ui.components.UIScrollPane;
 import delicious.pos.ui.components.UITable;

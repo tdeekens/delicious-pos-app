@@ -3,46 +3,59 @@ package delicious.pos.ui.components.menu.order;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
-import delicious.pos.ui.components.UIFrame;
+import delicious.pos.ui.components.UIHeaderPanel;
 import delicious.pos.ui.components.UIPanel;
 
 public class OrderTypePanel extends UIPanel {
-
+	private UIPanel orderTypePanel;
+	private UIPanel customerPanel;
+	private String selectedOrderType;
+	
 	public OrderTypePanel() {
+		super();
+		
 		init();
 	}
 
 	private void init() {
+		this.setLayout(new BorderLayout());
 
-		UIPanel mainPanel = new UIPanel();
-		mainPanel.setLayout(new BorderLayout());
+		this.orderTypePanel = new UIPanel();
+		
+		this.orderTypePanel.setPreferredSize(new Dimension(300, 20));
+		this.orderTypePanel.setMinimumSize(this.getPreferredSize());
+		this.orderTypePanel.setMaximumSize(this.getPreferredSize());
+		
+		this.orderTypePanel.setLayout(new BoxLayout(this.orderTypePanel, BoxLayout.PAGE_AXIS));
+				
+		this.customerPanel = new UIPanel();
+		customerPanel.setLayout(new BorderLayout());
+		
+		UIHeaderPanel orderTypeHeader = new UIHeaderPanel("Select order type and customer:", null, null);
+		orderTypeHeader.setBackground(UIManager.getColor("Button.background"));
+		orderTypeHeader.setSize(new Dimension(400, 50));
+		
+		add(orderTypeHeader, BorderLayout.NORTH);
+		add(this.orderTypePanel, BorderLayout.CENTER);
+		add(this.customerPanel, BorderLayout.SOUTH);
 
-		UIPanel btnPanel = new UIPanel();
-		btnPanel.setLayout(null);
-
-		mainPanel.add(btnPanel, BorderLayout.SOUTH);
-
-		add(mainPanel, BorderLayout.NORTH);
-
-		groupButton();
+		setupOrderTypes();
 	}
 
-	private void groupButton() {
-
-		String radioText = "";
-
+	private void setupOrderTypes() {
 		JRadioButton rdbtn1 = new JRadioButton("Take away");
-		add(rdbtn1, BorderLayout.WEST);
+		this.orderTypePanel.add(rdbtn1);
 
 		JRadioButton rdbtn2 = new JRadioButton("Eat here");
-		add(rdbtn2, BorderLayout.CENTER);
+		this.orderTypePanel.add(rdbtn2);
 
 		JRadioButton rdbtn3 = new JRadioButton("Delivery");
-		add(rdbtn3, BorderLayout.EAST);
+		this.orderTypePanel.add(rdbtn3);
 
 		ButtonGroup bg1 = new ButtonGroup();
 
@@ -51,11 +64,11 @@ public class OrderTypePanel extends UIPanel {
 		bg1.add(rdbtn3);
 
 		if (rdbtn1.isSelected())
-			radioText = rdbtn1.getText();
+			this.selectedOrderType = rdbtn1.getText();
 		if (rdbtn2.isSelected())
-			radioText = rdbtn2.getText();
+			this.selectedOrderType = rdbtn2.getText();
 		if (rdbtn3.isSelected())
-			radioText = rdbtn3.getText();
+			this.selectedOrderType = rdbtn3.getText();
 
 	}
 }

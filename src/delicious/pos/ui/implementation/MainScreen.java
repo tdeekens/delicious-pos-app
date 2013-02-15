@@ -1,8 +1,6 @@
 package delicious.pos.ui.implementation;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +9,8 @@ import delicious.pos.ui.components.UIButton;
 import delicious.pos.ui.components.UIContentPanel;
 import delicious.pos.ui.components.UIFrame;
 import delicious.pos.ui.components.UIPanel;
-import delicious.pos.ui.components.menu.MenuPanel;
 import delicious.pos.ui.event.SwitchPanel;
 import delicious.pos.ui.implementation.admin.DBEditor;
-
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
 
 public class MainScreen extends UIFrame {
 	private UIContentPanel contentPanelMain;
