@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -46,48 +47,33 @@ public class AdminScreen extends UIPanel {
 		// Add images
 		tabbedPane.addTab("Employees", null, employeesPanel(), "Employees");
 		tabbedPane.addTab("Items", null, itemsPanel(), "Items");
+		tabbedPane.addTab("Customers", null, customersPanel(), "Customers");
+		tabbedPane.addTab("Sizes", null, sizesPanel(), "Sizes");
 		
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout
-				.createParallelGroup(Alignment.LEADING)
-				.addComponent(btnsPanel, GroupLayout.DEFAULT_SIZE, 598,
-						Short.MAX_VALUE)
-				.addGroup(
-						Alignment.TRAILING,
-						groupLayout
-								.createSequentialGroup()
-								.addComponent(tabsPanel,
-										GroupLayout.DEFAULT_SIZE, 530,
-										Short.MAX_VALUE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(plusMinusPanel,
-										GroupLayout.PREFERRED_SIZE, 62,
-										GroupLayout.PREFERRED_SIZE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(
-				Alignment.LEADING).addGroup(
-				Alignment.TRAILING,
-				groupLayout
-						.createSequentialGroup()
-						.addGroup(
-								groupLayout
-										.createParallelGroup(Alignment.LEADING)
-										.addComponent(tabsPanel,
-												GroupLayout.DEFAULT_SIZE, 404,
-												Short.MAX_VALUE)
-										.addComponent(plusMinusPanel,
-												Alignment.TRAILING,
-												GroupLayout.DEFAULT_SIZE, 416,
-												Short.MAX_VALUE))
-						.addGap(18)
-						.addComponent(btnsPanel, GroupLayout.PREFERRED_SIZE,
-								54, GroupLayout.PREFERRED_SIZE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(btnsPanel, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(tabsPanel, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(plusMinusPanel, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(tabsPanel, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+						.addComponent(plusMinusPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnsPanel, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
+		);
 
 		setLayout(groupLayout);
 	}
 
 	private UITable employees;
 	private DefaultTableModel employeesModel;
-
 	private UIPanel employeesPanel() {
 		UIPanel employeesPanel = new UIPanel();
 
@@ -102,7 +88,6 @@ public class AdminScreen extends UIPanel {
 
 	private UITable items;
 	private DefaultTableModel itemsModel;
-
 	private UIPanel itemsPanel() {
 		UIPanel itemsPanel = new UIPanel();
 
@@ -114,16 +99,42 @@ public class AdminScreen extends UIPanel {
 
 		return itemsPanel;
 	}
+	
+	private UITable customers;
+	private DefaultTableModel customersModel;
+	private UIPanel customersPanel() {
+		UIPanel customersPanel = new UIPanel();
 
+		customersModel = new DefaultTableModel(data, columnNames);
+		customers = new UITable(customersModel);
+
+		UIScrollPane customerScroll = new UIScrollPane(customers);
+		customersPanel.add(customerScroll);
+
+		return customersPanel;
+	}
+	
+	private UITable sizes;
+	private DefaultTableModel sizesModel;
+	private UIPanel sizesPanel() {
+		UIPanel sizesPanel = new UIPanel();
+		sizesModel = new DefaultTableModel(
+				new Object [][]{{"Small"}, {"Medium"}, {"Large"}}, 
+				new String[] {"Size"});
+		sizes = new UITable(sizesModel);
+		sizes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		UIScrollPane sizesScroll = new UIScrollPane(sizes);
+		sizesPanel.add(sizesScroll);
+		
+		return sizesPanel;
+	}
+	
 	private UIPanel plusMinusPanel() {
 		UIPanel plusMinusPanel = new UIPanel();
-		// UIPanel center = new UIPanel();
-		// center.setLayout();
 
 		plusMinusPanel.add(plusButton());
 		plusMinusPanel.add(minusButton());
-
-		// plusMinusPanel.add(center, BorderLayout.CENTER);
 
 		return plusMinusPanel;
 	}
@@ -146,8 +157,12 @@ public class AdminScreen extends UIPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (tabbedPane.getSelectedIndex() == 0)
 					employees.insertRow();
-				else
-					System.out.println("Not printing");
+				else if (tabbedPane.getSelectedIndex() == 1)
+					items.insertRow();
+				else if (tabbedPane.getSelectedIndex() == 2)
+					customers.insertRow();
+				else if (tabbedPane.getSelectedIndex() == 3)
+					sizes.insertRow();
 			}
 		});
 
@@ -163,8 +178,12 @@ public class AdminScreen extends UIPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (tabbedPane.getSelectedIndex() == 0)
 					employees.removeRow();
-				else
-					System.out.println("Not printing");
+				else if (tabbedPane.getSelectedIndex() == 1)
+					items.removeRow();
+				else if (tabbedPane.getSelectedIndex() == 2)
+					customers.removeRow();
+				else if (tabbedPane.getSelectedIndex() == 3)
+					sizes.removeRow();
 			}
 		});
 
