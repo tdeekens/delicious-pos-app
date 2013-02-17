@@ -54,7 +54,7 @@ public class ItemPricePanel extends UIPanel {
 	
 	private void setupLabels() {
 		priceBtn.setText(Float.toString(this.price.getValue()));
-		sizeLbl.setText(this.price.getSize().getValue());
+		sizeLbl.setText(Float.toString(this.price.getValue()));
 	}
 	
 	public void select() {

@@ -1,7 +1,6 @@
 package delicious.pos.config;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Labels {
 	private HashMap<String, String> labels;

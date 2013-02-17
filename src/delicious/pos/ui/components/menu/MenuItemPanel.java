@@ -9,9 +9,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import delicious.pos.business.logic.view.ItemView;
 import delicious.pos.business.logic.view.PriceView;
-import delicious.pos.business.logic.view.SizeView;
+import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.order.OrderPanel;
@@ -53,8 +52,6 @@ public class MenuItemPanel extends UIPanel {
 		
 		//TODO: Shouldnt an item have n prices with a size each?
 		ArrayList<PriceView> itemPrices = new ArrayList<PriceView>();
-		itemPrices.add(new PriceView(new Float(2.2), new SizeView("XL")));
-		itemPrices.add(new PriceView(new Float(2.2), new SizeView("XL")));
 
 		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
 		add(itemPricesPanel);	

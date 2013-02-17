@@ -1,6 +1,5 @@
 package delicious.pos.ui.components.order;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,13 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import delicious.pos.App;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.util.ImageLoader;
-import javax.swing.SwingConstants;
 
 public class OrderTypePanel extends UIPanel {
 	

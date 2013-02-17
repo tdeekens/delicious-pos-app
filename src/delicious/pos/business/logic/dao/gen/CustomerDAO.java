@@ -1,13 +1,14 @@
 package delicious.pos.business.logic.dao.gen;
 
-import delicious.pos.business.logic.dao.BaseDAO;
-import delicious.pos.business.logic.dao.JDBCUtilities;
-import delicious.pos.business.logic.view.gen.CustomerView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import delicious.pos.business.logic.dao.BaseDAO;
+import delicious.pos.business.logic.dao.JDBCUtilities;
+import delicious.pos.business.logic.view.gen.CustomerView;
 
 public class CustomerDAO extends BaseDAO
 {

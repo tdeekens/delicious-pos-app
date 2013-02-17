@@ -2,8 +2,8 @@ package delicious.pos.ui.components.order;
 
 import javax.swing.BoxLayout;
 
-import delicious.pos.business.logic.view.ItemView;
 import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UIScrollPane;
 import delicious.pos.ui.components.menu.MenuItemPanel;

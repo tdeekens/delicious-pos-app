@@ -2,11 +2,10 @@ package delicious.pos.state;
 
 import java.util.HashMap;
 
-import delicious.pos.App;
-import delicious.pos.business.logic.view.CustomerView;
-import delicious.pos.business.logic.view.ItemView;
-import delicious.pos.business.logic.view.OrderTypeView;
 import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.business.logic.view.gen.CustomerView;
+import delicious.pos.business.logic.view.gen.ItemView;
+import delicious.pos.business.logic.view.gen.OrderTypeView;
 
 public class ApplicationState {
 	private CustomerView customer;

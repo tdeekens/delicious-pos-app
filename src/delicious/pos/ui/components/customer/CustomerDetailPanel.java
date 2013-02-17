@@ -1,14 +1,12 @@
 package delicious.pos.ui.components.customer;
 
 import java.awt.Dimension;
-import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.UIManager;
 
 import delicious.pos.App;
-import delicious.pos.business.logic.view.CustomerView;
-import delicious.pos.business.logic.view.ItemView;
+import delicious.pos.business.logic.view.gen.CustomerView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
 

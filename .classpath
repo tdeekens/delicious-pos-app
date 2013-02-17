@@ -8,6 +8,5 @@
 	<classpathentry kind="lib" path="libs/simpleeventbus-1.x.jar"/>
 	<classpathentry kind="lib" path="libs/ormlite-core-4.43.jar"/>
 	<classpathentry kind="lib" path="libs/ormlite-jdbc-4.43.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.7.0_13/db/lib/derby.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

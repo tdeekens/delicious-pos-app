@@ -1,13 +1,12 @@
 package delicious.pos.business.logic.dao;
 
-import delicious.pos.business.logic.dao.BaseDAO;
-import delicious.pos.business.logic.view.PriceView;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import delicious.pos.business.logic.view.PriceView;
 
 public class PriceDAO extends BaseDAO
 {

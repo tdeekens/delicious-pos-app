@@ -12,8 +12,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import delicious.pos.App;
-import delicious.pos.business.logic.view.ItemView;
 import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;

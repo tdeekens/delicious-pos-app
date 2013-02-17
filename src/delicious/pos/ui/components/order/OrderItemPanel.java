@@ -3,12 +3,11 @@ package delicious.pos.ui.components.order;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import delicious.pos.App;
-import delicious.pos.business.logic.view.ItemView;
 import delicious.pos.business.logic.view.PriceView;
+import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
 
@@ -32,7 +31,7 @@ public class OrderItemPanel extends UIPanel {
 		
 		setLayout(new BorderLayout());
 		
-		UILabel lblItem = new UILabel(this.item.getName() + " " + this.price.getSize().getValue() + this.price.getValue() + " " + App.labels.get("currency"));
+		UILabel lblItem = new UILabel(this.item.getName() + " " + this.price.getValue() + this.price.getValue() + " " + App.labels.get("currency"));
 		lblItem.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		add(lblItem, BorderLayout.CENTER);
