@@ -1,0 +1,13 @@
+<project name="delicious-pos-app" basedir=".">
+  <property name="ANTPROPERTIES" value="properties/javadb-build-properties.xml"/>
+  <import file="${ANTPROPERTIES}"/>
+
+	<target name="setup">
+		<sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+		 password="${DB.PASSWORD}" classpathref="CLASSPATH"
+	     delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+	     <transaction src="./sql/setupJavaDB.sql"></transaction>
+	    </sql>
+	</target>
+	
+</project>
