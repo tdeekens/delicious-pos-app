@@ -1,4 +1,4 @@
-<project name="JDBC Tutorial" default="all" basedir=".">
+<project name="delicious-pos-app" basedir=".">
   <property name="ANTPROPERTIES" value="properties/javadb-build-properties.xml"/>
   <import file="${ANTPROPERTIES}"/>
 

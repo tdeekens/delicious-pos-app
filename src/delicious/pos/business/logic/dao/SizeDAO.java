@@ -49,9 +49,32 @@ public class SizeDAO extends BaseDAO
 	    return result;
 	}
 	
-	public void persist(SizeView size)
+	public void persist(SizeView size) throws SQLException 
 	{
-		
+	    Statement stmt = null;
+	    try 
+	    {
+	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Sizes");
+
+	      uprs.moveToInsertRow();
+
+	      uprs.updateString("value", size.getValue());
+
+	      uprs.insertRow();
+	      uprs.beforeFirst();
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 	
 	public void remove(SizeView size)

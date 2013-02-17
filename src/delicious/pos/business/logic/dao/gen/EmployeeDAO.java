@@ -1,6 +1,7 @@
 package delicious.pos.business.logic.dao.gen;
 
 import delicious.pos.business.logic.dao.BaseDAO;
+import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.EmployeeView;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,9 +49,35 @@ public class EmployeeDAO extends BaseDAO
 	    return result;
 	}
 	
-	public void persist(EmployeeView employee)
+	public void persist(EmployeeView employee) throws SQLException 
 	{
-		
+	    Statement stmt = null;
+	    try 
+	    {
+	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Employees");
+
+	      uprs.moveToInsertRow();
+
+	      uprs.updateString("userName", employee.getUserName());
+	      uprs.updateFloat("salary", employee.getSalary());
+	      uprs.updateString("phone", employee.getPhone());
+	      uprs.updateString("position", employee.getPosition());
+
+	      uprs.insertRow();
+	      uprs.beforeFirst();
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 	
 	public void remove(EmployeeView employee)

@@ -1,6 +1,7 @@
 package delicious.pos.business.logic.dao.gen;
 
 import delicious.pos.business.logic.dao.BaseDAO;
+import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.ItemView;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,9 +49,34 @@ public class ItemDAO extends BaseDAO
 	    return result;
 	}
 	
-	public void persist(ItemView item)
+	public void persist(ItemView item) throws SQLException 
 	{
-		
+	    Statement stmt = null;
+	    try 
+	    {
+	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Items");
+
+	      uprs.moveToInsertRow();
+
+	      uprs.updateString("name", item.getName());
+	      uprs.updateInt("price_id", item.getPriceId());
+	      uprs.updateString("description", item.getDescription());
+
+	      uprs.insertRow();
+	      uprs.beforeFirst();
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 	
 	public void remove(ItemView item)

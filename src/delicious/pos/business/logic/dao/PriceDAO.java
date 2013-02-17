@@ -49,9 +49,35 @@ public class PriceDAO extends BaseDAO
 	    return result;
 	}
 	
-	public void persist(PriceView price)
+	public void persist(PriceView price) throws SQLException 
 	{
-		
+	    Statement stmt = null;
+	    try 
+	    {
+	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Prices");
+
+	      uprs.moveToInsertRow();
+
+	      uprs.updateInt("id", price.getId());
+	      uprs.updateFloat("value", price.getValue());
+	      uprs.updateString("size_value", price.getSizeValue());
+	      uprs.updateString("item_name", price.getItemName());
+
+	      uprs.insertRow();
+	      uprs.beforeFirst();
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 	
 	public void remove(PriceView price)

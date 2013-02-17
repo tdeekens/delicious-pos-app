@@ -1,6 +1,7 @@
 package delicious.pos.business.logic.dao.gen;
 
 import delicious.pos.business.logic.dao.BaseDAO;
+import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,9 +49,33 @@ public class OrderTypeDAO extends BaseDAO
 	    return result;
 	}
 	
-	public void persist(OrderTypeView orderType)
+	public void persist(OrderTypeView orderType) throws SQLException 
 	{
-		
+	    Statement stmt = null;
+	    try 
+	    {
+	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      ResultSet uprs = stmt.executeQuery("SELECT * FROM OrderTypes");
+
+	      uprs.moveToInsertRow();
+
+	      uprs.updateString("name", orderType.getName());
+	      uprs.updateInt("price_id", orderType.getPriceId());
+
+	      uprs.insertRow();
+	      uprs.beforeFirst();
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 	
 	public void remove(OrderTypeView orderType)

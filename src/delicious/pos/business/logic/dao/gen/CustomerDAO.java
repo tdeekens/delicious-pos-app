@@ -1,6 +1,7 @@
 package delicious.pos.business.logic.dao.gen;
 
 import delicious.pos.business.logic.dao.BaseDAO;
+import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.CustomerView;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,9 +49,37 @@ public class CustomerDAO extends BaseDAO
 	    return result;
 	}
 	
-	public void persist(CustomerView customer)
+	public void persist(CustomerView customer) throws SQLException 
 	{
-		
+	    Statement stmt = null;
+	    try 
+	    {
+	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Customers");
+
+	      uprs.moveToInsertRow();
+
+	      uprs.updateString("firstName", customer.getFirstName());
+	      uprs.updateString("lastName", customer.getLastName());
+	      uprs.updateString("street", customer.getStreet());
+	      uprs.updateString("zip", customer.getZIP());
+	      uprs.updateString("city", customer.getCity());
+	      uprs.updateString("phone", customer.getPhone());
+
+	      uprs.insertRow();
+	      uprs.beforeFirst();
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 	
 	public void remove(CustomerView customer)
