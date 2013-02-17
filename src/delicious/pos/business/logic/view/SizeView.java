@@ -1,6 +1,7 @@
 package delicious.pos.business.logic.view;
 
-public class SizeView
+
+public class SizeView extends BaseView
 {
 	private String value;
 	

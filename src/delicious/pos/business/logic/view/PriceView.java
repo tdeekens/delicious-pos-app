@@ -1,15 +1,32 @@
 package delicious.pos.business.logic.view;
 
-public class PriceView
+
+public class PriceView extends BaseView
 {
+	private int id;
+	
 	private Float value;
 	
-	private SizeView size;
+	private String sizeValue;
 	
-	public PriceView(Float value, SizeView size)
+	private String itemName;
+	
+	public PriceView(int id, Float value, String sizeValue, String itemName)
 	{
+		setId(id);
 		setValue(value);
-		setSize(size);
+		setSizeValue(sizeValue);
+		setItemName(itemName);
+	}
+	
+	public int getId()
+	{
+		return id;
+	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 	
 	public Float getValue()
@@ -22,13 +39,23 @@ public class PriceView
 		this.value = value;
 	}
 	
-	public SizeView getSize()
+	public String getSizeValue()
 	{
-		return size;
+		return sizeValue;
 	}
 	
-	public void setSize(SizeView size)
+	public void setSizeValue(String sizeValue)
 	{
-		this.size = size;
+		this.sizeValue = sizeValue;
+	}
+	
+	public String getItemName()
+	{
+		return itemName;
+	}
+	
+	public void setItemName(String itemName)
+	{
+		this.itemName = itemName;
 	}
 }
