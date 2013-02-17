@@ -1,17 +1,18 @@
-package delicious.pos.ui.implementation.screens;
+package delicious.pos.ui.screens;
 
 import java.awt.BorderLayout;
 
+import delicious.pos.App;
+import delicious.pos.ui.components.customer.CustomerDetailPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
-import delicious.pos.ui.components.order.OrderTypePanel;
 import delicious.pos.ui.components.order.OrderedItemsPanel;
 
-public class OrderValidationScreen extends UIPanel {
+public class OrderPlacementScreen extends UIPanel {
 
 	private OrderedItemsPanel orderItemsPanel;
-	private OrderTypePanel orderTypePanel;
+	private CustomerDetailPanel customerDetailPanel;
 
-	public OrderValidationScreen() {
+	public OrderPlacementScreen() {
 		this.init();
 	}
 
@@ -19,13 +20,14 @@ public class OrderValidationScreen extends UIPanel {
 		this.setLayout(new BorderLayout());
 		
 		this.orderItemsPanel = new OrderedItemsPanel();
-		this.orderTypePanel = new OrderTypePanel();
+		this.customerDetailPanel = new CustomerDetailPanel(App.orderState.getCustomer());
 		
+		this.add(this.customerDetailPanel, BorderLayout.WEST);
 		this.add(this.orderItemsPanel, BorderLayout.CENTER);
-		this.add(this.orderTypePanel, BorderLayout.WEST);
 	}
 	
 	public void renderChildren() {
 		this.orderItemsPanel.renderOrderedItems();
+		this.customerDetailPanel.renderCustomerDetails();
 	}
 }

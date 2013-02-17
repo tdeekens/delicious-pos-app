@@ -44,13 +44,12 @@ public class ItemPricesPanel extends UIPanel {
 		itemPricePanel.select();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void setOrdered(boolean isOrdered, PriceView price) {
 		this.removeBtn.setVisible(isOrdered);
 		
 		if(isOrdered) {
 			for(ItemPricePanel itemPricePanel : this.itemPricePanels) {
-				itemPricePanel.getPriceBtn().disable();
+				itemPricePanel.getPriceBtn().setEnabled(false);
 				itemPricePanel.hidePrices(price);
 			}
 		}

@@ -4,7 +4,7 @@ import javax.swing.BoxLayout;
 
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UIScrollPane;
-import delicious.pos.ui.implementation.screens.MenuScreen;
+import delicious.pos.ui.screens.MenuScreen;
 
 public class MenuPanel extends UIPanel {
 	private MenuScreen parentPanel;

@@ -1,4 +1,4 @@
-package delicious.pos.ui.implementation.screens;
+package delicious.pos.ui.screens;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import delicious.pos.App;
 import delicious.pos.ui.components.extensions.UIButton;
 import delicious.pos.ui.components.extensions.UIContentPanel;
 import delicious.pos.ui.components.extensions.UIFrame;
@@ -33,7 +34,7 @@ public class MainScreen extends UIFrame {
 				(dim.height/2) - (this.getSize().height/2)
 		);
 		
-		setTitle("Greek Paradise - a place greeks love!");
+		setTitle(App.labels.get("app-title"));
 		
 		this.setupMainPanel();
 		this.setupMenuPanel();
@@ -117,7 +118,7 @@ public class MainScreen extends UIFrame {
 		UIPanel mainPanel = new UIPanel();
 		mainPanel.setLayout(new BorderLayout());
 				
-		UIButton adminBtn = new UIButton("Admin");
+		UIButton adminBtn = new UIButton(App.labels.get("admin-btn"));
 		
 		adminBtn.setPreferredSize(new Dimension(500, 700));
 		adminBtn.setMinimumSize(this.getPreferredSize());
@@ -131,7 +132,7 @@ public class MainScreen extends UIFrame {
 			}
 		});
 		
-		UIButton menuBtn = new UIButton("Menu");
+		UIButton menuBtn = new UIButton(App.labels.get("menu-btn"));
 		
 		menuBtn.setPreferredSize(new Dimension(500, 700));
 		menuBtn.setMinimumSize(this.getPreferredSize());
@@ -149,8 +150,8 @@ public class MainScreen extends UIFrame {
 		mainPanel.add(adminBtn, BorderLayout.WEST);
 		
 		this.contentPanelMain = new UIContentPanel(
-			"Greek Paradise",
-			"...you're at home!", 
+			App.labels.get("restaurant-name"),
+			App.labels.get("home-h2"), 
 			"geek-paradise-logo_64", 
 			mainPanel, 
 			false,
@@ -163,12 +164,12 @@ public class MainScreen extends UIFrame {
 		UIPanel mainPanel = new MenuScreen();
 		
 		this.contentPanelMenu = new UIContentPanel(
-			"Greek Paradise", 
-			"The menu, place order...", 
+			App.labels.get("restaurant-name"), 
+			App.labels.get("menu-h2"), 
 			"welcome_64", 
 			mainPanel, 
 			true,
-			"1 of 3",
+			"1 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
 					showOrderValidation();
@@ -185,12 +186,12 @@ public class MainScreen extends UIFrame {
 		this.orderValidationScreen = new OrderValidationScreen();
 		
 		this.contentPanelOrderValidation = new UIContentPanel(
-			"Greek Paradise", 
-			"Please verify order...", 
+			App.labels.get("restaurant-name"), 
+			App.labels.get("order-validation-h2"), 
 			"welcome_64", 
 			this.orderValidationScreen, 
 			true,
-			"2 of 3",
+			"2 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
 					showOrderPlacement();
@@ -207,12 +208,12 @@ public class MainScreen extends UIFrame {
 		this.orderPlacementScreen = new OrderPlacementScreen();
 		
 		this.contentPanelOrderPlacement = new UIContentPanel(
-			"Greek Paradise", 
-			"Please verify si bloody order...", 
+			App.labels.get("restaurant-name"), 
+			App.labels.get("order-placement-h2"), 
 			"welcome_64", 
 			this.orderPlacementScreen, 
 			true,
-			"3 of 3",
+			"3 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
 					
@@ -229,8 +230,8 @@ public class MainScreen extends UIFrame {
 		UIPanel mainPanel = new AdminScreen();
 		
 		this.contentPanelAdmin = new UIContentPanel(
-			"Greek Paradise", 
-			"Administer the shit out of YOUR data!", 
+			App.labels.get("restaurant-name"),
+			App.labels.get("admin-h2"),
 			"suggesstions_64", 
 			mainPanel, 
 			true,
@@ -245,5 +246,10 @@ public class MainScreen extends UIFrame {
 				}
 			}
 		);
+	}
+	
+	private void validateOrder() {
+		//TODO: Kostas
+		System.out.println("We have to make sure to check for empty order");
 	}
 }

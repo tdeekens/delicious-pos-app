@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 
 import delicious.pos.ui.event.SwitchPanel;
+import delicious.pos.util.ImageLoader;
 
 public class UIContentPanel extends UIPanel {
 	private UIHeaderPanel headerPanel;
@@ -43,8 +44,8 @@ public class UIContentPanel extends UIPanel {
 		
 		if(this.enableFooter) {
 			this.footerPanel = new UIFooterPanel(
-				new ImageIcon(this.getClass().getResource("../icons/left_32.png")),
-				new ImageIcon(this.getClass().getResource("../icons/right_32.png")),
+				ImageLoader.loadImageIcon(this, "left_32"),
+				ImageLoader.loadImageIcon(this, "right_32"),
 				this.footerText,
 				this.switchPanel
 			);

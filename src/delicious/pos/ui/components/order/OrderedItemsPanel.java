@@ -11,12 +11,12 @@ import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import delicious.pos.App;
 import delicious.pos.business.logic.view.ItemView;
 import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
-import delicious.pos.ui.implementation.App;
 
 public class OrderedItemsPanel extends UIPanel {
 	private HashMap<PriceView, ItemView> orderedItems;
@@ -30,7 +30,7 @@ public class OrderedItemsPanel extends UIPanel {
 	public void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		UIHeaderPanel orderSummaryHeader = new UIHeaderPanel("Order summary", null, null);
+		UIHeaderPanel orderSummaryHeader = new UIHeaderPanel(App.labels.get("order-summary"), null, null);
 		orderSummaryHeader.setBackground(UIManager.getColor("Button.background"));
 		orderSummaryHeader.setSize(new Dimension(400, 50));
 		
@@ -53,7 +53,7 @@ public class OrderedItemsPanel extends UIPanel {
 		    completePrice =+ price.getValue();
 		}
 		
-		UILabel orderSummaryLabel = new UILabel(this.orderedItems.size() + " items for: " + completePrice + " Û");
+		UILabel orderSummaryLabel = new UILabel(this.orderedItems.size() + " " + App.labels.get("items-for") + " " + completePrice + " " + App.labels.get("currency"));
 		orderSummaryLabel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.black));
 		orderSummaryLabel.setFont(new Font("Palatino", Font.BOLD, 20));
 		

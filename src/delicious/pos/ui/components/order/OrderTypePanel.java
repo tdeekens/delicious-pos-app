@@ -10,13 +10,15 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 
+import delicious.pos.App;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.util.ImageLoader;
+import javax.swing.SwingConstants;
 
 public class OrderTypePanel extends UIPanel {
+	
 	private UIPanel orderTypePanel;
-	private UIPanel customerPanel;
-	private String selectedOrderType;
 	
 	public OrderTypePanel() {
 		super();
@@ -25,68 +27,65 @@ public class OrderTypePanel extends UIPanel {
 	}
 
 	private void init() {
-		this.setLayout(new BorderLayout());
-
+		this.setPreferredSize(new Dimension(400, 200));
+		this.setMinimumSize(this.getPreferredSize());
+		this.setMaximumSize(this.getPreferredSize());
+		
 		this.orderTypePanel = new UIPanel();
+		this.orderTypePanel.setLayout(new BoxLayout(this.orderTypePanel, BoxLayout.X_AXIS));
 		
-		this.orderTypePanel.setPreferredSize(new Dimension(300, 20));
-		this.orderTypePanel.setMinimumSize(this.getPreferredSize());
-		this.orderTypePanel.setMaximumSize(this.getPreferredSize());
-		
-		this.orderTypePanel.setLayout(new BoxLayout(this.orderTypePanel, BoxLayout.PAGE_AXIS));
-				
-		this.customerPanel = new UIPanel();
-		customerPanel.setLayout(new BorderLayout());
-		
-		UIHeaderPanel orderTypeHeader = new UIHeaderPanel("Select order type and customer:", null, null);
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+						
+		UIHeaderPanel orderTypeHeader = new UIHeaderPanel(App.labels.get("specify-order"), null, null);
 		orderTypeHeader.setBackground(UIManager.getColor("Button.background"));
 		orderTypeHeader.setSize(new Dimension(400, 50));
-		
+				
 		this.setupOrderTypes();
 		
-		add(orderTypeHeader, BorderLayout.NORTH);
-		add(this.orderTypePanel, BorderLayout.CENTER);
-		add(this.customerPanel, BorderLayout.SOUTH);
+		this.add(orderTypeHeader);
+		this.add(this.orderTypePanel);
 	}
 
 	private void setupOrderTypes() {
-		JRadioButton rdbtn1 = new JRadioButton("Take away");
-		JRadioButton rdbtn2 = new JRadioButton("Eat here");
-		JRadioButton rdbtn3 = new JRadioButton("Delivery");
+		JRadioButton takeAwayBtn = new JRadioButton(App.labels.get("takeaway"), ImageLoader.loadImageIcon(this, "takeaway"));
+		takeAwayBtn.setHorizontalAlignment(SwingConstants.LEFT);
+		JRadioButton eatHereBtn = new JRadioButton(App.labels.get("takeaway"), ImageLoader.loadImageIcon(this, "eatHere"));
+		JRadioButton deliveryBtn = new JRadioButton(App.labels.get("takeaway"), ImageLoader.loadImageIcon(this, "delivery"));
 		
-		rdbtn1.addActionListener(new ActionListener() {
+		takeAwayBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setOrderType("Take away");
+				setOrderType(App.labels.get("takeaway"));
 			}
 		});
 		
-		rdbtn2.addActionListener(new ActionListener() {
+		eatHereBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setOrderType("Eat here");
+				setOrderType(App.labels.get("eathere"));
 			}
 		});
 		
-		rdbtn3.addActionListener(new ActionListener() {
+		deliveryBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setOrderType("Delivery");
+				setOrderType(App.labels.get("delivery"));
 			}
 		});
 		
-		this.orderTypePanel.add(rdbtn1);
-		this.orderTypePanel.add(rdbtn2);
-		this.orderTypePanel.add(rdbtn3);
+		this.orderTypePanel.add(takeAwayBtn);
+		this.orderTypePanel.add(eatHereBtn);
+		this.orderTypePanel.add(deliveryBtn);
 
-		ButtonGroup bg1 = new ButtonGroup();
+		ButtonGroup bg = new ButtonGroup();
 
-		bg1.add(rdbtn1);
-		bg1.add(rdbtn2);
-		bg1.add(rdbtn3);
+		bg.add(takeAwayBtn);
+		bg.add(eatHereBtn);
+		bg.add(deliveryBtn);
 	}
 	
 	private void setOrderType(String orderType) {
+		//TODO: Set ordertype in state object to gather later
 		//App.orderState.setOrderType(orderType);
 	}
 }

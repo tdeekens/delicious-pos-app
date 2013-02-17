@@ -15,7 +15,7 @@ import delicious.pos.business.logic.view.SizeView;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.order.OrderPanel;
-import delicious.pos.ui.implementation.screens.MenuScreen;
+import delicious.pos.ui.screens.MenuScreen;
 
 
 public class MenuItemPanel extends UIPanel {
@@ -47,15 +47,15 @@ public class MenuItemPanel extends UIPanel {
 		this.setMaximumSize(this.getPreferredSize());
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
-		JLabel lblItemName = new UILabel("Item Name");
+		JLabel lblItemName = new UILabel(this.item.getName());
 		lblItemName.setVerticalAlignment(SwingConstants.CENTER);
 		add(lblItemName);
 		
-		//TODO
+		//TODO: Shouldnt an item have n prices with a size each?
 		ArrayList<PriceView> itemPrices = new ArrayList<PriceView>();
 		itemPrices.add(new PriceView(new Float(2.2), new SizeView("XL")));
 		itemPrices.add(new PriceView(new Float(2.2), new SizeView("XL")));
-		
+
 		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
 		add(itemPricesPanel);	
 		

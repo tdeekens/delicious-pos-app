@@ -1,4 +1,4 @@
-package delicious.pos.ui.implementation.screens;
+package delicious.pos.ui.screens;
 
 import java.awt.Color;
 import java.awt.FlowLayout;

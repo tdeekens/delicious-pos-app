@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -21,12 +20,12 @@ public class UIFooterPanel extends UIPanel {
 	private UIButton iconRight;
 	private SwitchPanel switchPanel;
 	private UIButton iconLeft;
-	private JLabel stateCenter;
+	private UILabel stateCenter;
 	
 	public UIFooterPanel(ImageIcon iconLeft, ImageIcon iconRight, String stateText, SwitchPanel switchPanel) {
 		this.iconRight = new UIButton(iconLeft);
 		this.iconLeft = new UIButton(iconRight);
-		this.stateCenter = new JLabel(stateText);
+		this.stateCenter = new UILabel(stateText);
 		
 		this.switchPanel = switchPanel;
 		stateCenter.setHorizontalAlignment(SwingConstants.CENTER);

@@ -3,6 +3,8 @@ package delicious.pos.ui.components.extensions;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import delicious.pos.util.ImageLoader;
+
 public class UIButton extends JButton {
 	public UIButton(String string) {
 		super(string);
@@ -24,6 +26,6 @@ public class UIButton extends JButton {
 	}
 	
 	public void setIcon(String icon) {
-		super.setIcon(new ImageIcon(this.getClass().getResource("../icons/" + icon + ".png")));
+		super.setIcon(ImageLoader.loadImageIcon(this, icon));
 	}
 }
