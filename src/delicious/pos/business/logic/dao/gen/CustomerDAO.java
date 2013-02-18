@@ -4,6 +4,7 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.CustomerView;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -82,8 +83,37 @@ public class CustomerDAO extends BaseDAO
 	    }
 	}
 	
-	public void remove(CustomerView customer)
+	public void remove(CustomerView customer) throws SQLException
 	{
-		
+	    PreparedStatement stmt = null;
+	    
+	    String query = "SELECT value FROM Customers ";
+	    query += "WHERE firstName = ?";
+	    query += "  AND lastName = ?";
+	    
+	    try 
+	    {
+	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt.setString(1, customer.getFirstName());
+	      stmt.setString(2, customer.getLastName());
+	      
+	      ResultSet uprs = stmt.executeQuery();
+
+	      while (uprs.next()) 
+	      {
+	    	  uprs.deleteRow();
+	      }
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 }

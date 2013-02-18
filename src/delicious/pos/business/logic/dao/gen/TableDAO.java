@@ -4,6 +4,7 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.TableView;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -78,8 +79,35 @@ public class TableDAO extends BaseDAO
 	    }
 	}
 	
-	public void remove(TableView table)
+	public void remove(TableView table) throws SQLException
 	{
-		
+	    PreparedStatement stmt = null;
+	    
+	    String query = "SELECT value FROM Tables ";
+	    query += "WHERE id = ?";
+	    
+	    try 
+	    {
+	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt.setInt(1, table.getId());
+	      
+	      ResultSet uprs = stmt.executeQuery();
+
+	      while (uprs.next()) 
+	      {
+	    	  uprs.deleteRow();
+	      }
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 }
