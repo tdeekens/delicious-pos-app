@@ -48,8 +48,6 @@ public class App {
 			DBConnection = JDBCUtilities.getConnection();
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
-	    } finally {
-	      JDBCUtilities.closeConnection(DBConnection);
 	    }
 	}
 }
