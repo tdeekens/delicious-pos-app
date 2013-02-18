@@ -3,6 +3,9 @@ package delicious.pos.ui.components.order;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -11,6 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import delicious.pos.App;
+import delicious.pos.business.logic.dao.gen.OrderTypeDAO;
+import delicious.pos.business.logic.view.gen.OrderTypeView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.util.ImageLoader;
@@ -18,9 +23,20 @@ import delicious.pos.util.ImageLoader;
 public class OrderTypePanel extends UIPanel {
 	
 	private UIPanel orderTypePanel;
+	private OrderTypeDAO orderTypeDAO;
+	private ArrayList<OrderTypeView> orderTypes;
 	
 	public OrderTypePanel() {
 		super();
+		
+		this.orderTypeDAO = new OrderTypeDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		
+		try {
+			this.orderTypes = this.orderTypeDAO.findAll();
+		} catch (SQLException e) {
+			App.put("Could not load Menu, please check internet connection!");
+			e.printStackTrace();
+		}
 		
 		init();
 	}
@@ -46,45 +62,24 @@ public class OrderTypePanel extends UIPanel {
 	}
 
 	private void setupOrderTypes() {
-		JRadioButton takeAwayBtn = new JRadioButton(App.labels.get("takeaway"), ImageLoader.loadImageIcon(this, "takeaway"));
-		takeAwayBtn.setHorizontalAlignment(SwingConstants.LEFT);
-		JRadioButton eatHereBtn = new JRadioButton(App.labels.get("takeaway"), ImageLoader.loadImageIcon(this, "eatHere"));
-		JRadioButton deliveryBtn = new JRadioButton(App.labels.get("takeaway"), ImageLoader.loadImageIcon(this, "delivery"));
+		ButtonGroup btnGroup = new ButtonGroup();
 		
-		takeAwayBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setOrderType(App.labels.get("takeaway"));
-			}
-		});
-		
-		eatHereBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setOrderType(App.labels.get("eathere"));
-			}
-		});
-		
-		deliveryBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				setOrderType(App.labels.get("delivery"));
-			}
-		});
-		
-		this.orderTypePanel.add(takeAwayBtn);
-		this.orderTypePanel.add(eatHereBtn);
-		this.orderTypePanel.add(deliveryBtn);
-
-		ButtonGroup bg = new ButtonGroup();
-
-		bg.add(takeAwayBtn);
-		bg.add(eatHereBtn);
-		bg.add(deliveryBtn);
+		for (final OrderTypeView orderType : this.orderTypes) {			
+			JRadioButton orderTypeBtn = new JRadioButton(App.labels.get(orderType.getName()), ImageLoader.loadImageIcon(this, orderType.getName()));
+			
+			orderTypeBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setOrderType(orderType);
+				}
+			});
+			
+			btnGroup.add(orderTypeBtn);
+			this.orderTypePanel.add(orderTypeBtn);
+		}
 	}
 	
-	private void setOrderType(String orderType) {
-		//TODO: Set ordertype in state object to gather later
-		//App.orderState.setOrderType(orderType);
+	private void setOrderType(OrderTypeView orderType) {
+		App.orderState.setOrderType(orderType);
 	}
 }

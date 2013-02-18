@@ -2,6 +2,10 @@ package delicious.pos.ui.screens;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JSplitPane;
@@ -9,8 +13,10 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import delicious.pos.App;
+import delicious.pos.business.logic.dao.gen.ItemDAO;
 import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.ItemView;
+import delicious.pos.ui.components.customer.CustomerDetailItemPanel;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UISplitPane;
@@ -23,6 +29,8 @@ public class MenuScreen extends UIPanel {
 	private JSplitPane splitPane;
 	private OrderPanel orderPanel;
 	private MenuPanel menuPanel;
+	private ItemDAO itemDAO;
+	private ArrayList<ItemView> menuItems;
 
 	public MenuScreen() {
 		this.init();
@@ -30,6 +38,14 @@ public class MenuScreen extends UIPanel {
 
 	public void init() {
 		this.setLayout(new BorderLayout());
+		
+		this.itemDAO = new ItemDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		try {
+			this.menuItems = this.itemDAO.findAll();
+		} catch (SQLException e) {
+			App.put("Could not load Menu, please check internet connection!");
+			e.printStackTrace();
+		}
 		
 		UIPanel contentPane = new UIPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -54,7 +70,9 @@ public class MenuScreen extends UIPanel {
 		menuHeader.setSize(new Dimension(400, 50));
 		menuPanel.add(menuHeader);
 		
-		//TODO: Init menu here
+		for (ItemView menuItem : this.menuItems) {
+			menuPanel.add(new MenuItemPanel(menuItem, this));
+		}
 	}
 	
 	private void setupOrderList() {

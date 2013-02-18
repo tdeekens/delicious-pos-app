@@ -34,6 +34,26 @@ public class Labels {
 		this.labels.put("order-placement-h2", "Please verify si bloody order...");
 		this.labels.put("admin-h2", "Administer the shit out of YOUR data!");
 		this.labels.put("step-of", "of");
-		this.labels.put("our-menu", "Our menu...");
+		this.labels.put("firstName", "Firstname");
+		this.labels.put("lastName", "Surname");
+		this.labels.put("street", "Street");
+		this.labels.put("zip", "ZIP");
+		this.labels.put("city", "City");
+		this.labels.put("phone", "Phone");
+		this.labels.put("userName", "Username");
+		this.labels.put("salary", "Salary");
+		this.labels.put("position", "Position");
+		this.labels.put("name", "Name");
+		this.labels.put("description", "Description");
+		this.labels.put("orderTypeName", "Order type");
+		this.labels.put("employeUserName", "Employee's username");
+		this.labels.put("number", "Number");
+		this.labels.put("id", "ID");
+		this.labels.put("priceId", "Price ID");
+		this.labels.put("customerId", "Customer's ID");
+		this.labels.put("tableId", "Table ID");
+		this.labels.put("value", "Value");
+		this.labels.put("sizeValue", "Size");
+		this.labels.put("itemName", "Name");
 	}
 }

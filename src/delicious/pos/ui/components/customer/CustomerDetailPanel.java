@@ -1,6 +1,8 @@
 package delicious.pos.ui.components.customer;
 
 import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.UIManager;
@@ -36,12 +38,13 @@ public class CustomerDetailPanel extends UIPanel {
 		this.removeAll();
 		this.init();
 		
-		//TODO: Dani: can the CustomerView pls return a Map<String, String> by calling getAttributes with rowName, rowValue?
-		/*for (Map.Entry<String, String> entry : this.customer.getAttributes()) {
+		HashMap<String, String> customerMap = new HashMap<String, String>(this.customer.toMap());
+		
+		for (Map.Entry<String, String> entry : customerMap.entrySet()) {
 			String rowName = entry.getKey();
 			String rowValue = entry.getValue();
 
 		    this.add(new CustomerDetailItemPanel(rowName, rowValue));
-		}*/
+		}
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.SwingConstants;
 
+import delicious.pos.App;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
 
@@ -28,7 +29,7 @@ public class CustomerDetailItemPanel extends UIPanel {
 		
 		setLayout(new BorderLayout());
 		
-		UILabel lblItem = new UILabel(this.rowName + ": " + this.rowValue);
+		UILabel lblItem = new UILabel(App.labels.get(this.rowName) + ": " + this.rowValue);
 		lblItem.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		add(lblItem, BorderLayout.CENTER);
