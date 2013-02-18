@@ -4,6 +4,7 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.EmployeeView;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,8 +81,35 @@ public class EmployeeDAO extends BaseDAO
 	    }
 	}
 	
-	public void remove(EmployeeView employee)
+	public void remove(EmployeeView employee) throws SQLException
 	{
-		
+	    PreparedStatement stmt = null;
+	    
+	    String query = "SELECT value FROM Employees ";
+	    query += "WHERE userName = ?";
+	    
+	    try 
+	    {
+	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt.setString(1, employee.getUserName());
+	      
+	      ResultSet uprs = stmt.executeQuery();
+
+	      while (uprs.next()) 
+	      {
+	    	  uprs.deleteRow();
+	      }
+
+	    } catch (SQLException e) 
+	    {
+	      JDBCUtilities.printSQLException(e);
+	    } 
+	    finally 
+	    {
+	      if (stmt != null) 
+	      { 
+	    	  stmt.close(); 
+	      }
+	    }
 	}
 }

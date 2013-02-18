@@ -51,6 +51,15 @@ public class Test {
 	      {
 	    	  System.out.println(size.getValue());
 	      }
+	      
+	      // test remove()
+	      sizeDAO.remove(sizeXLarge);
+	      
+    	  System.out.println("SIZES:");
+	      for(SizeView size : sizes)
+	      {
+	    	  System.out.println(size.getValue());
+	      }
 	    } 
 	    catch (SQLException e) 
 	    {
@@ -60,10 +69,5 @@ public class Test {
 	    {
 	      JDBCUtilities.closeConnection(myConnection);
 	    }
-	}
-	
-	private void testFindAllSizes()
-	{
-		
 	}
 }
