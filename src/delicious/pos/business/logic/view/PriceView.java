@@ -1,9 +1,12 @@
 package delicious.pos.business.logic.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class PriceView extends BaseView
 {
-	private int id;
+	private Integer id;
 	
 	private Float value;
 	
@@ -11,7 +14,7 @@ public class PriceView extends BaseView
 	
 	private String itemName;
 	
-	public PriceView(int id, Float value, String sizeValue, String itemName)
+	public PriceView(Integer id, Float value, String sizeValue, String itemName)
 	{
 		setId(id);
 		setValue(value);
@@ -19,12 +22,12 @@ public class PriceView extends BaseView
 		setItemName(itemName);
 	}
 	
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 	
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -57,5 +60,15 @@ public class PriceView extends BaseView
 	public void setItemName(String itemName)
 	{
 		this.itemName = itemName;
+	}
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("id", getId().toString());
+		viewAsMap.put("value", getValue().toString());	
+		viewAsMap.put("sizeValue", getSizeValue());	
+		viewAsMap.put("itemName", getItemName());	
+		return viewAsMap;
 	}
 }

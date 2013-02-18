@@ -1,10 +1,12 @@
 package delicious.pos.business.logic.view.gen;
 
 import delicious.pos.business.logic.view.BaseView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderView extends BaseView
 {
-	private int id;
+	private Integer id;
 	
 	private String orderTypeName;
 	
@@ -23,12 +25,12 @@ public class OrderView extends BaseView
 		setTableId(tableId);
 	}
 	
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 	
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -53,23 +55,34 @@ public class OrderView extends BaseView
 		this.employeeUserName = employeeUserName;
 	}
 	
-	public int getCustomerId()
+	public Integer getCustomerId()
 	{
 		return customerId;
 	}
 	
-	public int getTableId()
+	public Integer getTableId()
 	{
 		return tableId;
 	}
 	
-	public void setCustomerId(int customerId)
+	public void setCustomerId(Integer customerId)
 	{
 		this.customerId = customerId;
 	}
 	
-	public void setTableId(int tableId)
+	public void setTableId(Integer tableId)
 	{
 		this.tableId = tableId;
+	}
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("id", getId().toString());
+		viewAsMap.put("orderTypeName", getOrderTypeName());
+		viewAsMap.put("employeUserName", getEmployeeUserName());
+		viewAsMap.put("customerId", getCustomerId().toString());
+		viewAsMap.put("tableId", getTableId().toString());
+		return viewAsMap;
 	}
 }

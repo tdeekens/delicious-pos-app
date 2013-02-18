@@ -1,14 +1,13 @@
 package delicious.pos.business.logic.dao.gen;
 
+import delicious.pos.business.logic.dao.BaseDAO;
+import delicious.pos.business.logic.dao.JDBCUtilities;
+import delicious.pos.business.logic.view.gen.TableView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-import delicious.pos.business.logic.dao.BaseDAO;
-import delicious.pos.business.logic.dao.JDBCUtilities;
-import delicious.pos.business.logic.view.gen.TableView;
 
 public class TableDAO extends BaseDAO
 {

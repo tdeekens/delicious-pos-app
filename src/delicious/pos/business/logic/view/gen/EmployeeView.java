@@ -1,6 +1,8 @@
 package delicious.pos.business.logic.view.gen;
 
 import delicious.pos.business.logic.view.BaseView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EmployeeView extends BaseView
 {
@@ -58,5 +60,15 @@ public class EmployeeView extends BaseView
 	public void setPosition( String position)
 	{
 		this.position = position;
+	}
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("userName", getUserName());
+		viewAsMap.put("salary", getSalary().toString());
+		viewAsMap.put("phone", getPhone());
+		viewAsMap.put("position", getPosition());
+		return viewAsMap;
 	}
 }

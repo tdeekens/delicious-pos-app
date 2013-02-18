@@ -1,10 +1,12 @@
 package delicious.pos.business.logic.view.gen;
 
 import delicious.pos.business.logic.view.BaseView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TableView extends BaseView
 {
-	private int id;
+	private Integer id;
 	
 	private String number;
 	
@@ -14,12 +16,12 @@ public class TableView extends BaseView
 		setNumber(number);
 	}
 	
-	public int getId()
+	public Integer getId()
 	{
 		return id;
 	}
 	
-	public void setId(int id)
+	public void setId(Integer id)
 	{
 		this.id = id;
 	}
@@ -32,5 +34,13 @@ public class TableView extends BaseView
 	public void setNumber( String number)
 	{
 		this.number = number;
+	}
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("id", getId().toString());
+		viewAsMap.put("number", getNumber());
+		return viewAsMap;
 	}
 }

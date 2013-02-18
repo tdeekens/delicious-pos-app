@@ -1,5 +1,8 @@
 package delicious.pos.business.logic.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class SizeView extends BaseView
 {
@@ -18,5 +21,12 @@ public class SizeView extends BaseView
 	public void setValue(String value)
 	{
 		this.value = value;
+	}
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("value", getValue());		
+		return viewAsMap;
 	}
 }

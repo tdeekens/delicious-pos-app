@@ -1,14 +1,16 @@
 package delicious.pos.business.logic.view.gen;
 
 import delicious.pos.business.logic.view.BaseView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderTypeView extends BaseView
 {
 	private String name;
 	
-	private int priceId;
+	private Integer priceId;
 	
-	public OrderTypeView(String name, int priceId)
+	public OrderTypeView(String name, Integer priceId)
 	{
 		setName(name);
 		setPriceId(priceId);
@@ -24,13 +26,21 @@ public class OrderTypeView extends BaseView
 		this.name = name;
 	}
 	
-	public int getPriceId()
+	public Integer getPriceId()
 	{
 		return priceId;
 	}
 	
-	public void setPriceId(int priceId)
+	public void setPriceId(Integer priceId)
 	{
 		this.priceId = priceId;
 	}	
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("name", getName());
+		viewAsMap.put("priceId", getPriceId().toString());
+		return viewAsMap;
+	}
 }

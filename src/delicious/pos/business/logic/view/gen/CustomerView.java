@@ -1,6 +1,8 @@
 package delicious.pos.business.logic.view.gen;
 
 import delicious.pos.business.logic.view.BaseView;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomerView extends BaseView
 {
@@ -84,5 +86,17 @@ public class CustomerView extends BaseView
 	public void setPhone( String phone)
 	{
 		this.phone = phone;
+	}
+	
+	public Map<String, String> toMap()
+	{
+		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("firstName", getFirstName());	
+		viewAsMap.put("lastName", getLastName());
+		viewAsMap.put("street", getStreet());
+		viewAsMap.put("zip", getZIP());
+		viewAsMap.put("city", getCity());
+		viewAsMap.put("phone", getPhone());
+		return viewAsMap;
 	}
 }
