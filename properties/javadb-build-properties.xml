@@ -2,25 +2,16 @@
 
 <project name="properties" basedir=".">
 
-  <property name="JAVAC" value="C:\\Program Files\\Java\\jdk1.7.0_13\\bin\\javac"/>
-  <property name="JAVA" value="C:\\Program Files\\Java\\jdk1.7.0_13\\bin\\java"/>
-
+  <property name="JAVAC" value="/usr/bin/javac"/>
+  <property name="JAVA" value="/usr/bin/javac"/>
 
   <property name="PROPERTIESFILE" value="properties/javadb-pos-properties.xml"/>
-  <property name="JAVADBDRIVER" value="C:\\Program Files\\Java\\jdk1.7.0_13\\db\\lib\\derby.jar"/>
-  <property name="XALANDIRECTORY" value="C:\\Program Files\\xalan-j_2_7_1"/>
-
-  <path id="XALAN">
-    <pathelement location="${XALANDIRECTORY}\\xalan.jar"/>
-  </path>
+  <property name="JAVADBDRIVER" value="./libs/derby.jar"/>
 
   <path id="CLASSPATH">
     <pathelement location="classes"/>
     <pathelement location="${JAVADBDRIVER}"/>
-    <!--pathelement location="lib/JDBCTutorial.jar"/-->
-    <path refid="XALAN"/>
   </path>
-
 
   <property name="DB.VENDOR" value="javadb"/>
   <property name="DB.DRIVER" value="org.apache.derby.jdbc.EmbeddedDriver"/>
