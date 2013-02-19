@@ -111,4 +111,39 @@ public class PriceDAO extends BaseDAO
 	      }
 	    }
 	}
+	
+	public ArrayList<PriceView> findByItemName(String itemName) throws SQLException
+	{
+		ArrayList<PriceView> result = new ArrayList<PriceView>();
+		PreparedStatement stmt = null;
+	    
+	    String query = "SELECT * ";
+	    query += " FROM Prices ";
+	    query += "WHERE item_name = ?";
+	    
+	    try 
+	    {
+	    	stmt = getCon().prepareStatement(query);
+	    	stmt.setString(1, itemName);
+	    	ResultSet resultSet = stmt.executeQuery(query);
+
+	      while (resultSet.next()) 
+	      {
+	    	  PriceView price  = new PriceView(resultSet.getInt("id"), resultSet.getFloat("value"), resultSet.getString("size_value"), resultSet.getString("item_name"));
+	          result.add(price);
+	      }
+	    } 
+	    catch (SQLException e) 
+	    {
+	    	e.printStackTrace();
+	    } 
+	    finally 
+	    {
+	    	if (stmt != null) 
+	    	{ 
+	    		stmt.close(); 
+	    	}
+	    }
+	    return result;
+	}
 }
