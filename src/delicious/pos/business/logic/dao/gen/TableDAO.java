@@ -17,7 +17,7 @@ public class TableDAO extends BaseDAO
 		super(con, dbName, dbms);
 	}
 	
-	public ArrayList<TableView> findAll()throws SQLException
+	public ArrayList<TableView> findAll()
 	{
 		ArrayList<TableView> result = new ArrayList<TableView>();
 		Statement statement = null;
@@ -38,19 +38,23 @@ public class TableDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+			JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (statement != null) 
 	    	{ 
-	    		statement.close(); 
+	    		try {
+					statement.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	    	}
 	    }
 	    return result;
 	}
 	
-	public void persist(TableView table) throws SQLException 
+	public void persist(TableView table)
 	{
 	    Statement stmt = null;
 	    try 
@@ -74,12 +78,16 @@ public class TableDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
 	
-	public void remove(TableView table) throws SQLException
+	public void remove(TableView table)
 	{
 	    PreparedStatement stmt = null;
 	    
@@ -106,7 +114,11 @@ public class TableDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}

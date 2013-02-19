@@ -17,7 +17,7 @@ public class EmployeeDAO extends BaseDAO
 		super(con, dbName, dbms);
 	}
 	
-	public ArrayList<EmployeeView> findAll()throws SQLException
+	public ArrayList<EmployeeView> findAll()
 	{
 		ArrayList<EmployeeView> result = new ArrayList<EmployeeView>();
 		Statement statement = null;
@@ -38,19 +38,23 @@ public class EmployeeDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+			JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (statement != null) 
 	    	{ 
-	    		statement.close(); 
+	    		try {
+					statement.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	    	}
 	    }
 	    return result;
 	}
 	
-	public void persist(EmployeeView employee) throws SQLException 
+	public void persist(EmployeeView employee)
 	{
 	    Statement stmt = null;
 	    try 
@@ -76,12 +80,16 @@ public class EmployeeDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
 	
-	public void remove(EmployeeView employee) throws SQLException
+	public void remove(EmployeeView employee)
 	{
 	    PreparedStatement stmt = null;
 	    
@@ -108,7 +116,11 @@ public class EmployeeDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}

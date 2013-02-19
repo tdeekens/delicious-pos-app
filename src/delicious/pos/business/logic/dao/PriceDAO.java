@@ -16,7 +16,7 @@ public class PriceDAO extends BaseDAO
 		super(con, dbName, dbms);
 	}
 	
-	public ArrayList<PriceView> findAll()throws SQLException
+	public ArrayList<PriceView> findAll()
 	{
 		ArrayList<PriceView> result = new ArrayList<PriceView>();
 		Statement stmt = null;
@@ -37,19 +37,26 @@ public class PriceDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+	    	JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (stmt != null) 
 	    	{ 
-	    		stmt.close(); 
+	    		try 
+	    		{
+					stmt.close();
+				} 
+	    		catch (SQLException e) 
+	    		{
+	    			JDBCUtilities.printSQLException(e);
+				} 
 	    	}
 	    }
 	    return result;
 	}
 	
-	public void persist(PriceView price) throws SQLException 
+	public void persist(PriceView price)
 	{
 	    Statement stmt = null;
 	    try 
@@ -75,12 +82,19 @@ public class PriceDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    	  try 
+	    	  {
+				stmt.close();
+	    	  } 
+	    	  catch (SQLException e) 
+	    	  {
+	    		  JDBCUtilities.printSQLException(e);
+	    	  } 
 	      }
 	    }
 	}
 	
-	public void remove(PriceView price) throws SQLException
+	public void remove(PriceView price)
 	{
 	    PreparedStatement stmt = null;
 	    
@@ -107,12 +121,19 @@ public class PriceDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    	  try 
+	    	  {
+				stmt.close();
+	    	  } 
+	    	  catch (SQLException e) 
+	    	  {
+	    		  JDBCUtilities.printSQLException(e);
+	    	  } 
 	      }
 	    }
 	}
 	
-	public ArrayList<PriceView> findByItemName(String itemName) throws SQLException
+	public ArrayList<PriceView> findByItemName(String itemName)
 	{
 		ArrayList<PriceView> result = new ArrayList<PriceView>();
 		PreparedStatement stmt = null;
@@ -135,19 +156,23 @@ public class PriceDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+	    	JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (stmt != null) 
 	    	{ 
-	    		stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				} 
 	    	}
 	    }
 	    return result;
 	}
 	
-	public PriceView findById(Integer id) throws SQLException
+	public PriceView findById(Integer id)
 	{
 		PreparedStatement stmt = null;
 	    PriceView price = null;
@@ -170,13 +195,20 @@ public class PriceDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+	    	JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (stmt != null) 
 	    	{ 
-	    		stmt.close(); 
+	    		try 
+	    		{
+					stmt.close();
+				} 
+	    		catch (SQLException e) 
+	    		{
+	    			JDBCUtilities.printSQLException(e);
+				} 
 	    	}
 	    }
 	    return price;

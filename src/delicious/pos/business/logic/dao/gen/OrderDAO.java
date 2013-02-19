@@ -17,7 +17,7 @@ public class OrderDAO extends BaseDAO
 		super(con, dbName, dbms);
 	}
 	
-	public ArrayList<OrderView> findAll()throws SQLException
+	public ArrayList<OrderView> findAll()
 	{
 		ArrayList<OrderView> result = new ArrayList<OrderView>();
 		Statement statement = null;
@@ -38,19 +38,23 @@ public class OrderDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+			JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (statement != null) 
 	    	{ 
-	    		statement.close(); 
+	    		try {
+					statement.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	    	}
 	    }
 	    return result;
 	}
 	
-	public void persist(OrderView order) throws SQLException 
+	public void persist(OrderView order) 
 	{
 	    Statement stmt = null;
 	    try 
@@ -75,12 +79,16 @@ public class OrderDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
 	
-	public void remove(OrderView order) throws SQLException
+	public void remove(OrderView order)
 	{
 	    PreparedStatement stmt = null;
 	    
@@ -107,7 +115,11 @@ public class OrderDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}

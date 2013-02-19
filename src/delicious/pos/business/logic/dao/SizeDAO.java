@@ -16,7 +16,7 @@ public class SizeDAO extends BaseDAO
 		super(con, dbName, dbms);
 	}
 	
-	public ArrayList<SizeView> findAll()throws SQLException
+	public ArrayList<SizeView> findAll()
 	{
 		ArrayList<SizeView> result = new ArrayList<SizeView>();
 		Statement stmt = null;
@@ -37,19 +37,23 @@ public class SizeDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+	    	JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (stmt != null) 
 	    	{ 
-	    		stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	    	}
 	    }
 	    return result;
 	}
 	
-	public void persist(SizeView size) throws SQLException 
+	public void persist(SizeView size)
 	{
 	    Statement stmt = null;
 	    try 
@@ -72,12 +76,16 @@ public class SizeDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
 	
-	public void remove(SizeView size) throws SQLException
+	public void remove(SizeView size)
 	{
 	    PreparedStatement stmt = null;
 	    
@@ -104,7 +112,11 @@ public class SizeDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
