@@ -23,7 +23,7 @@ public class OrderTypeDAO extends BaseDAO
 		Statement statement = null;
 	    
 	    String query = "SELECT name, price_id ";
-	    query += "FROM Items";
+	    query += "FROM OrderTypes";
 	    
 	    try 
 	    {
