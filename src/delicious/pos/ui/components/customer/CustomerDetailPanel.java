@@ -16,11 +16,9 @@ public class CustomerDetailPanel extends UIPanel {
 	
 	private CustomerView customer;
 	
-	public CustomerDetailPanel(CustomerView customer) {
+	public CustomerDetailPanel() {
 		super();
-		
-		this.customer = customer;
-		
+				
 		this.init();
 	}
 	
@@ -32,6 +30,10 @@ public class CustomerDetailPanel extends UIPanel {
 		customerDetailHeader.setSize(new Dimension(400, 50));
 		
 		this.add(customerDetailHeader);		
+	}
+	
+	public void setCustomer(CustomerView customer) {
+		this.customer = customer;
 	}
 	
 	public void renderCustomerDetails() {

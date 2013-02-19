@@ -91,7 +91,12 @@ public class MainScreen extends UIFrame {
 			this.getContentPane().remove(this.contentPanelOrderValidation);
 		}
 		
-		this.orderPlacementScreen.renderChildren();
+		if(App.orderState.getCustomer() == null) {
+			System.out.println("No customer selected, can't go on ordering!");
+		} else {
+			this.orderPlacementScreen.setCustomer(App.orderState.getCustomer());
+			this.orderPlacementScreen.renderChildren();
+		}
 		
 		this.getContentPane().add(this.contentPanelOrderPlacement);
 		
