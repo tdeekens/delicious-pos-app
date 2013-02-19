@@ -38,3 +38,6 @@ INSERT INTO Prices VALUES(12,100,'Large','Bivteki');
 INSERT INTO Prices VALUES(13,60,'Small','Feta salad');
 INSERT INTO Prices VALUES(14,80,'Medium','Feta salad');
 INSERT INTO Prices VALUES(15,100,'Large','Feta salad');
+INSERT INTO Prices VALUES(16,10,null,null);
+
+INSERT INTO OrderTypes VALUES('Night delivery',16);
