@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
+import delicious.pos.App;
 import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.ui.components.extensions.UIButton;
 import delicious.pos.ui.components.extensions.UILabel;
@@ -53,8 +54,8 @@ public class ItemPricePanel extends UIPanel {
 	}
 	
 	private void setupLabels() {
-		priceBtn.setText(Float.toString(this.price.getValue()));
-		sizeLbl.setText(Float.toString(this.price.getValue()));
+		priceBtn.setText(Float.toString(this.price.getValue()) + " " + App.labels.get("currency"));
+		sizeLbl.setText(this.price.getSizeValue() != "" ? this.price.getSizeValue() : "One size.");
 	}
 	
 	public void select() {

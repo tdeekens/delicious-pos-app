@@ -3,12 +3,15 @@ package delicious.pos.ui.components.menu;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import delicious.pos.App;
+import delicious.pos.business.logic.dao.PriceDAO;
 import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.ui.components.extensions.UILabel;
@@ -27,10 +30,13 @@ public class MenuItemPanel extends UIPanel {
 	private OrderPanel orderPanel;
 	private ItemView item;
 	private PriceView price;
+	private PriceDAO priceDAO;
 	
 	public MenuItemPanel(ItemView item, MenuScreen parentPanel) {
 		this.menuScreen = parentPanel;
 		this.item = item;
+		this.priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		
 		this.init();
 	}
 	
@@ -50,8 +56,13 @@ public class MenuItemPanel extends UIPanel {
 		lblItemName.setVerticalAlignment(SwingConstants.CENTER);
 		add(lblItemName);
 		
-		//TODO: Shouldnt an item have n prices with a size each?
-		ArrayList<PriceView> itemPrices = new ArrayList<PriceView>();
+		ArrayList<PriceView> itemPrices = null;
+		try {
+			itemPrices = priceDAO.findByItemName(this.item.getName());
+		} catch (SQLException e1) {
+			App.put("Could not load Menu, please check internet connection!");
+			e1.printStackTrace();
+		}
 
 		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
 		add(itemPricesPanel);	

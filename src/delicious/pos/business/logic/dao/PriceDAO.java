@@ -125,7 +125,7 @@ public class PriceDAO extends BaseDAO
 	    {
 	    	stmt = getCon().prepareStatement(query);
 	    	stmt.setString(1, itemName);
-	    	ResultSet resultSet = stmt.executeQuery(query);
+	    	ResultSet resultSet = stmt.executeQuery();
 
 	      while (resultSet.next()) 
 	      {
