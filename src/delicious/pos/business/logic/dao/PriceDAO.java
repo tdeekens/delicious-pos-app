@@ -147,10 +147,10 @@ public class PriceDAO extends BaseDAO
 	    return result;
 	}
 	
-	public ArrayList<PriceView> findById(Integer id) throws SQLException
+	public PriceView findById(Integer id) throws SQLException
 	{
-		ArrayList<PriceView> result = new ArrayList<PriceView>();
 		PreparedStatement stmt = null;
+	    PriceView price = null;
 	    
 	    String query = "SELECT * ";
 	    query += " FROM Prices ";
@@ -162,10 +162,10 @@ public class PriceDAO extends BaseDAO
 	    	stmt.setInt(1, id);
 	    	ResultSet resultSet = stmt.executeQuery();
 
+
 	      while (resultSet.next()) 
 	      {
-	    	  PriceView price  = new PriceView(resultSet.getInt("id"), resultSet.getFloat("value"), resultSet.getString("size_value"), resultSet.getString("item_name"));
-	          result.add(price);
+	    	  price  = new PriceView(resultSet.getInt("id"), resultSet.getFloat("value"), resultSet.getString("size_value"), resultSet.getString("item_name"));
 	      }
 	    } 
 	    catch (SQLException e) 
@@ -179,6 +179,6 @@ public class PriceDAO extends BaseDAO
 	    		stmt.close(); 
 	    	}
 	    }
-	    return result;
+	    return price;
 	}
 }
