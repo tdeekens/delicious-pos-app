@@ -53,26 +53,16 @@ public class ApplicationState {
 		PriceView price;
 		
 		if(this.orderType != null) {
-			try {
-				price = this.priceDAO.findById(this.orderType.getPriceId());
-				this.substractFromCompletePrice(price.getValue());
-				this.orderTypePrice = price.getValue();
-			} catch (SQLException e) {
-				App.put("Could not load Price, please check internet connection!");
-				e.printStackTrace();
-			}
+			price = this.priceDAO.findById(this.orderType.getPriceId());
+			this.substractFromCompletePrice(price.getValue());
+			this.orderTypePrice = price.getValue();
 		}
 		
-		try {
-			price = this.priceDAO.findById(orderType.getPriceId());
-			this.addToCompletePrice(price.getValue());
-			this.orderTypePrice = price.getValue();
-			
-			this.orderType = orderType;
-		} catch (SQLException e) {
-			App.put("Could not load Price, please check internet connection!");
-			e.printStackTrace();
-		}
+		price = this.priceDAO.findById(orderType.getPriceId());
+		this.addToCompletePrice(price.getValue());
+		this.orderTypePrice = price.getValue();
+		
+		this.orderType = orderType;
 	}
 	
 	public OrderTypeView getOrderType() {

@@ -40,12 +40,7 @@ public class MenuScreen extends UIPanel {
 		this.setLayout(new BorderLayout());
 		
 		this.itemDAO = new ItemDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
-		try {
-			this.menuItems = this.itemDAO.findAll();
-		} catch (SQLException e) {
-			App.put("Could not load Menu, please check internet connection!");
-			e.printStackTrace();
-		}
+		this.menuItems = this.itemDAO.findAll();
 		
 		UIPanel contentPane = new UIPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

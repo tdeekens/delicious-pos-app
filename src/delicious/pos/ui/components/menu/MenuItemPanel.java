@@ -57,12 +57,8 @@ public class MenuItemPanel extends UIPanel {
 		add(lblItemName);
 		
 		ArrayList<PriceView> itemPrices = null;
-		try {
-			itemPrices = this.priceDAO.findByItemName(this.item.getName());
-		} catch (SQLException e1) {
-			App.put("Could not load Menu, please check internet connection!");
-			e1.printStackTrace();
-		}
+		
+		itemPrices = this.priceDAO.findByItemName(this.item.getName());
 
 		itemPricesPanel = new ItemPricesPanel(itemPrices, this);
 		add(itemPricesPanel);	

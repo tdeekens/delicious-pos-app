@@ -33,12 +33,7 @@ public class OrderTypePanel extends UIPanel {
 		
 		this.orderTypeDAO = new OrderTypeDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
 		
-		try {
-			this.orderTypes = this.orderTypeDAO.findAll();
-		} catch (SQLException e) {
-			App.put("Could not load Menu, please check internet connection!");
-			e.printStackTrace();
-		}
+		this.orderTypes = this.orderTypeDAO.findAll();
 		
 		init();
 	}
@@ -98,14 +93,9 @@ public class OrderTypePanel extends UIPanel {
 		
 		PriceDAO priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
 
-		try {
-			PriceView price = priceDAO.findById(priceId);
+		PriceView price = priceDAO.findById(priceId);
 
-			orderTypePrice = price.getValue();
-		} catch (SQLException e1) {
-			App.put("Could not load Price, please check internet connection!");
-			e1.printStackTrace();
-		}
+		orderTypePrice = price.getValue();
 		
 		return orderTypePrice;
 	}
