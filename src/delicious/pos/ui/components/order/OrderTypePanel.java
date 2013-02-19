@@ -64,8 +64,8 @@ public class OrderTypePanel extends UIPanel {
 	private void setupOrderTypes() {
 		ButtonGroup btnGroup = new ButtonGroup();
 		
-		for (final OrderTypeView orderType : this.orderTypes) {			
-			JRadioButton orderTypeBtn = new JRadioButton(App.labels.get(orderType.getName()), ImageLoader.loadImageIcon(this, orderType.getName()));
+		for (final OrderTypeView orderType : this.orderTypes) {		
+			JRadioButton orderTypeBtn = new JRadioButton(App.labels.get(orderType.getName()));
 			
 			orderTypeBtn.addActionListener(new ActionListener() {
 				@Override
