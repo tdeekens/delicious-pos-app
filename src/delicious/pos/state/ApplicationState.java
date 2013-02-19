@@ -52,15 +52,19 @@ public class ApplicationState {
 	public void setOrderType(OrderTypeView orderType) {
 		PriceView price;
 		
-		if(this.orderType != null) {
+		//Only if we already added once and need to substract
+		if(this.orderType != null && this.orderType.getPriceId() != 0) {
 			price = this.priceDAO.findById(this.orderType.getPriceId());
 			this.substractFromCompletePrice(price.getValue());
 			this.orderTypePrice = price.getValue();
 		}
 		
-		price = this.priceDAO.findById(orderType.getPriceId());
-		this.addToCompletePrice(price.getValue());
-		this.orderTypePrice = price.getValue();
+		//Only if there is something to add
+		if(orderType.getPriceId() != 0) {
+			price = this.priceDAO.findById(orderType.getPriceId());
+			this.addToCompletePrice(price.getValue());
+			this.orderTypePrice = price.getValue();
+		}
 		
 		this.orderType = orderType;
 	}

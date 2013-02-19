@@ -1,6 +1,7 @@
 package delicious.pos.ui.components.order;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import delicious.pos.ui.components.extensions.UIPanel;
 
 public class OrderedItemsPanel extends UIPanel {
 	private HashMap<PriceView, ItemView> orderedItems;
+	private UIHeaderPanel orderSummaryHeader;
 	
 	public OrderedItemsPanel() {
 		super();
@@ -50,20 +52,26 @@ public class OrderedItemsPanel extends UIPanel {
 		    this.add(new OrderItemPanel(item, price));
 		}
 		
-		UIHeaderPanel orderSummaryLabel = new UIHeaderPanel(
+		this.renderOrderSummary();
+	}
+	
+	public void renderOrderSummary() {
+		if(this.orderSummaryHeader instanceof Component) this.remove(this.orderSummaryHeader);
+		
+		this.orderSummaryHeader = new UIHeaderPanel(
 				this.orderedItems.size() + " " + App.labels.get("items-for") 
 				+ " " + 
 				App.orderState.getCompletePrice() 
 				+ " (incl.: " 
 				+ App.orderState.getOrderTypePrice()
-				+ ") "
+				+ " Û) "
 				+ App.labels.get("currency"), 
 				null, null
 		);
 		
-		orderSummaryLabel.setBackground(UIManager.getColor("Button.background"));
-		orderSummaryLabel.setSize(new Dimension(400, 50));
+		this.orderSummaryHeader.setBackground(UIManager.getColor("Button.background"));
+		this.orderSummaryHeader.setSize(new Dimension(400, 50));
 		
-		this.add(orderSummaryLabel);
+		this.add(this.orderSummaryHeader);
 	}
 }

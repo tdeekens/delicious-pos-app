@@ -19,7 +19,7 @@ public class OrderValidationScreen extends UIPanel {
 		this.setLayout(new BorderLayout());
 		
 		this.orderItemsPanel = new OrderedItemsPanel();
-		this.orderTypePanel = new OrderTypePanel();
+		this.orderTypePanel = new OrderTypePanel(this);
 		
 		this.add(this.orderItemsPanel, BorderLayout.CENTER);
 		this.add(this.orderTypePanel, BorderLayout.WEST);
@@ -27,5 +27,9 @@ public class OrderValidationScreen extends UIPanel {
 	
 	public void renderChildren() {
 		this.orderItemsPanel.renderOrderedItems();
+	}
+	
+	public void onOrderTypeSet() {
+		this.orderItemsPanel.renderOrderSummary();
 	}
 }

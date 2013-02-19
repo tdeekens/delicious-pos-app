@@ -20,6 +20,7 @@ import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.screens.OrderValidationScreen;
 import delicious.pos.util.ImageLoader;
 
 public class OrderTypePanel extends UIPanel {
@@ -27,9 +28,12 @@ public class OrderTypePanel extends UIPanel {
 	private UIPanel orderTypePanel;
 	private OrderTypeDAO orderTypeDAO;
 	private ArrayList<OrderTypeView> orderTypes;
+	private OrderValidationScreen parentScreen;
 	
-	public OrderTypePanel() {
+	public OrderTypePanel(OrderValidationScreen parentScreen) {
 		super();
+		
+		this.parentScreen = parentScreen;
 		
 		this.orderTypeDAO = new OrderTypeDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
 		
@@ -84,6 +88,7 @@ public class OrderTypePanel extends UIPanel {
 	
 	private void setOrderType(OrderTypeView orderType) {
 		App.orderState.setOrderType(orderType);
+		this.parentScreen.onOrderTypeSet();
 	}
 	
 	private Float getPriceForOrderType(Integer priceId) {
