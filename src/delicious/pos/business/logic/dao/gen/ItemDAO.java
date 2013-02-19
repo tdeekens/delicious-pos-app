@@ -22,7 +22,7 @@ public class ItemDAO extends BaseDAO
 		ArrayList<ItemView> result = new ArrayList<ItemView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT name, price_id, description ";
+	    String query = "SELECT name, description ";
 	    query += "FROM Items";
 	    
 	    try 
@@ -32,7 +32,7 @@ public class ItemDAO extends BaseDAO
 
 	      while (resultSet.next()) 
 	      {
-	    	  ItemView item  = new ItemView(resultSet.getString("name"), resultSet.getInt("price_id"), resultSet.getString("description"));
+	    	  ItemView item  = new ItemView(resultSet.getString("name"), resultSet.getString("description"));
 	          result.add(item);
 	      }
 	    } 
@@ -61,7 +61,6 @@ public class ItemDAO extends BaseDAO
 	      uprs.moveToInsertRow();
 
 	      uprs.updateString("name", item.getName());
-	      uprs.updateInt("price_id", item.getPriceId());
 	      uprs.updateString("description", item.getDescription());
 
 	      uprs.insertRow();

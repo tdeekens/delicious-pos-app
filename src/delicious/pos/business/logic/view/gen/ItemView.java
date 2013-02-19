@@ -8,14 +8,11 @@ public class ItemView extends BaseView
 {
 	private String name;
 	
-	private Integer priceId;
-	
 	private String description;
 	
-	public ItemView(String name, int priceId,  String description)
+	public ItemView(String name,  String description)
 	{
 		setName(name);
-		setPriceId(priceId);
 		setDescription(description);
 	}
 	
@@ -29,15 +26,6 @@ public class ItemView extends BaseView
 		this.name = name;
 	}
 	
-	public Integer getPriceId()
-	{
-		return priceId;
-	}
-	
-	public void setPriceId(Integer priceId)
-	{
-		this.priceId = priceId;
-	}	
 	
 	public  String getDescription()
 	{
@@ -53,7 +41,6 @@ public class ItemView extends BaseView
 	{
 		Map<String, String> viewAsMap = new HashMap<String, String>();
 		viewAsMap.put("name", getName());	
-		viewAsMap.put("priceId", getPriceId().toString());
 		viewAsMap.put("description", getDescription());
 		return viewAsMap;
 	}
