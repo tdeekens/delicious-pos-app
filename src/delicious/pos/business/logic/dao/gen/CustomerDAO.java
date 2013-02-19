@@ -22,7 +22,7 @@ public class CustomerDAO extends BaseDAO
 		ArrayList<CustomerView> result = new ArrayList<CustomerView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT firstName, lastName, street, zip, city, phone";
+	    String query = "SELECT firstName, lastName, street, zip, city, phone ";
 	    query += "FROM Customers";
 	    
 	    try 

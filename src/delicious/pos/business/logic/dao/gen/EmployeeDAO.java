@@ -22,7 +22,7 @@ public class EmployeeDAO extends BaseDAO
 		ArrayList<EmployeeView> result = new ArrayList<EmployeeView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT userName, salary, phone, position";
+	    String query = "SELECT userName, salary, phone, position ";
 	    query += "FROM Employees";
 	    
 	    try 

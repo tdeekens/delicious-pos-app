@@ -22,7 +22,7 @@ public class OrderDAO extends BaseDAO
 		ArrayList<OrderView> result = new ArrayList<OrderView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT id, orderType_name, employee_userName,Customer_id,Table_id";
+	    String query = "SELECT id, orderType_name, employee_userName,Customer_id,Table_id ";
 	    query += "FROM Orders";
 	    
 	    try 

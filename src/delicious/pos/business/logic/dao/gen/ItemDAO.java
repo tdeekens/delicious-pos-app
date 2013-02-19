@@ -22,7 +22,7 @@ public class ItemDAO extends BaseDAO
 		ArrayList<ItemView> result = new ArrayList<ItemView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT name, price_id, description";
+	    String query = "SELECT name, price_id, description ";
 	    query += "FROM Items";
 	    
 	    try 
