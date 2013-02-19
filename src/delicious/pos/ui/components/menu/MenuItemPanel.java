@@ -35,8 +35,6 @@ public class MenuItemPanel extends UIPanel {
 	public MenuItemPanel(ItemView item, MenuScreen parentPanel) {
 		this.menuScreen = parentPanel;
 		this.item = item;
-		this.priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
-		
 		this.init();
 	}
 	
@@ -51,14 +49,16 @@ public class MenuItemPanel extends UIPanel {
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		
+
+		this.priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+
 		JLabel lblItemName = new UILabel(this.item.getName());
 		lblItemName.setVerticalAlignment(SwingConstants.CENTER);
 		add(lblItemName);
 		
 		ArrayList<PriceView> itemPrices = null;
 		try {
-			itemPrices = priceDAO.findByItemName(this.item.getName());
+			itemPrices = this.priceDAO.findByItemName(this.item.getName());
 		} catch (SQLException e1) {
 			App.put("Could not load Menu, please check internet connection!");
 			e1.printStackTrace();

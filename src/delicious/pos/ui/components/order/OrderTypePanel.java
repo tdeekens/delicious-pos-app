@@ -14,7 +14,9 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import delicious.pos.App;
+import delicious.pos.business.logic.dao.PriceDAO;
 import delicious.pos.business.logic.dao.gen.OrderTypeDAO;
+import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
@@ -64,8 +66,14 @@ public class OrderTypePanel extends UIPanel {
 	private void setupOrderTypes() {
 		ButtonGroup btnGroup = new ButtonGroup();
 		
-		for (final OrderTypeView orderType : this.orderTypes) {		
-			JRadioButton orderTypeBtn = new JRadioButton(App.labels.get(orderType.getName()));
+		for (final OrderTypeView orderType : this.orderTypes) {
+			JRadioButton orderTypeBtn = new JRadioButton(
+					orderType.getName()
+					+ " ("
+					+ this.getPriceForOrderType(orderType.getPriceId())
+					+ " " + App.labels.get("currency")
+					+ ") "
+			);
 			
 			orderTypeBtn.addActionListener(new ActionListener() {
 				@Override
@@ -81,5 +89,24 @@ public class OrderTypePanel extends UIPanel {
 	
 	private void setOrderType(OrderTypeView orderType) {
 		App.orderState.setOrderType(orderType);
+	}
+	
+	private Float getPriceForOrderType(Integer priceId) {
+		Float orderTypePrice = (float) 0.0;
+		
+		if(priceId == 0) return orderTypePrice;
+		
+		PriceDAO priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+
+		try {
+			PriceView price = priceDAO.findById(priceId);
+
+			orderTypePrice = price.getValue();
+		} catch (SQLException e1) {
+			App.put("Could not load Price, please check internet connection!");
+			e1.printStackTrace();
+		}
+		
+		return orderTypePrice;
 	}
 }

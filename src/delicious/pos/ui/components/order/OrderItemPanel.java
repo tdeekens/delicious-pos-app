@@ -31,8 +31,17 @@ public class OrderItemPanel extends UIPanel {
 		
 		setLayout(new BorderLayout());
 		
-		UILabel lblItem = new UILabel(this.item.getName() + " " + this.price.getValue() + this.price.getValue() + " " + App.labels.get("currency"));
-		lblItem.setHorizontalAlignment(SwingConstants.CENTER);
+		String lblString = 
+				this.item.getName() 
+				+ " in " 
+				+ this.price.getSizeValue() 
+				+ " for " 
+				+ this.price.getValue() 
+				+ " " + App.labels.get("currency");
+			
+		UILabel lblItem = new UILabel(lblString);
+		
+		lblItem.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		add(lblItem, BorderLayout.CENTER);
 	}

@@ -77,10 +77,10 @@ public class ItemPricePanel extends UIPanel {
 		this.repaint();
 	}
 
-	public void hidePrices(Object except) {
+	public void hidePrices(PriceView except) {
 		this.priceBtn.setEnabled(false);
 		
-		if ( ! except.equals(this.price) ) {
+		if ( Float.compare(except.getValue(), price.getValue()) != 0 ) {
 			this.setVisible(false);
 		}
 	}

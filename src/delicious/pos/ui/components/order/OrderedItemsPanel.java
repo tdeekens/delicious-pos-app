@@ -42,22 +42,28 @@ public class OrderedItemsPanel extends UIPanel {
 		this.init();
 		
 		this.orderedItems = App.orderState.getOrderedItems();
-		Float completePrice = new Float(0.0);
 
 		for (Map.Entry<PriceView, ItemView> entry : this.orderedItems.entrySet()) {
 			PriceView price = entry.getKey();
 			ItemView item = entry.getValue();
 
 		    this.add(new OrderItemPanel(item, price));
-
-		    completePrice =+ price.getValue();
 		}
 		
-		UILabel orderSummaryLabel = new UILabel(this.orderedItems.size() + " " + App.labels.get("items-for") + " " + completePrice + " " + App.labels.get("currency"));
-		orderSummaryLabel.setBorder(BorderFactory.createMatteBorder(2, 0, 0, 0, Color.black));
-		orderSummaryLabel.setFont(new Font("Palatino", Font.BOLD, 20));
+		UIHeaderPanel orderSummaryLabel = new UIHeaderPanel(
+				this.orderedItems.size() + " " + App.labels.get("items-for") 
+				+ " " + 
+				App.orderState.getCompletePrice() 
+				+ " (incl.: " 
+				+ App.orderState.getOrderTypePrice()
+				+ ") "
+				+ App.labels.get("currency"), 
+				null, null
+		);
 		
-		orderSummaryLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		orderSummaryLabel.setBackground(UIManager.getColor("Button.background"));
+		orderSummaryLabel.setSize(new Dimension(400, 50));
+		
 		this.add(orderSummaryLabel);
 	}
 }
