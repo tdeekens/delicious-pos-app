@@ -10,4 +10,12 @@
 	    </sql>
 	</target>
 	
+	<target name="insertTestdata">
+		<sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+		 password="${DB.PASSWORD}" classpathref="CLASSPATH"
+	     delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+	     <transaction src="./sql/insertTestData.sql"></transaction>
+	    </sql>
+	</target>
+	
 </project>
