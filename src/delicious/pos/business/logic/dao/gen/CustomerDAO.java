@@ -17,7 +17,7 @@ public class CustomerDAO extends BaseDAO
 		super(con, dbName, dbms);
 	}
 	
-	public ArrayList<CustomerView> findAll()throws SQLException
+	public ArrayList<CustomerView> findAll()
 	{
 		ArrayList<CustomerView> result = new ArrayList<CustomerView>();
 		Statement statement = null;
@@ -38,19 +38,23 @@ public class CustomerDAO extends BaseDAO
 	    } 
 	    catch (SQLException e) 
 	    {
-	    	e.printStackTrace();
+			JDBCUtilities.printSQLException(e);
 	    } 
 	    finally 
 	    {
 	    	if (statement != null) 
 	    	{ 
-	    		statement.close(); 
+	    		try {
+					statement.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	    	}
 	    }
 	    return result;
 	}
 	
-	public void persist(CustomerView customer) throws SQLException 
+	public void persist(CustomerView customer) 
 	{
 	    Statement stmt = null;
 	    try 
@@ -78,12 +82,16 @@ public class CustomerDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
 	
-	public void remove(CustomerView customer) throws SQLException
+	public void remove(CustomerView customer)
 	{
 	    PreparedStatement stmt = null;
 	    
@@ -112,7 +120,11 @@ public class CustomerDAO extends BaseDAO
 	    {
 	      if (stmt != null) 
 	      { 
-	    	  stmt.close(); 
+	    		try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
 	      }
 	    }
 	}
