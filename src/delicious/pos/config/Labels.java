@@ -19,6 +19,7 @@ public class Labels {
 		this.labels.put("order-summary", "Order summary");
 		this.labels.put("customer-details", "Customer details:");
 		this.labels.put("ordered-items", "Ordered items:");
+		this.labels.put("our-menu", "Our menu:");
 		this.labels.put("items-for", "items for:");
 		this.labels.put("currency", "Û");
 		this.labels.put("delivery", "delivery");
@@ -30,7 +31,7 @@ public class Labels {
 		this.labels.put("menu-btn", "Menu");
 		this.labels.put("home-h2", "...you're at home!");
 		this.labels.put("menu-h2", "The menu, place order...");
-		this.labels.put("order-validation-h2", "Please verify order...");
+		this.labels.put("order-validation-h2", "Please specify order...");
 		this.labels.put("order-placement-h2", "Please verify si bloody order...");
 		this.labels.put("admin-h2", "Administer the shit out of YOUR data!");
 		this.labels.put("step-of", "of");

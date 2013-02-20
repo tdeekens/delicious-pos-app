@@ -21,9 +21,6 @@ import delicious.pos.ui.screens.MenuScreen;
 
 
 public class MenuItemPanel extends UIPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private ItemPricesPanel itemPricesPanel = null;
 	private MenuScreen menuScreen;
