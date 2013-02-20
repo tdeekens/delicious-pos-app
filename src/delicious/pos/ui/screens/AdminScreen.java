@@ -12,6 +12,10 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
+import delicious.pos.business.logic.dao.SizeDAO;
+import delicious.pos.business.logic.dao.gen.CustomerDAO;
+import delicious.pos.business.logic.dao.gen.EmployeeDAO;
+import delicious.pos.business.logic.dao.gen.ItemDAO;
 import delicious.pos.ui.components.extensions.UIButton;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UIScrollPane;
@@ -25,16 +29,6 @@ public class AdminScreen extends UIPanel {
 	}
 
 	private JTabbedPane tabbedPane;
-	private Object[][] data = {
-			{ "Kathy", "Smith", "Snowboarding", new Integer(5),
-					new Boolean(false) },
-			{ "John", "Doe", "Rowing", new Integer(3), new Boolean(true) },
-			{ "Sue", "Black", "Knitting", new Integer(2), new Boolean(false) },
-			{ "Jane", "White", "Speed reading", new Integer(20),
-					new Boolean(true) },
-			{ "Joe", "Brown", "Pool", new Integer(10), new Boolean(false) } };
-	private String[] columnNames = { "First Name", "Last Name", "Sport",
-			"# of Years", "Vegetarian" };
 
 	private void init() {
 
@@ -45,10 +39,10 @@ public class AdminScreen extends UIPanel {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabsPanel.add(tabbedPane);
 		// Add images
-		tabbedPane.addTab("Employees", null, employeesPanel(), "Employees");
-		tabbedPane.addTab("Items", null, itemsPanel(), "Items");
-		tabbedPane.addTab("Customers", null, customersPanel(), "Customers");
-		tabbedPane.addTab("Sizes", null, sizesPanel(), "Sizes");
+		tabbedPane.addTab("Employees", employeesPanel());
+		tabbedPane.addTab("Items", itemsPanel());
+		tabbedPane.addTab("Customers", customersPanel());
+		tabbedPane.addTab("Sizes", sizesPanel());
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -72,12 +66,12 @@ public class AdminScreen extends UIPanel {
 		setLayout(groupLayout);
 	}
 
-	private UITable employees;
 	private DefaultTableModel employeesModel;
+	private UITable employees;
 	private UIPanel employeesPanel() {
 		UIPanel employeesPanel = new UIPanel();
-
-		employeesModel = new DefaultTableModel(data, columnNames);
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		employeesModel = new DefaultTableModel(employeeDAO.getAllAsArray(), employeeDAO.getColumnNames());
 		employees = new UITable(employeesModel);
 
 		UIScrollPane employeeScroll = new UIScrollPane(employees);
@@ -86,12 +80,12 @@ public class AdminScreen extends UIPanel {
 		return employeesPanel;
 	}
 
-	private UITable items;
 	private DefaultTableModel itemsModel;
+	private UITable items;
 	private UIPanel itemsPanel() {
 		UIPanel itemsPanel = new UIPanel();
-
-		itemsModel = new DefaultTableModel(data, columnNames);
+		ItemDAO itemDAO = new ItemDAO();
+		itemsModel = new DefaultTableModel(itemDAO.getAllAsArray(), itemDAO.getColumnNames());
 		items = new UITable(itemsModel);
 
 		UIScrollPane itemScroll = new UIScrollPane(items);
@@ -100,12 +94,12 @@ public class AdminScreen extends UIPanel {
 		return itemsPanel;
 	}
 	
-	private UITable customers;
 	private DefaultTableModel customersModel;
+	private UITable customers;
 	private UIPanel customersPanel() {
 		UIPanel customersPanel = new UIPanel();
-
-		customersModel = new DefaultTableModel(data, columnNames);
+		CustomerDAO customerDAO = new CustomerDAO();
+		customersModel = new DefaultTableModel(customerDAO.getAllAsArray(), customerDAO.getColumnNames());
 		customers = new UITable(customersModel);
 
 		UIScrollPane customerScroll = new UIScrollPane(customers);
@@ -114,13 +108,12 @@ public class AdminScreen extends UIPanel {
 		return customersPanel;
 	}
 	
-	private UITable sizes;
 	private DefaultTableModel sizesModel;
+	private UITable sizes;
 	private UIPanel sizesPanel() {
 		UIPanel sizesPanel = new UIPanel();
-		sizesModel = new DefaultTableModel(
-				new Object [][]{{"Small"}, {"Medium"}, {"Large"}}, 
-				new String[] {"Size"});
+		SizeDAO sizeDAO = new SizeDAO();
+		sizesModel = new DefaultTableModel(sizeDAO.getAllAsArray(), sizeDAO.getColumnNames());
 		sizes = new UITable(sizesModel);
 		sizes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		

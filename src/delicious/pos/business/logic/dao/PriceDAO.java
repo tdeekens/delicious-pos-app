@@ -5,12 +5,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import delicious.pos.App;
 import delicious.pos.business.logic.view.PriceView;
 
 public class PriceDAO extends BaseDAO
 {
+	public Object[] getColumnNames()
+	{
+		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("id");
+		columnNames.add("value");
+		columnNames.add("size_value");
+		columnNames.add("item_value");
+		return columnNames.toArray();
+	}
+	
+	public Object[][] getAllAsArray()
+	{
+		ArrayList<PriceView> priceViews = findAll();
+		Object[][] prices = new Object[priceViews.size()][];
+		
+		for(int i = 0;i < priceViews.size();i++) 
+		{
+			List<Object> price = new ArrayList<Object>();
+			price.add(priceViews.get(i).getValue());
+			prices[i] = price.toArray();
+		}
+		
+		return prices;
+	}
+	
 	public ArrayList<PriceView> findAll()
 	{
 		ArrayList<PriceView> result = new ArrayList<PriceView>();

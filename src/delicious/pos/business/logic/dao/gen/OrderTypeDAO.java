@@ -5,20 +5,47 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class OrderTypeDAO extends BaseDAO
 {
+	public Object[] getColumnNames()
+	{
+		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("name");
+		columnNames.add("price_id");
+		columnNames.add("target");
+		return columnNames.toArray();
+	}
+	
+	public Object[][] getAllAsArray()
+	{
+		ArrayList<OrderTypeView> orderTypeViews = findAll();
+		Object[][] orderTypes = new Object[orderTypeViews.size()][];
+		
+		for(int i = 0;i < orderTypeViews.size();i++) 
+		{
+			List<Object> orderType = new ArrayList<Object>();
+			orderType.add(orderTypeViews.get(i).getName());
+			orderType.add(orderTypeViews.get(i).getPriceId());
+			orderType.add(orderTypeViews.get(i).getTarget());
+			orderTypes[i] = orderType.toArray();
+		}
+		
+		return orderTypes;
+	}
+	
 	public ArrayList<OrderTypeView> findAll()
 	{
 		ArrayList<OrderTypeView> result = new ArrayList<OrderTypeView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT name, price_id ";
+	    String query = "SELECT name, price_id, target ";
 	    query += "FROM OrderTypes";
 	    
 	    try 
@@ -28,7 +55,7 @@ public class OrderTypeDAO extends BaseDAO
 
 	      while (resultSet.next()) 
 	      {
-	    	  OrderTypeView orderType  = new OrderTypeView(resultSet.getString("name"), resultSet.getInt("price_id"));
+	    	  OrderTypeView orderType  = new OrderTypeView(resultSet.getString("name"), resultSet.getInt("price_id"), resultSet.getString("target"));
 	          result.add(orderType);
 	      }
 	    } 
@@ -62,6 +89,7 @@ public class OrderTypeDAO extends BaseDAO
 
 	      uprs.updateString("name", orderType.getName());
 	      uprs.updateInt("price_id", orderType.getPriceId());
+	      uprs.updateString("target", orderType.getTarget());
 
 	      uprs.insertRow();
 	      uprs.beforeFirst();

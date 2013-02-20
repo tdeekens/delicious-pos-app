@@ -10,10 +10,13 @@ public class OrderTypeView extends BaseView
 	
 	private Integer priceId;
 	
-	public OrderTypeView(String name, Integer priceId)
+	private String target;
+	
+	public OrderTypeView(String name, Integer priceId, String target)
 	{
 		setName(name);
 		setPriceId(priceId);
+		setTarget(target);
 	}
 	
 	public String getName()
@@ -35,6 +38,16 @@ public class OrderTypeView extends BaseView
 	{
 		this.priceId = priceId;
 	}	
+	
+	public String getTarget()
+	{
+		return target;
+	}
+	
+	public void setTarget(String target)
+	{
+		this.target = target;
+	}
 	
 	public Map<String, String> toMap()
 	{

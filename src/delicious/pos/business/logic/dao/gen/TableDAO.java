@@ -5,14 +5,39 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.TableView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class TableDAO extends BaseDAO
 {
+	public Object[] getColumnNames()
+	{
+		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("id");
+		columnNames.add("number");
+		return columnNames.toArray();
+	}
+	
+	public Object[][] getAllAsArray()
+	{
+		ArrayList<TableView> tableViews = findAll();
+		Object[][] tables = new Object[tableViews.size()][];
+		
+		for(int i = 0;i < tableViews.size();i++) 
+		{
+			List<Object> table = new ArrayList<Object>();
+			table.add(tableViews.get(i).getId());
+			table.add(tableViews.get(i).getNumber());
+			tables[i] = table.toArray();
+		}
+		
+		return tables;
+	}
+	
 	public ArrayList<TableView> findAll()
 	{
 		ArrayList<TableView> result = new ArrayList<TableView>();

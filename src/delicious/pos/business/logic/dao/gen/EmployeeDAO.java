@@ -5,14 +5,43 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.EmployeeView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class EmployeeDAO extends BaseDAO
 {
+	public Object[] getColumnNames()
+	{
+		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("userName");
+		columnNames.add("salary");
+		columnNames.add("phone");
+		columnNames.add("position");
+		return columnNames.toArray();
+	}
+	
+	public Object[][] getAllAsArray()
+	{
+		ArrayList<EmployeeView> employeeViews = findAll();
+		Object[][] employees = new Object[employeeViews.size()][];
+		
+		for(int i = 0;i < employeeViews.size();i++) 
+		{
+			List<Object> employee = new ArrayList<Object>();
+			employee.add(employeeViews.get(i).getUserName());
+			employee.add(employeeViews.get(i).getSalary());
+			employee.add(employeeViews.get(i).getPhone());
+			employee.add(employeeViews.get(i).getPosition());
+			employees[i] = employee.toArray();
+		}
+		
+		return employees;
+	}
+	
 	public ArrayList<EmployeeView> findAll()
 	{
 		ArrayList<EmployeeView> result = new ArrayList<EmployeeView>();

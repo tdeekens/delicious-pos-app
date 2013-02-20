@@ -5,14 +5,47 @@ import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.CustomerView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class CustomerDAO extends BaseDAO
 {
+	public Object[] getColumnNames()
+	{
+		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("firstName");
+		columnNames.add("lastName");
+		columnNames.add("street");
+		columnNames.add("zip");
+		columnNames.add("city");
+		columnNames.add("phone");
+		return columnNames.toArray();
+	}
+	
+	public Object[][] getAllAsArray()
+	{
+		ArrayList<CustomerView> customerViews = findAll();
+		Object[][] customers = new Object[customerViews.size()][];
+		
+		for(int i = 0;i < customerViews.size();i++) 
+		{
+			List<Object> customer = new ArrayList<Object>();
+			customer.add(customerViews.get(i).getFirstName());
+			customer.add(customerViews.get(i).getLastName());
+			customer.add(customerViews.get(i).getStreet());
+			customer.add(customerViews.get(i).getZIP());
+			customer.add(customerViews.get(i).getCity());
+			customer.add(customerViews.get(i).getPhone());
+			customers[i] = customer.toArray();
+		}
+		
+		return customers;
+	}
+
 	public ArrayList<CustomerView> findAll()
 	{
 		ArrayList<CustomerView> result = new ArrayList<CustomerView>();
