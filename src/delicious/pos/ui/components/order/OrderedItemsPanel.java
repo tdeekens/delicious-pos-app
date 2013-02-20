@@ -58,20 +58,32 @@ public class OrderedItemsPanel extends UIPanel {
 	public void renderOrderSummary() {
 		if(this.orderSummaryHeader instanceof Component) this.remove(this.orderSummaryHeader);
 		
-		this.orderSummaryHeader = new UIHeaderPanel(
+		String orderSummaryLbl = 
 				this.orderedItems.size() + " " + App.labels.get("items-for") 
 				+ " " + 
 				App.orderState.getCompletePrice() 
+				+ " " + App.labels.get("currency")
 				+ " (incl.: " 
 				+ App.orderState.getOrderTypePrice()
-				+ " Û) "
-				+ App.labels.get("currency"), 
+				+ " "
+				+ App.labels.get("currency")
+				+ ")";
+		
+		this.orderSummaryHeader = new UIHeaderPanel(
+				orderSummaryLbl, 
 				null, null
 		);
-		
+						
 		this.orderSummaryHeader.setBackground(UIManager.getColor("Button.background"));
 		this.orderSummaryHeader.setSize(new Dimension(400, 50));
 		
 		this.add(this.orderSummaryHeader);
+		
+		this.redraw();
+	}
+	
+	private void redraw() {
+		this.validate();
+		this.repaint();
 	}
 }

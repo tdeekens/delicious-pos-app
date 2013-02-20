@@ -48,7 +48,7 @@ public class OrderTypePanel extends UIPanel {
 		this.setMaximumSize(this.getPreferredSize());
 		
 		this.orderTypePanel = new UIPanel();
-		this.orderTypePanel.setLayout(new BoxLayout(this.orderTypePanel, BoxLayout.X_AXIS));
+		this.orderTypePanel.setLayout(new BoxLayout(this.orderTypePanel, BoxLayout.Y_AXIS));
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 						
