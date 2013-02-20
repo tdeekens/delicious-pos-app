@@ -1,9 +1,10 @@
 package delicious.pos.business.logic.dao.gen;
 
+import delicious.pos.App;
 import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.CustomerView;
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +13,6 @@ import java.util.ArrayList;
 
 public class CustomerDAO extends BaseDAO
 {
-	public CustomerDAO(Connection con, String dbName, String dbms)
-	{
-		super(con, dbName, dbms);
-	}
-	
 	public ArrayList<CustomerView> findAll()
 	{
 		ArrayList<CustomerView> result = new ArrayList<CustomerView>();
@@ -27,7 +23,7 @@ public class CustomerDAO extends BaseDAO
 	    
 	    try 
 	    {
-	    	statement = getCon().createStatement();
+	    	statement = App.DBConnection.createStatement();
 	    	ResultSet resultSet = statement.executeQuery(query);
 
 	      while (resultSet.next()) 
@@ -59,7 +55,7 @@ public class CustomerDAO extends BaseDAO
 	    Statement stmt = null;
 	    try 
 	    {
-	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Customers");
 
 	      uprs.moveToInsertRow();
@@ -101,7 +97,7 @@ public class CustomerDAO extends BaseDAO
 	    
 	    try 
 	    {
-	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      stmt.setString(1, customer.getFirstName());
 	      stmt.setString(2, customer.getLastName());
 	      

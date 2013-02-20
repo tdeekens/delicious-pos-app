@@ -14,7 +14,7 @@ public class App {
 	public static ApplicationState orderState;
 	public static Labels labels;
 	public static Connection DBConnection;
-	public static JDBCUtilities JDBCUtilities;
+	public static JDBCUtilities JDBCUtility;
 	
 	public static void put(String string) {
 		System.out.println(string);
@@ -36,18 +36,9 @@ public class App {
 	}
 	
 	private static void setupDatabase() {
-		try {
-			JDBCUtilities = new JDBCUtilities();
-	    } catch (Exception e) {
-	    	App.put("Problem reading properties file ");
-	        e.printStackTrace();
-	        return;
-	    }
-		
+		JDBCUtility = new JDBCUtilities();
 		try {
 			DBConnection = JDBCUtilities.getConnection();
-	    } catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
+	    } catch (SQLException e) { e.printStackTrace(); }
 	}
 }

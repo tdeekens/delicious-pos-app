@@ -1,9 +1,10 @@
 package delicious.pos.business.logic.dao.gen;
 
+import delicious.pos.App;
 import delicious.pos.business.logic.dao.BaseDAO;
 import delicious.pos.business.logic.dao.JDBCUtilities;
 import delicious.pos.business.logic.view.gen.OrderView;
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +13,6 @@ import java.util.ArrayList;
 
 public class OrderDAO extends BaseDAO
 {
-	public OrderDAO(Connection con, String dbName, String dbms)
-	{
-		super(con, dbName, dbms);
-	}
-	
 	public ArrayList<OrderView> findAll()
 	{
 		ArrayList<OrderView> result = new ArrayList<OrderView>();
@@ -27,7 +23,7 @@ public class OrderDAO extends BaseDAO
 	    
 	    try 
 	    {
-	    	statement = getCon().createStatement();
+	    	statement = App.DBConnection.createStatement();
 	    	ResultSet resultSet = statement.executeQuery(query);
 
 	      while (resultSet.next()) 
@@ -59,7 +55,7 @@ public class OrderDAO extends BaseDAO
 	    Statement stmt = null;
 	    try 
 	    {
-	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Orders");
 
 	      uprs.moveToInsertRow();
@@ -97,7 +93,7 @@ public class OrderDAO extends BaseDAO
 	    
 	    try 
 	    {
-	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      stmt.setInt(1, order.getId());
 	      
 	      ResultSet uprs = stmt.executeQuery();

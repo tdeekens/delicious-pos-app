@@ -1,21 +1,16 @@
 package delicious.pos.business.logic.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import delicious.pos.App;
 import delicious.pos.business.logic.view.SizeView;
 
 public class SizeDAO extends BaseDAO
 {
-	public SizeDAO(Connection con, String dbName, String dbms)
-	{
-		super(con, dbName, dbms);
-	}
-	
 	public ArrayList<SizeView> findAll()
 	{
 		ArrayList<SizeView> result = new ArrayList<SizeView>();
@@ -26,7 +21,7 @@ public class SizeDAO extends BaseDAO
 	    
 	    try 
 	    {
-	    	stmt = getCon().createStatement();
+	    	stmt = App.DBConnection.createStatement();
 	    	ResultSet resultSet = stmt.executeQuery(query);
 
 	      while (resultSet.next()) 
@@ -58,7 +53,7 @@ public class SizeDAO extends BaseDAO
 	    Statement stmt = null;
 	    try 
 	    {
-	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Sizes");
 
 	      uprs.moveToInsertRow();
@@ -94,7 +89,7 @@ public class SizeDAO extends BaseDAO
 	    
 	    try 
 	    {
-	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      stmt.setString(1, size.getValue());
 	      
 	      ResultSet uprs = stmt.executeQuery();

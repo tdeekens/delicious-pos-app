@@ -1,21 +1,16 @@
 package delicious.pos.business.logic.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import delicious.pos.App;
 import delicious.pos.business.logic.view.PriceView;
 
 public class PriceDAO extends BaseDAO
 {
-	public PriceDAO(Connection con, String dbName, String dbms)
-	{
-		super(con, dbName, dbms);
-	}
-	
 	public ArrayList<PriceView> findAll()
 	{
 		ArrayList<PriceView> result = new ArrayList<PriceView>();
@@ -26,7 +21,7 @@ public class PriceDAO extends BaseDAO
 	    
 	    try 
 	    {
-	    	stmt = getCon().createStatement();
+	    	stmt = App.DBConnection.createStatement();
 	    	ResultSet resultSet = stmt.executeQuery(query);
 
 	      while (resultSet.next()) 
@@ -61,7 +56,7 @@ public class PriceDAO extends BaseDAO
 	    Statement stmt = null;
 	    try 
 	    {
-	      stmt = getCon().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Prices");
 
 	      uprs.moveToInsertRow();
@@ -103,7 +98,7 @@ public class PriceDAO extends BaseDAO
 	    
 	    try 
 	    {
-	      stmt = getCon().prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+	      stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      stmt.setInt(1, price.getId());
 	      
 	      ResultSet uprs = stmt.executeQuery();
@@ -144,7 +139,7 @@ public class PriceDAO extends BaseDAO
 	    
 	    try 
 	    {
-	    	stmt = getCon().prepareStatement(query);
+	    	stmt = App.DBConnection.prepareStatement(query);
 	    	stmt.setString(1, itemName);
 	    	ResultSet resultSet = stmt.executeQuery();
 
@@ -183,7 +178,7 @@ public class PriceDAO extends BaseDAO
 	    
 	    try 
 	    {
-	    	stmt = getCon().prepareStatement(query);
+	    	stmt = App.DBConnection.prepareStatement(query);
 	    	stmt.setInt(1, id);
 	    	ResultSet resultSet = stmt.executeQuery();
 

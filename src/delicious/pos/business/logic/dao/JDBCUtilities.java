@@ -11,60 +11,55 @@ import java.util.Properties;
 
 public class JDBCUtilities 
 {
-	public String dbms;
+	public static String dbms;
 	
-	public String jarFile;
+	public static String dbName; 
 	
-	public String dbName; 
+	public static String userName;
 	
-	public String userName;
-	
-	public String password;
-	
-	public String urlString;
-	  
-	private String driver;
-	
-	private String serverName;
-	
-	private int portNumber;
-	
-	private Properties prop;
+	public static String password;
 	
 	private static String propertiesFileName = "./././././properties/javadb-pos-properties.xml";
 	
-	public JDBCUtilities() throws FileNotFoundException, IOException, InvalidPropertiesFormatException 
+	public JDBCUtilities()
 	{
 		this.setProperties(propertiesFileName);
 	}
 	  
-	private void setProperties(String fileName) throws FileNotFoundException, IOException, InvalidPropertiesFormatException 
+	private void setProperties(String fileName)
 	{
-		this.prop = new Properties();
-		FileInputStream fis = new FileInputStream(fileName);
-		prop.loadFromXML(fis);
+		Properties prop = new Properties();
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(fileName);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			prop.loadFromXML(fis);
+		} catch (InvalidPropertiesFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		this.dbms = this.prop.getProperty("dbms");
-		this.jarFile = this.prop.getProperty("jar_file");
-		this.driver = this.prop.getProperty("driver");
-		this.dbName = this.prop.getProperty("database_name");
-		this.userName = this.prop.getProperty("user_name");
-		this.password = this.prop.getProperty("password");
-		this.serverName = this.prop.getProperty("server_name");
-		this.portNumber = Integer.parseInt(this.prop.getProperty("port_number"));
+		dbms = prop.getProperty("dbms");
+		dbName = prop.getProperty("database_name");
+		userName = prop.getProperty("user_name");
+		password = prop.getProperty("password");
 	}
 	
-	public Connection getConnection() throws SQLException
+	public static Connection getConnection() throws SQLException
 	{ 
 		Connection conn = null;
 		Properties connectionProps = new Properties();
-		connectionProps.put("user", this.userName);
-		connectionProps.put("password", this.password);
+		connectionProps.put("user", userName);
+		connectionProps.put("password", password);
 
-		if (this.dbms.equals("derby")) 
+		if (dbms.equals("derby")) 
 		{
-			this.urlString = "jdbc:" + this.dbms + ":" + this.dbName;
-			conn = DriverManager.getConnection(this.urlString + ";create=true", connectionProps);    
+			String urlString = "jdbc:" + dbms + ":" + dbName;
+			conn = DriverManager.getConnection(urlString + ";create=true", connectionProps);    
 		}
 		return conn;
 	}
