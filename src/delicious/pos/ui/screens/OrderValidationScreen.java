@@ -3,8 +3,8 @@ package delicious.pos.ui.screens;
 import java.awt.BorderLayout;
 
 import delicious.pos.ui.components.extensions.UIPanel;
-import delicious.pos.ui.components.order.OrderTypePanel;
-import delicious.pos.ui.components.order.OrderedItemsPanel;
+import delicious.pos.ui.components.order.item.OrderedItemsPanel;
+import delicious.pos.ui.components.order.type.OrderTypePanel;
 
 public class OrderValidationScreen extends UIPanel {
 

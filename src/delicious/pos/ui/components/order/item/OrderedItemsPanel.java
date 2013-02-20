@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.order;
+package delicious.pos.ui.components.order.item;
 
 import java.awt.Color;
 import java.awt.Component;

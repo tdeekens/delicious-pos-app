@@ -1,5 +1,7 @@
-package delicious.pos.ui.components.order;
+package delicious.pos.ui.components.order.type;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -22,10 +25,13 @@ import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.screens.OrderValidationScreen;
 import delicious.pos.util.ImageLoader;
+import java.awt.FlowLayout;
 
 public class OrderTypePanel extends UIPanel {
 	
 	private UIPanel orderTypePanel;
+	private UIPanel orderTypeInfoPanel;
+	private UIPanel orderTargetPanel;
 	private OrderTypeDAO orderTypeDAO;
 	private ArrayList<OrderTypeView> orderTypes;
 	private OrderValidationScreen parentScreen;
@@ -43,23 +49,25 @@ public class OrderTypePanel extends UIPanel {
 	}
 
 	private void init() {
-		this.setPreferredSize(new Dimension(400, 200));
-		this.setMinimumSize(this.getPreferredSize());
-		this.setMaximumSize(this.getPreferredSize());
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		this.orderTypePanel = new UIPanel();
+		this.orderTypeInfoPanel = new UIPanel();
+		this.orderTargetPanel = new UIPanel();
+		
 		this.orderTypePanel.setLayout(new BoxLayout(this.orderTypePanel, BoxLayout.Y_AXIS));
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-						
 		UIHeaderPanel orderTypeHeader = new UIHeaderPanel(App.labels.get("specify-order"), null, null);
 		orderTypeHeader.setBackground(UIManager.getColor("Button.background"));
 		orderTypeHeader.setSize(new Dimension(400, 50));
-				
-		this.setupOrderTypes();
-		
+
 		this.add(orderTypeHeader);
+		
+		this.setupOrderTypes();
 		this.add(this.orderTypePanel);
+		
+		this.add(this.orderTypeInfoPanel);
 	}
 
 	private void setupOrderTypes() {
@@ -74,10 +82,14 @@ public class OrderTypePanel extends UIPanel {
 					+ ") "
 			);
 			
+			orderTypeBtn.setHorizontalAlignment(SwingConstants.LEFT);
+			
 			orderTypeBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					setOrderType(orderType);
+					showOrderTypeInfo(orderType);
+					showOrderTarget(orderType);
 				}
 			});
 			
@@ -89,6 +101,25 @@ public class OrderTypePanel extends UIPanel {
 	private void setOrderType(OrderTypeView orderType) {
 		App.orderState.setOrderType(orderType);
 		this.parentScreen.onOrderTypeSet();
+	}
+	
+	private void showOrderTypeInfo(OrderTypeView orderType) {
+		this.orderTypeInfoPanel.removeAll();
+		this.orderTypeInfoPanel.setBorder(BorderFactory.createMatteBorder(0, 10, 0, 0, UIManager.getColor("Button.background")));
+		
+		this.orderTypeInfoPanel.add(new OrderTypeInfoPanel(orderType));
+		
+		this.orderTypeInfoPanel.validate();
+		this.orderTypeInfoPanel.repaint();
+	}
+	
+	private void showOrderTarget(OrderTypeView orderType) {
+		//TODO Tobi: check ordertype's target and render OrderTargetTablePanel or John's customer selection list
+	}
+	
+	public void redraw() {
+		this.validate();
+		this.repaint();
 	}
 	
 	private Float getPriceForOrderType(Integer priceId) {

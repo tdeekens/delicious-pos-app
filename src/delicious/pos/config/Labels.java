@@ -56,5 +56,6 @@ public class Labels {
 		this.labels.put("value", "Value");
 		this.labels.put("sizeValue", "Size");
 		this.labels.put("itemName", "Name");
+		this.labels.put("restaurant-table", "Table-Nr");
 	}
 }

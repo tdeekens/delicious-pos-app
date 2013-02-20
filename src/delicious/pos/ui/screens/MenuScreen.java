@@ -20,8 +20,8 @@ import delicious.pos.ui.components.customer.CustomerDetailItemPanel;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UISplitPane;
-import delicious.pos.ui.components.menu.MenuItemPanel;
 import delicious.pos.ui.components.menu.MenuPanel;
+import delicious.pos.ui.components.menu.item.MenuItemPanel;
 import delicious.pos.ui.components.order.OrderPanel;
 
 public class MenuScreen extends UIPanel {

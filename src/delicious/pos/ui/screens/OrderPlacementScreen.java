@@ -6,7 +6,7 @@ import delicious.pos.App;
 import delicious.pos.business.logic.view.gen.CustomerView;
 import delicious.pos.ui.components.customer.CustomerDetailPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
-import delicious.pos.ui.components.order.OrderedItemsPanel;
+import delicious.pos.ui.components.order.item.OrderedItemsPanel;
 
 public class OrderPlacementScreen extends UIPanel {
 

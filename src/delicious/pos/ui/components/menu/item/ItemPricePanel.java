@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.menu;
+package delicious.pos.ui.components.menu.item;
 
 
 import java.awt.BorderLayout;

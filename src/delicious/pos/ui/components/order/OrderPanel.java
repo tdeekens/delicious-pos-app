@@ -6,7 +6,7 @@ import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UIScrollPane;
-import delicious.pos.ui.components.menu.MenuItemPanel;
+import delicious.pos.ui.components.menu.item.MenuItemPanel;
 import delicious.pos.ui.screens.MenuScreen;
 
 public class OrderPanel extends UIPanel {
