@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -32,16 +34,17 @@ public class OrderTargetTablePanel extends UIPanel {
 		setLayout(new BorderLayout());
 		
 		UILabel lblItem = new UILabel(App.labels.get("restaurant-table") + ":");
-		JTextField txtField = new JTextField("", 15);
+		final JTextField txtField = new JTextField("", 15);
 		
-		txtField.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO Tobi: set the table number... where?
-			}
+		txtField.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                JTextField textField = (JTextField) e.getSource();
+                
+                //TODO: Tobi: where to set the table number, which viewobj
+            }
 		});
 		
 		this.add(lblItem, BorderLayout.WEST);
-		this.add(lblItem, BorderLayout.CENTER);
+		this.add(txtField, BorderLayout.CENTER);
 	}
 }
