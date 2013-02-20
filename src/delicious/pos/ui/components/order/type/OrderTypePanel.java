@@ -23,6 +23,7 @@ import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
 import delicious.pos.ui.components.extensions.UIPanel;
+import delicious.pos.ui.components.order.target.CustomerFilterList;
 import delicious.pos.ui.screens.OrderValidationScreen;
 import delicious.pos.util.ImageLoader;
 import java.awt.FlowLayout;
@@ -68,6 +69,7 @@ public class OrderTypePanel extends UIPanel {
 		this.add(this.orderTypePanel);
 		
 		this.add(this.orderTypeInfoPanel);
+		this.add(this.orderTargetPanel);
 	}
 
 	private void setupOrderTypes() {
@@ -114,6 +116,11 @@ public class OrderTypePanel extends UIPanel {
 	}
 	
 	private void showOrderTarget(OrderTypeView orderType) {
+		CustomerFilterList customerFilterList = new CustomerFilterList();
+		
+		this.orderTargetPanel.add(customerFilterList.getPane());
+		
+		this.redraw();
 		//TODO Tobi: check ordertype's target and render OrderTargetTablePanel or John's customer selection list
 	}
 	

@@ -2,6 +2,8 @@ package delicious.pos.ui.components.extensions;
 
 import javax.swing.JScrollPane;
 
+import delicious.pos.ui.components.order.target.CustomerFilterList;
+
 public class UIScrollPane extends JScrollPane {
 	
 	public UIScrollPane() {
@@ -15,6 +17,15 @@ public class UIScrollPane extends JScrollPane {
 	
 	public UIScrollPane(UITable table) {
 		super(table);
+		
+		this.init();
+	}
+
+	public UIScrollPane(CustomerFilterList customerFilterList, int verticalScrollbarAlways, int horizontalScrollbarNever) {
+		
+		super(customerFilterList, verticalScrollbarAlways, horizontalScrollbarNever);
+		
+		this.init();
 	}
 
 	public void init() {
