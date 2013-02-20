@@ -73,11 +73,11 @@ CREATE TABLE OrderedItems
 id int NOT NULL,
 order_id int NOT NULL,
 item_name varchar(255) NOT NULL,
-item_size varchar(255),
+price_id int NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (order_id) REFERENCES Orders(id),
 FOREIGN KEY (item_name) REFERENCES Items(name),
-FOREIGN KEY (item_size) REFERENCES Sizes(value)
+FOREIGN KEY (price_id) REFERENCES Prices(id)
 );
 
 INSERT INTO OrderTypes VALUES ('Delivery',null);
