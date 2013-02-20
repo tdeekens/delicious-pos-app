@@ -5,12 +5,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import delicious.pos.App;
 import delicious.pos.business.logic.view.SizeView;
 
 public class SizeDAO extends BaseDAO
 {
+	public Object[] getColumnNames()
+	{
+		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("value");
+		return columnNames.toArray();
+	}
+	
+	public Object[][] getAllAsArray()
+	{
+		ArrayList<SizeView> sizeViews = findAll();
+		Object[][] sizes = new Object[sizeViews.size()][];
+		
+		for(int i = 0;i < sizeViews.size();i++) 
+		{
+			List<Object> size = new ArrayList<Object>();
+			size.add(sizeViews.get(i).getValue());
+			sizes[i] = size.toArray();
+		}
+		
+		return sizes;
+	}
+	
 	public ArrayList<SizeView> findAll()
 	{
 		ArrayList<SizeView> result = new ArrayList<SizeView>();
