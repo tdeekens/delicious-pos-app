@@ -22,7 +22,7 @@ public class ApplicationState {
 		this.orderItems = new HashMap<PriceView, ItemView>();
 		this.completePrice = (float) 0.0;
 		this.orderTypePrice = (float) 0.0;
-		this.priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		this.priceDAO = new PriceDAO();
 	}
 	
 	public void addOrderItem(ItemView orderItem, PriceView priceItem) {

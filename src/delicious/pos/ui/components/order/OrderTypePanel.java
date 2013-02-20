@@ -35,7 +35,7 @@ public class OrderTypePanel extends UIPanel {
 		
 		this.parentScreen = parentScreen;
 		
-		this.orderTypeDAO = new OrderTypeDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		this.orderTypeDAO = new OrderTypeDAO();
 		
 		this.orderTypes = this.orderTypeDAO.findAll();
 		
@@ -96,7 +96,7 @@ public class OrderTypePanel extends UIPanel {
 		
 		if(priceId == 0) return orderTypePrice;
 		
-		PriceDAO priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		PriceDAO priceDAO = new PriceDAO();
 
 		PriceView price = priceDAO.findById(priceId);
 

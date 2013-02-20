@@ -47,7 +47,7 @@ public class MenuItemPanel extends UIPanel {
 		this.setMaximumSize(this.getPreferredSize());
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-		this.priceDAO = new PriceDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		this.priceDAO = new PriceDAO();
 
 		JLabel lblItemName = new UILabel(this.item.getName());
 		lblItemName.setVerticalAlignment(SwingConstants.CENTER);

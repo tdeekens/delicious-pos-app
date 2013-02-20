@@ -39,7 +39,7 @@ public class MenuScreen extends UIPanel {
 	public void init() {
 		this.setLayout(new BorderLayout());
 		
-		this.itemDAO = new ItemDAO(App.DBConnection, App.JDBCUtilities.dbName, App.JDBCUtilities.dbms);
+		this.itemDAO = new ItemDAO();
 		this.menuItems = this.itemDAO.findAll();
 		
 		UIPanel contentPane = new UIPanel();
