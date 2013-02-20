@@ -19,6 +19,7 @@ public class OrderTypeDAO extends BaseDAO
 		List<String> columnNames = new ArrayList<String>();
 		columnNames.add("name");
 		columnNames.add("price_id");
+		columnNames.add("target");
 		return columnNames.toArray();
 	}
 	
@@ -32,6 +33,7 @@ public class OrderTypeDAO extends BaseDAO
 			List<Object> orderType = new ArrayList<Object>();
 			orderType.add(orderTypeViews.get(i).getName());
 			orderType.add(orderTypeViews.get(i).getPriceId());
+			orderType.add(orderTypeViews.get(i).getTarget());
 			orderTypes[i] = orderType.toArray();
 		}
 		
@@ -43,7 +45,7 @@ public class OrderTypeDAO extends BaseDAO
 		ArrayList<OrderTypeView> result = new ArrayList<OrderTypeView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT name, price_id ";
+	    String query = "SELECT name, price_id, target ";
 	    query += "FROM OrderTypes";
 	    
 	    try 
@@ -53,7 +55,7 @@ public class OrderTypeDAO extends BaseDAO
 
 	      while (resultSet.next()) 
 	      {
-	    	  OrderTypeView orderType  = new OrderTypeView(resultSet.getString("name"), resultSet.getInt("price_id"));
+	    	  OrderTypeView orderType  = new OrderTypeView(resultSet.getString("name"), resultSet.getInt("price_id"), resultSet.getString("target"));
 	          result.add(orderType);
 	      }
 	    } 
@@ -87,6 +89,7 @@ public class OrderTypeDAO extends BaseDAO
 
 	      uprs.updateString("name", orderType.getName());
 	      uprs.updateInt("price_id", orderType.getPriceId());
+	      uprs.updateString("target", orderType.getTarget());
 
 	      uprs.insertRow();
 	      uprs.beforeFirst();

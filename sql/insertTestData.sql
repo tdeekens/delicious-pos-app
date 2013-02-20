@@ -40,4 +40,4 @@ INSERT INTO Prices VALUES(14,80,'Medium','Feta salad');
 INSERT INTO Prices VALUES(15,100,'Large','Feta salad');
 INSERT INTO Prices VALUES(16,10,null,null);
 
-INSERT INTO OrderTypes VALUES('Night delivery',16);
+INSERT INTO OrderTypes VALUES('Night delivery','Customer',16);

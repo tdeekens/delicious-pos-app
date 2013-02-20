@@ -53,6 +53,7 @@ FOREIGN KEY (item_name) REFERENCES Items(name)
 CREATE TABLE OrderTypes
 (
 name varchar(255) NOT NULL,
+target varchar(255),
 PRIMARY KEY (name),
 price_id int,
 FOREIGN KEY (price_id) REFERENCES Prices(id)
@@ -80,9 +81,9 @@ FOREIGN KEY (item_name) REFERENCES Items(name),
 FOREIGN KEY (price_id) REFERENCES Prices(id)
 );
 
-INSERT INTO OrderTypes VALUES ('Delivery',null);
-INSERT INTO OrderTypes VALUES ('Eat In',null);
-INSERT INTO OrderTypes VALUES ('Takeaway',null);
+INSERT INTO OrderTypes VALUES ('Delivery','Customer',null);
+INSERT INTO OrderTypes VALUES ('Eat In','Target',null);
+INSERT INTO OrderTypes VALUES ('Takeaway',null, null);
 
 INSERT INTO Sizes VALUES ('Small');
 INSERT INTO Sizes VALUES ('Medium');
