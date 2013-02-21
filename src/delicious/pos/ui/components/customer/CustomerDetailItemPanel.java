@@ -30,7 +30,8 @@ public class CustomerDetailItemPanel extends UIPanel {
 		setLayout(new BorderLayout());
 		
 		UILabel lblItem = new UILabel(App.labels.get(this.rowName) + ": " + this.rowValue);
-		lblItem.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblItem.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		add(lblItem, BorderLayout.CENTER);
 	}

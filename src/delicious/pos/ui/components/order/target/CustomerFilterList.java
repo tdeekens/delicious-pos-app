@@ -57,6 +57,10 @@ public class CustomerFilterList extends JList {
         
         this.contentPane = new UIPanel();
         
+        this.contentPane.setPreferredSize(new Dimension(300, 300));
+		this.contentPane.setMinimumSize(this.getPreferredSize());
+		this.contentPane.setMaximumSize(this.getPreferredSize());
+        
         this.contentPane.setLayout(new BorderLayout());
         
         this.contentPane.add(this.getFilterField(), BorderLayout.NORTH);

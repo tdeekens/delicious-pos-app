@@ -2,6 +2,9 @@ package delicious.pos.ui.screens;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+
 import delicious.pos.App;
 import delicious.pos.business.logic.view.gen.CustomerView;
 import delicious.pos.ui.components.customer.CustomerDetailPanel;
@@ -19,10 +22,10 @@ public class OrderPlacementScreen extends UIPanel {
 
 	public void init() {
 		this.setLayout(new BorderLayout());
-		
+				
 		this.orderItemsPanel = new OrderedItemsPanel();
 		this.customerDetailPanel = new CustomerDetailPanel();
-		
+				
 		this.add(this.customerDetailPanel, BorderLayout.WEST);
 		this.add(this.orderItemsPanel, BorderLayout.CENTER);
 	}

@@ -28,7 +28,9 @@ public class MainScreen extends UIFrame {
 	
 	private void init() {
 		setSize(new Dimension(1024, 768));
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		
 		this.setLocation(
 				(dim.width/2) - (this.getSize().width/2), 
 				(dim.height/2) - (this.getSize().height/2)

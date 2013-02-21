@@ -21,7 +21,7 @@ public class CustomerView extends BaseView
 	public CustomerView(String firstName, String lastName,  String street,  String zip,  String city,  String phone)
 	{
 		setFirstName(firstName);
-		setLastName(firstName);
+		setLastName(lastName);
 		setStreet(street);
 		setZIP(zip);
 		setCity(city);
@@ -98,5 +98,21 @@ public class CustomerView extends BaseView
 		viewAsMap.put("city", getCity());
 		viewAsMap.put("phone", getPhone());
 		return viewAsMap;
+	}
+	
+	public String toString() {
+		String toString;
+		
+		toString =
+			getLastName()
+			+ ", "
+			+ getFirstName()
+			+ " ("
+			+ getZIP()
+			+ " "
+			+ getCity()
+			+ ")";
+		
+		return toString;
 	}
 }

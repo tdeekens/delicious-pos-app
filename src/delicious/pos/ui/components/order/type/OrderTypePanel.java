@@ -71,6 +71,11 @@ public class OrderTypePanel extends UIPanel {
 		
 		this.add(this.orderTypeInfoPanel);
 		this.add(this.orderTargetPanel);
+
+		
+		this.orderTypeInfoPanel.setPreferredSize(new Dimension(400, 150));
+		this.orderTypeInfoPanel.setMinimumSize(this.getPreferredSize());
+		this.orderTypeInfoPanel.setMaximumSize(this.getPreferredSize());
 	}
 
 	private void setupOrderTypes() {
@@ -108,7 +113,6 @@ public class OrderTypePanel extends UIPanel {
 	
 	private void showOrderTypeInfo(OrderTypeView orderType) {
 		this.orderTypeInfoPanel.removeAll();
-		this.orderTypeInfoPanel.setBorder(BorderFactory.createMatteBorder(0, 10, 0, 0, UIManager.getColor("Button.background")));
 		
 		this.orderTypeInfoPanel.add(new OrderTypeInfoPanel(orderType));
 		

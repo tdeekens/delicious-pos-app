@@ -27,7 +27,7 @@ public class OrderTypeInfoItemPanel extends UIPanel {
 	public void init() {
 		setLayout(new BorderLayout());
 		
-		this.setPreferredSize(new Dimension(400, 20));
+		this.setPreferredSize(new Dimension(300, 20));
 		this.setMinimumSize(this.getPreferredSize());
 		this.setMaximumSize(this.getPreferredSize());
 				

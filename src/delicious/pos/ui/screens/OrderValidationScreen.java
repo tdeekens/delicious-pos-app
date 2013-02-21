@@ -2,6 +2,9 @@ package delicious.pos.ui.screens;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.UIManager;
+
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.order.item.OrderedItemsPanel;
 import delicious.pos.ui.components.order.type.OrderTypePanel;
