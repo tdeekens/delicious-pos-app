@@ -4,18 +4,25 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import delicious.pos.business.logic.dao.SizeDAO;
 import delicious.pos.business.logic.dao.gen.CustomerDAO;
 import delicious.pos.business.logic.dao.gen.EmployeeDAO;
 import delicious.pos.business.logic.dao.gen.ItemDAO;
+import delicious.pos.business.logic.view.gen.EmployeeView;
 import delicious.pos.ui.components.extensions.UIButton;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.components.extensions.UIScrollPane;
@@ -37,12 +44,12 @@ public class AdminScreen extends UIPanel {
 		UIPanel tabsPanel = new UIPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addTab("Employees", null, employees(), "Employees");
+		tabbedPane.addTab("Items", null, items(), "Items");
+		tabbedPane.addTab("Customers", null, customers(), "Customers");
+		tabbedPane.addTab("Sizes", null, sizes(), "Sizes");
+		
 		tabsPanel.add(tabbedPane);
-		// Add images
-		tabbedPane.addTab("Employees", employeesPanel());
-		tabbedPane.addTab("Items", itemsPanel());
-		tabbedPane.addTab("Customers", customersPanel());
-		tabbedPane.addTab("Sizes", sizesPanel());
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -66,61 +73,63 @@ public class AdminScreen extends UIPanel {
 		setLayout(groupLayout);
 	}
 
-	private DefaultTableModel employeesModel;
+	private int employeeRows;
 	private UITable employees;
-	private UIPanel employeesPanel() {
-		UIPanel employeesPanel = new UIPanel();
+	private DefaultTableModel employeesModel;
+	private List<Integer> touchedRows;
+	private UIScrollPane employees() {
 		EmployeeDAO employeeDAO = new EmployeeDAO();
-		employeesModel = new DefaultTableModel(employeeDAO.getAllAsArray(), employeeDAO.getColumnNames());
+		touchedRows = new Vector<Integer>();
+		employeesModel = new DefaultTableModel(employeeDAO.getAllAsArray(), 
+						employeeDAO.getColumnNames());
 		employees = new UITable(employeesModel);
+		
+		ListSelectionModel rowSelectionModel = employees.getSelectionModel();
+		rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting())
+					return;
+				touchedRows.add(employees.getSelectedRow());
+			}
 
-		UIScrollPane employeeScroll = new UIScrollPane(employees);
-		employeesPanel.add(employeeScroll);
-
-		return employeesPanel;
+		});
+		
+		employeeRows = employeeDAO.getAllAsArray().length;
+		return new UIScrollPane(employees);
 	}
 
-	private DefaultTableModel itemsModel;
 	private UITable items;
-	private UIPanel itemsPanel() {
-		UIPanel itemsPanel = new UIPanel();
+	private DefaultTableModel itemsModel;
+	private UIScrollPane items() {
 		ItemDAO itemDAO = new ItemDAO();
-		itemsModel = new DefaultTableModel(itemDAO.getAllAsArray(), itemDAO.getColumnNames());
+		itemsModel = new DefaultTableModel(itemDAO.getAllAsArray(), 
+					itemDAO.getColumnNames());
 		items = new UITable(itemsModel);
 
-		UIScrollPane itemScroll = new UIScrollPane(items);
-		itemsPanel.add(itemScroll);
-
-		return itemsPanel;
+		return  new UIScrollPane(items);
 	}
 	
-	private DefaultTableModel customersModel;
 	private UITable customers;
-	private UIPanel customersPanel() {
-		UIPanel customersPanel = new UIPanel();
+	private DefaultTableModel customersModel;
+	private UIScrollPane customers() {
 		CustomerDAO customerDAO = new CustomerDAO();
-		customersModel = new DefaultTableModel(customerDAO.getAllAsArray(), customerDAO.getColumnNames());
+		customersModel = new DefaultTableModel(customerDAO.getAllAsArray(), 
+						customerDAO.getColumnNames());
 		customers = new UITable(customersModel);
 
-		UIScrollPane customerScroll = new UIScrollPane(customers);
-		customersPanel.add(customerScroll);
-
-		return customersPanel;
+		return new UIScrollPane(customers);
 	}
 	
-	private DefaultTableModel sizesModel;
 	private UITable sizes;
-	private UIPanel sizesPanel() {
-		UIPanel sizesPanel = new UIPanel();
+	private DefaultTableModel sizesModel;
+	private UIScrollPane sizes() {
 		SizeDAO sizeDAO = new SizeDAO();
-		sizesModel = new DefaultTableModel(sizeDAO.getAllAsArray(), sizeDAO.getColumnNames());
+		sizesModel = new DefaultTableModel(sizeDAO.getAllAsArray(), 
+					sizeDAO.getColumnNames());
 		sizes = new UITable(sizesModel);
 		sizes.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		
-		UIScrollPane sizesScroll = new UIScrollPane(sizes);
-		sizesPanel.add(sizesScroll);
-		
-		return sizesPanel;
+		return new UIScrollPane(sizes);
 	}
 	
 	private UIPanel plusMinusPanel() {
@@ -141,8 +150,9 @@ public class AdminScreen extends UIPanel {
 		return btnsPanel;
 	}
 
+	private UIButton plusBtn;
 	private UIButton plusButton() {
-		UIButton plusBtn = new UIButton("+");
+		plusBtn = new UIButton("+");
 		plusBtn.setBounds(7, 172, 44, 25);
 		plusBtn.setBackground(Color.GREEN);
 		plusBtn.addActionListener(new ActionListener() {
@@ -188,27 +198,101 @@ public class AdminScreen extends UIPanel {
 		saveBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Saved!");
+				save();
 			}
 		});
 		return saveBtn;
+	}
+	
+	//TODO must handle NumberFormatException
+	private void save() {
+		if (tabbedPane.getSelectedIndex() == 0) {
+			persistEmployee();
+			updateEmployee();
+		}
+	}
+	
+	private void updateEmployee() {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		for(int row : touchedRows) {
+			EmployeeView employee = new EmployeeView();
+			employee.setUserName((String)employeesModel.getValueAt(row, 0));
+			employee.setSalary(Float.parseFloat((String)employeesModel.getValueAt(row, 1)));
+			employee.setPhone((String)employeesModel.getValueAt(row, 2));
+			employee.setPosition((String)employeesModel.getValueAt(row, 3));
+			employeeDAO.update(employee);
+		}
+	}
+	
+	private void persistEmployee() {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		EmployeeView employee = new EmployeeView();
+		
+		for(int row = employeeRows; row < employeesModel.getRowCount(); row++) {
+			for(int column = 0; column < employeesModel.getColumnCount(); column++) {
+				
+				String columnName = employeesModel.getColumnName(column);
+				Object value = employeesModel.getValueAt(row, column);
+				
+				if("userName".equals(columnName))
+					employee.setUserName((String)value);
+				if("salary".equals(columnName))
+					employee.setSalary(Float.parseFloat((String)value));
+				if("phone".equals(columnName))
+					employee.setPhone((String)value);
+				if("position".equals(columnName))
+					employee.setPosition((String)value);
+			}
+			employeeDAO.persist(employee);
+			employeeRows = employeeDAO.getAllAsArray().length;
+		}
 	}
 
 	private UIButton cancelButton() {
 		UIButton cancelBtn = new UIButton("Cancel");
 		cancelBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent event) {
+				if (tabbedPane.getSelectedIndex() == 0)
+					employees.removeRows(employeeRows);
 			}
 		});
 		return cancelBtn;
 	}
+	
+	private void removeEmployee() {
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		EmployeeView employee = new EmployeeView();
+		
+		int row = employees.getSelectedRow();
+		
+		for(int column = 0; column < employeesModel.getColumnCount(); column++) {
+			
+			String columnName = employeesModel.getColumnName(column);
+			Object value = employeesModel.getValueAt(row, column);
+			
+			if("userName".equals(columnName))
+				employee.setUserName((String)value);
+			if("salary".equals(columnName))
+				employee.setSalary(((Float)value).floatValue());
+			if("phone".equals(columnName))
+				employee.setPhone((String)value);
+			if("position".equals(columnName))
+				employee.setPosition((String)value);
+		}
+		
+		employeeDAO.remove(employee);
+		employees.removeRow();
+		employeeRows = employeeDAO.getAllAsArray().length;
+	}
 
 	private UIButton doneButton() {
-		UIButton doneBtn = new UIButton("Done");
+		UIButton doneBtn = new UIButton("Delete");
 		doneBtn.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent event) {
+				if (tabbedPane.getSelectedIndex() == 0)
+					removeEmployee();
 			}
 		});
 		return doneBtn;

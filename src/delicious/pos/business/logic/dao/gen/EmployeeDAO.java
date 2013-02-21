@@ -7,6 +7,7 @@ import delicious.pos.business.logic.view.gen.EmployeeView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,13 @@ import java.sql.Statement;
 
 public class EmployeeDAO extends BaseDAO
 {
+	
+	private Connection con = null; 
+			
+	public EmployeeDAO () {
+		con = App.DBConnection;
+	}
+	
 	public Object[] getColumnNames()
 	{
 		List<String> columnNames = new ArrayList<String>();
@@ -114,11 +122,41 @@ public class EmployeeDAO extends BaseDAO
 	    }
 	}
 	
+	public void update(EmployeeView employee) {
+		PreparedStatement stmt = null;
+		String query = "Update Employees set userName = ?" +
+						", salary = ?" +
+						", phone = ?" +
+						", position = ?" +
+						" where username = ?";
+		
+		try {
+			
+			stmt = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, employee.getUserName());
+			stmt.setFloat(2, employee.getSalary());
+			stmt.setString(3, employee.getPhone());
+			stmt.setString(4, employee.getPosition());
+			stmt.setString(5, employee.getUserName());
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) { JDBCUtilities.printSQLException(e); } 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
+	}
+	
 	public void remove(EmployeeView employee)
 	{
 	    PreparedStatement stmt = null;
 	    
-	    String query = "SELECT value FROM Employees ";
+	    String query = "SELECT userName FROM Employees ";
 	    query += "WHERE userName = ?";
 	    
 	    try 
