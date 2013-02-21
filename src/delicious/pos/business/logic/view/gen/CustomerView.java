@@ -18,6 +18,11 @@ public class CustomerView extends BaseView
 	
 	private String phone;
 	
+	public CustomerView() 
+	{
+		
+	}
+	
 	public CustomerView(String firstName, String lastName,  String street,  String zip,  String city,  String phone)
 	{
 		setFirstName(firstName);

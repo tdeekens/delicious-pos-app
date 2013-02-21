@@ -10,6 +10,11 @@ public class TableView extends BaseView
 	
 	private String number;
 	
+	public TableView() 
+	{
+		
+	}
+	
 	public TableView(int id,  String number)
 	{
 		setId(id);

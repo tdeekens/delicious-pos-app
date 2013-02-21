@@ -10,6 +10,11 @@ public class ItemView extends BaseView
 	
 	private String description;
 	
+	public ItemView() 
+	{
+		
+	}
+	
 	public ItemView(String name,  String description)
 	{
 		setName(name);

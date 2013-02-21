@@ -16,6 +16,11 @@ public class OrderView extends BaseView
 	
 	private int tableId;
 	
+	public OrderView() 
+	{
+		
+	}
+	
 	public OrderView(int id, String orderTypeName, String employeeUserName, int customerId, int tableId)
 	{
 		setId(id);

@@ -8,6 +8,11 @@ public class SizeView extends BaseView
 {
 	private String value;
 	
+	public SizeView() 
+	{
+		
+	}
+	
 	public SizeView(String value)
 	{
 		setValue(value);

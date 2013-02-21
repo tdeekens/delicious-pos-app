@@ -14,6 +14,11 @@ public class PriceView extends BaseView
 	
 	private String itemName;
 	
+	public PriceView() 
+	{
+		
+	}
+	
 	public PriceView(Integer id, Float value, String sizeValue, String itemName)
 	{
 		setId(id);

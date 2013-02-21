@@ -12,6 +12,11 @@ public class OrderTypeView extends BaseView
 	
 	private String target;
 	
+	public OrderTypeView() 
+	{
+		
+	}
+	
 	public OrderTypeView(String name, Integer priceId, String target)
 	{
 		setName(name);

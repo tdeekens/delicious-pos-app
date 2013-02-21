@@ -10,6 +10,11 @@ public class OrderedItemView extends BaseView
 	
 	private Integer priceId;
 	
+	public OrderedItemView() 
+	{
+		
+	}
+	
 	public OrderedItemView(Integer id, Integer orderId, String itemName, Integer priceId)
 	{
 		setId(id);

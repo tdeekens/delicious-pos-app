@@ -14,6 +14,11 @@ public class EmployeeView extends BaseView
 	
 	private String position;
 	
+	public EmployeeView() 
+	{
+		
+	}
+	
 	public EmployeeView(String userName,  Float salary,  String phone,  String position)
 	{
 		setUserName(userName);
