@@ -223,7 +223,7 @@ public class MainScreen extends UIFrame {
 			"3 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
-					
+					orderPlacementScreen.persistOrder();
 				}
 				
 				public void previous() {

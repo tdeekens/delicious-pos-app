@@ -21,7 +21,7 @@ public class OrderView extends BaseView
 		
 	}
 	
-	public OrderView(int id, String orderTypeName, String employeeUserName, int customerId, int tableId)
+	public OrderView(Integer id, String orderTypeName, String employeeUserName, int customerId, int tableId)
 	{
 		setId(id);
 		setOrderTypeName(orderTypeName);

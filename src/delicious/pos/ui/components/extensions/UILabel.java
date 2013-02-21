@@ -1,5 +1,6 @@
 package delicious.pos.ui.components.extensions;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class UILabel extends JLabel {
@@ -13,6 +14,11 @@ public class UILabel extends JLabel {
 		init();
 	}
 	
+	public UILabel(ImageIcon icon) {
+		super(icon);
+		init();
+	}
+
 	private void init() {
 	}
 
