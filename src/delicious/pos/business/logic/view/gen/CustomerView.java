@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class CustomerView extends BaseView
 {
+	private Integer id;
 	private String firstName;
-	
 	private String lastName;
 	
 	private String street;
@@ -18,13 +18,13 @@ public class CustomerView extends BaseView
 	
 	private String phone;
 	
-	public CustomerView() 
+	public CustomerView()
 	{
-		
 	}
-	
-	public CustomerView(String firstName, String lastName,  String street,  String zip,  String city,  String phone)
+
+	public CustomerView(Integer id, String firstName, String lastName,  String street,  String zip,  String city,  String phone)
 	{
+		setId(id);
 		setFirstName(firstName);
 		setLastName(lastName);
 		setStreet(street);
@@ -33,6 +33,16 @@ public class CustomerView extends BaseView
 		setPhone(phone);
 	}
 	
+	public Integer getId()
+	{
+		return id;
+	}
+	
+	public void setId(Integer id)
+	{
+		this.id = id;
+	}
+
 	public String getFirstName()
 	{
 		return firstName;
@@ -96,6 +106,7 @@ public class CustomerView extends BaseView
 	public Map<String, String> toMap()
 	{
 		Map<String, String> viewAsMap = new HashMap<String, String>();
+		viewAsMap.put("id", getId().toString());
 		viewAsMap.put("firstName", getFirstName());	
 		viewAsMap.put("lastName", getLastName());
 		viewAsMap.put("street", getStreet());
@@ -104,20 +115,11 @@ public class CustomerView extends BaseView
 		viewAsMap.put("phone", getPhone());
 		return viewAsMap;
 	}
-	
-	public String toString() {
-		String toString;
-		
-		toString =
-			getLastName()
-			+ ", "
-			+ getFirstName()
-			+ " ("
-			+ getZIP()
-			+ " "
-			+ getCity()
-			+ ")";
-		
+
+	public String toString()
+	{
+		String toString = getLastName() + ", " + getFirstName() + " (" + getZIP() + ", " + getCity() + ")";
+
 		return toString;
 	}
 }

@@ -11,7 +11,7 @@ public class Labels {
 	}
 	
 	public String get(String label) {
-		return this.labels.get(label);
+		return this.labels.get(label) == null ? label : this.labels.get(label);
 	}
 	
 	private void setup() {

@@ -1,6 +1,6 @@
-INSERT INTO Customers VALUES('Iva','Popova','Street 1','12345','City 1','123456789');
-INSERT INTO Customers VALUES('Anna','Averyanova','Street 2','12345','City 1','343456789');
-INSERT INTO Customers VALUES('Daniela','Holzner','Street 3','12346','City 2','343451189');
+INSERT INTO Customers VALUES(1, 'Iva','Popova','Street 1','12345','City 1','123456789');
+INSERT INTO Customers VALUES(2, 'Anna','Averyanova','Street 2','12345','City 1','343456789');
+INSERT INTO Customers VALUES(3, 'Daniela','Holzner','Street 3','12346','City 2','343451189');
 
 INSERT INTO Employees VALUES('Kostas',10000,'12345678','Waiter');
 INSERT INTO Employees VALUES('John',10000,'12345678','Waiter');

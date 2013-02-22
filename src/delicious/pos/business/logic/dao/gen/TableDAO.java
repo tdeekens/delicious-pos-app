@@ -74,7 +74,7 @@ public class TableDAO extends BaseDAO
 	    }
 	    return result;
 	}
-	
+
 	public void persist(TableView table)
 	{
 		if(rowCount(table.getId()) > 0) 
@@ -86,37 +86,9 @@ public class TableDAO extends BaseDAO
 	    }
 	}
 	
-	public void update(TableView table)
-	{
-		PreparedStatement stmt = null;
-		String query = "Update Tables " +
-						"set number = ?" +
-						" where id = ?";
-		
-		try {
-			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			stmt.setString(1, table.getNumber());
-			stmt.setInt(2, table.getId());
-			stmt.executeUpdate();
-			stmt.close();
-
-		} catch (SQLException e) 
-		{ 
-			JDBCUtilities.printSQLException(e); 
-		} 
-		
-		finally {
-			if(stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
-			}
-		}
-	}
-	
 	public void insert(TableView table)
 	{
-		Statement stmt = null;
+	    Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -145,6 +117,37 @@ public class TableDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+
+	public void update(TableView table)
+	{
+		PreparedStatement stmt = null;
+		String query = "Update Tables set " +
+				      	", number = ?" +
+						" where id = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+	      	stmt.setString(1, table.getNumber());
+
+			stmt.setInt(1 + 1, table.getId());
+
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
 	}
 	
 	public void remove(TableView table)
@@ -182,7 +185,7 @@ public class TableDAO extends BaseDAO
 	      }
 	    }
 	}
-	
+
 	private int rowCount(Integer primaryKey)
 	{
 		PreparedStatement stmt = null;

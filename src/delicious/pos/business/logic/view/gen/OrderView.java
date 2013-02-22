@@ -11,17 +11,17 @@ public class OrderView extends BaseView
 	private String orderTypeName;
 	
 	private String employeeUserName;
+
 	
 	private int customerId;
 	
 	private int tableId;
 	
-	public OrderView() 
+	public OrderView()
 	{
-		
 	}
-	
-	public OrderView(Integer id, String orderTypeName, String employeeUserName, int customerId, int tableId)
+
+	public OrderView(int id, String orderTypeName, String employeeUserName, int customerId, int tableId)
 	{
 		setId(id);
 		setOrderTypeName(orderTypeName);
@@ -59,6 +59,7 @@ public class OrderView extends BaseView
 	{
 		this.employeeUserName = employeeUserName;
 	}
+	
 	
 	public Integer getCustomerId()
 	{

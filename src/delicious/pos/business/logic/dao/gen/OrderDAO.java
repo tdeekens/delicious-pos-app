@@ -45,7 +45,7 @@ public class OrderDAO extends BaseDAO
 		ArrayList<OrderView> result = new ArrayList<OrderView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT id, orderType_name, employee_userName,Customer_id,Table_id ";
+	    String query = "SELECT id, orderType_name, employee_userName";
 	    query += "FROM Orders";
 	    
 	    try 
@@ -87,7 +87,7 @@ public class OrderDAO extends BaseDAO
 	    	this.insert(order);
 	    }
 	}
-	
+
 	public void update(OrderView order)
 	{
 		PreparedStatement stmt = null;
@@ -117,10 +117,10 @@ public class OrderDAO extends BaseDAO
 			}
 		}
 	}
-	
-	public void insert(OrderView order)
+
+	public void insert(OrderView order) 
 	{
-		Statement stmt = null;
+	    Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -187,7 +187,7 @@ public class OrderDAO extends BaseDAO
 	      }
 	    }
 	}
-	
+
 	private int rowCount(Integer primaryKey)
 	{
 		PreparedStatement stmt = null;

@@ -76,7 +76,7 @@ public class OrderTypeDAO extends BaseDAO
 	    }
 	    return result;
 	}
-	
+
 	public void persist(OrderTypeView orderType)
 	{
 		if(rowCount(orderType.getName()) > 0) 
@@ -87,10 +87,52 @@ public class OrderTypeDAO extends BaseDAO
 	    	this.insert(orderType);
 	    }
 	}
+
+	public void update(OrderTypeView orderType)
+	{
+		PreparedStatement stmt = null;
+		String query = "Update OrderTypes set " +
+						"name = ?" +
+						"price_id = ?" +
+						"target = ?" +
+						" where name = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, orderType.getName());
+			stmt.setInt(2, orderType.getPriceId());
+			stmt.setString(3, orderType.getTarget());
+
+			
+			stmt.setString(0 + 4, orderType.getName());
+			
+			
+			stmt.setString(0 + 4, orderType.getName());
+			
+			
+			stmt.setString(0 + 4, orderType.getName());
+			
+
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
+	}
 	
 	public void insert(OrderTypeView orderType)
 	{
-		Statement stmt = null;
+	    Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -120,38 +162,6 @@ public class OrderTypeDAO extends BaseDAO
 				}
 	      }
 	    }
-	}
-	
-	public void update(OrderTypeView orderType)
-	{
-		PreparedStatement stmt = null;
-		String query = "Update OrderTypes " +
-						"set name = ?" +
-						", target = ?" +
-						", price_id = ?" +
-						" where name = ?";
-		
-		try {
-			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			stmt.setString(1, orderType.getName());
-			stmt.setString(2, orderType.getTarget());
-			stmt.setInt(1, orderType.getPriceId());
-			stmt.setString(1, orderType.getName());
-			stmt.executeUpdate();
-			stmt.close();
-
-		} catch (SQLException e) 
-		{ 
-			JDBCUtilities.printSQLException(e); 
-		} 
-		
-		finally {
-			if(stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
-			}
-		}
 	}
 	
 	public void remove(OrderTypeView orderType)
@@ -189,7 +199,7 @@ public class OrderTypeDAO extends BaseDAO
 	      }
 	    }
 	}
-	
+
 	private int rowCount(String primaryKey)
 	{
 		PreparedStatement stmt = null;

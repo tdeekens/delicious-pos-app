@@ -17,6 +17,7 @@ public class CustomerDAO extends BaseDAO
 	public Object[] getColumnNames()
 	{
 		List<String> columnNames = new ArrayList<String>();
+		columnNames.add("id");
 		columnNames.add("firstName");
 		columnNames.add("lastName");
 		columnNames.add("street");
@@ -34,6 +35,7 @@ public class CustomerDAO extends BaseDAO
 		for(int i = 0;i < customerViews.size();i++) 
 		{
 			List<Object> customer = new ArrayList<Object>();
+			customer.add(customerViews.get(i).getId());
 			customer.add(customerViews.get(i).getFirstName());
 			customer.add(customerViews.get(i).getLastName());
 			customer.add(customerViews.get(i).getStreet());
@@ -51,7 +53,7 @@ public class CustomerDAO extends BaseDAO
 		ArrayList<CustomerView> result = new ArrayList<CustomerView>();
 		Statement statement = null;
 	    
-	    String query = "SELECT firstName, lastName, street, zip, city, phone ";
+	    String query = "SELECT id, firstName, lastName, street, zip, city, phone ";
 	    query += "FROM Customers";
 	    
 	    try 
@@ -61,7 +63,7 @@ public class CustomerDAO extends BaseDAO
 
 	      while (resultSet.next()) 
 	      {
-	    	  CustomerView customer  = new CustomerView(resultSet.getString("firstName"), resultSet.getString("lastName"), resultSet.getString("street"), resultSet.getString("zip"), resultSet.getString("city"), resultSet.getString("phone"));
+	    	  CustomerView customer  = new CustomerView(resultSet.getInt("id"), resultSet.getString("firstName"), resultSet.getString("lastName"), resultSet.getString("street"), resultSet.getString("zip"), resultSet.getString("city"), resultSet.getString("phone"));
 	          result.add(customer);
 	      }
 	    } 
@@ -82,10 +84,10 @@ public class CustomerDAO extends BaseDAO
 	    }
 	    return result;
 	}
-	
+
 	public void persist(CustomerView customer) 
 	{
-	    if(rowCount(customer.getFirstName(), customer.getLastName()) > 0) 
+	    if(rowCount(customer.getId()) > 0) 
 	    {
 	    	this.update(customer);
 	    } else 
@@ -96,16 +98,18 @@ public class CustomerDAO extends BaseDAO
 	
 	public void insert(CustomerView customer) 
 	{
-		Statement stmt = null;
+	    Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Customers");
 
 	      uprs.moveToInsertRow();
-
+			
+		  uprs.updateInt("id", customer.getId());
 	      uprs.updateString("firstName", customer.getFirstName());
 	      uprs.updateString("lastName", customer.getLastName());
+
 	      uprs.updateString("street", customer.getStreet());
 	      uprs.updateString("zip", customer.getZIP());
 	      uprs.updateString("city", customer.getCity());
@@ -130,29 +134,34 @@ public class CustomerDAO extends BaseDAO
 	      }
 	    }
 	}
-	
+
 	public void update(CustomerView customer)
 	{
 		PreparedStatement stmt = null;
 		String query = "Update Customers set " +
+						"id = ?" +
 						"firstName = ?" +
 						", lastName = ?" +
-						", street = ?" +
-						", zip = ?" +
-						", city = ?" +
-						", phone = ?" +
-						" where firstName = ? AND lastName = ?";
+				      	", street = ?" +
+				      	", zip = ?" +
+				      	", city = ?" +
+				      	", phone = ?" +
+						" where id = ?";
 		
 		try {
 			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			stmt.setString(1, customer.getFirstName());
-			stmt.setString(2, customer.getLastName());
-			stmt.setString(3, customer.getStreet());
-			stmt.setString(4, customer.getZIP());
-			stmt.setString(5, customer.getCity());
-			stmt.setString(6, customer.getPhone());
-			stmt.setString(7, customer.getFirstName());
-			stmt.setString(8, customer.getLastName());
+			stmt.setInt(1, customer.getId());
+			stmt.setString(2, customer.getFirstName());
+			stmt.setString(3, customer.getLastName());
+
+	      	stmt.setString(1 + 3, customer.getStreet());
+	      	stmt.setString(2 + 3, customer.getZIP());
+	      	stmt.setString(3 + 3, customer.getCity());
+	      	stmt.setString(4 + 3, customer.getPhone());
+
+			stmt.setString(4 + 4, customer.getFirstName());
+			stmt.setString(4 + 5, customer.getLastName());
+
 			stmt.executeUpdate();
 			stmt.close();
 
@@ -175,14 +184,12 @@ public class CustomerDAO extends BaseDAO
 	    PreparedStatement stmt = null;
 	    
 	    String query = "SELECT value FROM Customers ";
-	    query += "WHERE firstName = ?";
-	    query += "  AND lastName = ?";
+	    query += "WHERE id = ?";
 	    
 	    try 
 	    {
 	      stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-	      stmt.setString(1, customer.getFirstName());
-	      stmt.setString(2, customer.getLastName());
+	      stmt.setInt(1, customer.getId());
 	      
 	      ResultSet uprs = stmt.executeQuery();
 
@@ -207,19 +214,18 @@ public class CustomerDAO extends BaseDAO
 	      }
 	    }
 	}
-	
-	private int rowCount(String primaryKeyPart1, String primaryKeyPart2)
+
+	private int rowCount(Integer primaryKey)
 	{
 		PreparedStatement stmt = null;
 	    ResultSet rs = null;
-	    String query = "SELECT COUNT(*) FROM Customers WHERE firstName = ? AND lastName = ?";
+	    String query = "SELECT COUNT(*) FROM Customers WHERE id = ?";
 	    int rowCount = -1;
 	    
 	    try 
 	    {
 	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		    stmt.setString(1, primaryKeyPart1);
-		    stmt.setString(1, primaryKeyPart2);
+		    stmt.setInt(1, primaryKey);
 		    
 		    rs = stmt.executeQuery();
 
