@@ -14,8 +14,8 @@ import delicious.pos.business.logic.view.gen.CustomerView;
 import delicious.pos.business.logic.view.gen.ItemView;
 import delicious.pos.business.logic.view.gen.OrderView;
 import delicious.pos.ui.components.customer.CustomerDetailPanel;
+import delicious.pos.ui.components.extensions.UIInfoDialog;
 import delicious.pos.ui.components.extensions.UIPanel;
-import delicious.pos.ui.components.order.OrderSuccessFrame;
 import delicious.pos.ui.components.order.item.OrderedItemsPanel;
 
 public class OrderPlacementScreen extends UIPanel {
@@ -64,6 +64,6 @@ public class OrderPlacementScreen extends UIPanel {
 			);
 		}*/
 		
-		new OrderSuccessFrame();
+		new UIInfoDialog(App.labels.get("order-success"), App.labels.get("close-dialog"));
 	}
 }

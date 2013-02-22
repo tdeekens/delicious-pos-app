@@ -10,6 +10,7 @@ import delicious.pos.App;
 import delicious.pos.ui.components.extensions.UIButton;
 import delicious.pos.ui.components.extensions.UIContentPanel;
 import delicious.pos.ui.components.extensions.UIFrame;
+import delicious.pos.ui.components.extensions.UIInfoDialog;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.ui.event.SwitchPanel;
 
@@ -179,7 +180,11 @@ public class MainScreen extends UIFrame {
 			"1 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
-					showOrderValidation();
+					if(App.orderState.getOrderedItems().size() > 0) {
+						showOrderValidation();
+					} else {
+						new UIInfoDialog(App.labels.get("order-no-items"), App.labels.get("close-dialog"));
+					}
 				}
 				
 				public void previous() {
@@ -201,7 +206,11 @@ public class MainScreen extends UIFrame {
 			"2 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
-					showOrderPlacement();
+					if(App.orderState.getOrderType() != null) {
+						showOrderPlacement();
+					} else {
+						new UIInfoDialog(App.labels.get("order-no-type"), App.labels.get("close-dialog"));
+					}
 				}
 				
 				public void previous() {

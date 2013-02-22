@@ -1,4 +1,4 @@
-package delicious.pos.ui.components.order;
+package delicious.pos.ui.components.extensions;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,13 +11,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import delicious.pos.App;
-import delicious.pos.ui.components.extensions.UIButton;
-import delicious.pos.ui.components.extensions.UIFrame;
-import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.util.ImageLoader;
 
-public class OrderSuccessFrame extends JDialog implements ActionListener {
-   public OrderSuccessFrame() {
+public class UIInfoDialog extends JDialog implements ActionListener {
+   public UIInfoDialog(String msg, String closeBtnLabel) {
       super();
       
       ImageIcon myIcon = new ImageIcon(this.getClass().getResource("../icons/kostasicous-success.png"));
@@ -25,8 +22,8 @@ public class OrderSuccessFrame extends JDialog implements ActionListener {
       getContentPane().setLayout(new BorderLayout());
 
       UILabel centerLabel = new UILabel(myIcon);
-      UILabel name = new UILabel(App.labels.get("restaurant-name"));
-      UIButton closeBtn = new UIButton(App.labels.get("close-dialog")); 
+      UILabel name = new UILabel(msg);
+      UIButton closeBtn = new UIButton(closeBtnLabel); 
       closeBtn.addActionListener((ActionListener) this);
       
       name.setFont(new Font("Palatino", Font.BOLD, 18));

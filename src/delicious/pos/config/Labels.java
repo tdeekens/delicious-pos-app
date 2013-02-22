@@ -18,6 +18,8 @@ public class Labels {
 		this.labels.put("restaurant-name", "Greek Paradise");
 		this.labels.put("order-summary", "Order summary");
 		this.labels.put("order-success", "Order placed [Kostas thanks you!]");
+		this.labels.put("order-no-items", "Order does not contain items, add items!");
+		this.labels.put("order-no-type", "No order type, please select!");
 		this.labels.put("customer-details", "Customer details:");
 		this.labels.put("ordered-items", "Ordered items:");
 		this.labels.put("our-menu", "Our menu:");
