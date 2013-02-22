@@ -263,9 +263,4 @@ public class MainScreen extends UIFrame {
 			}
 		);
 	}
-	
-	private void validateOrder() {
-		//TODO: Kostas
-		System.out.println("We have to make sure to check for empty order");
-	}
 }
