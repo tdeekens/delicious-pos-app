@@ -77,7 +77,40 @@ public class TableDAO extends BaseDAO
 	
 	public void persist(TableView table)
 	{
-	    Statement stmt = null;
+	    
+	}
+	
+	public void update(TableView table)
+	{
+		PreparedStatement stmt = null;
+		String query = "Update Tables " +
+						"set number = ?" +
+						" where id = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, table.getNumber());
+			stmt.setInt(2, table.getId());
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
+	}
+	
+	public void insert(TableView table)
+	{
+		Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

@@ -14,12 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class EmployeeDAO extends BaseDAO
-{
-	
-	private Connection con = null; 
-			
+{			
 	public EmployeeDAO () {
-		con = App.DBConnection;
+
 	}
 	
 	public Object[] getColumnNames()
@@ -89,7 +86,12 @@ public class EmployeeDAO extends BaseDAO
 	
 	public void persist(EmployeeView employee)
 	{
-	    Statement stmt = null;
+	    
+	}
+	
+	public void insert(EmployeeView employee)
+	{
+		Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -124,15 +126,15 @@ public class EmployeeDAO extends BaseDAO
 	
 	public void update(EmployeeView employee) {
 		PreparedStatement stmt = null;
-		String query = "Update Employees set userName = ?" +
+		String query = "Update Employees set " +
+						"userName = ?" +
 						", salary = ?" +
 						", phone = ?" +
 						", position = ?" +
 						" where username = ?";
 		
 		try {
-			
-			stmt = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			stmt.setString(1, employee.getUserName());
 			stmt.setFloat(2, employee.getSalary());
 			stmt.setString(3, employee.getPhone());
@@ -141,7 +143,10 @@ public class EmployeeDAO extends BaseDAO
 			stmt.executeUpdate();
 			stmt.close();
 
-		} catch (SQLException e) { JDBCUtilities.printSQLException(e); } 
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
 		
 		finally {
 			if(stmt != null) {

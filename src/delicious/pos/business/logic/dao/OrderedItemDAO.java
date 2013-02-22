@@ -79,37 +79,74 @@ public class OrderedItemDAO extends BaseDAO
 	
 	public void persist(OrderedItemView orderedItem)
 	{
-	    Statement stmt = null;
-	    try 
-	    {
-	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-	      ResultSet uprs = stmt.executeQuery("SELECT * FROM OrderedItems");
+	   
+	}
+	
+	public void update(OrderedItemView orderedItem)
+	{
+		PreparedStatement stmt = null;
+		String query = "Update OrderedItems " +
+						"set order_id = ?" +
+						", item_name = ?" +
+						", price_id = ?" +
+						" where id = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setInt(1, orderedItem.getOrderId());
+			stmt.setString(2, orderedItem.getItemName());
+			stmt.setInt(1, orderedItem.getPriceId());
+			stmt.setInt(1, orderedItem.getId());
+			stmt.executeUpdate();
+			stmt.close();
 
-	      uprs.moveToInsertRow();
-
-	      uprs.updateInt("id", orderedItem.getId());
-	      uprs.updateInt("order_id", orderedItem.getOrderId());
-	      uprs.updateString("item_name", orderedItem.getItemName());
-	      uprs.updateInt("price_id", orderedItem.getPriceId());
-
-	      uprs.insertRow();
-	      uprs.beforeFirst();
-
-	    } catch (SQLException e) 
-	    {
-	      JDBCUtilities.printSQLException(e);
-	    } 
-	    finally 
-	    {
-	      if (stmt != null) 
-	      { 
-	    		try {
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
 					stmt.close();
-				} catch (SQLException e) {
-					JDBCUtilities.printSQLException(e);
-				}
-	      }
-	    }
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
+	}
+	
+	public void insert(OrderedItemView orderedItem)
+	{
+		 Statement stmt = null;
+		    try 
+		    {
+		      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		      ResultSet uprs = stmt.executeQuery("SELECT * FROM OrderedItems");
+
+		      uprs.moveToInsertRow();
+
+		      uprs.updateInt("id", orderedItem.getId());
+		      uprs.updateInt("order_id", orderedItem.getOrderId());
+		      uprs.updateString("item_name", orderedItem.getItemName());
+		      uprs.updateInt("price_id", orderedItem.getPriceId());
+
+		      uprs.insertRow();
+		      uprs.beforeFirst();
+
+		    } catch (SQLException e) 
+		    {
+		      JDBCUtilities.printSQLException(e);
+		    } 
+		    finally 
+		    {
+		      if (stmt != null) 
+		      { 
+		    		try {
+						stmt.close();
+					} catch (SQLException e) {
+						JDBCUtilities.printSQLException(e);
+					}
+		      }
+		    }
 	}
 	
 	public void remove(OrderedItemView orderedItem)

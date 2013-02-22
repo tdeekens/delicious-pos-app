@@ -73,7 +73,40 @@ public class SizeDAO extends BaseDAO
 	
 	public void persist(SizeView size)
 	{
-	    Statement stmt = null;
+	    
+	}
+	
+	public void update(SizeView size)
+	{
+		PreparedStatement stmt = null;
+		String query = "Update Sizes " +
+						"set value = ?" +
+						" where value = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, size.getValue());
+			stmt.setString(2, size.getValue());
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
+	}
+	
+	public void insert(SizeView size)
+	{
+		Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

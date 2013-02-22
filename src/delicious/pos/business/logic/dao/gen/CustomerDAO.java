@@ -85,7 +85,12 @@ public class CustomerDAO extends BaseDAO
 	
 	public void persist(CustomerView customer) 
 	{
-	    Statement stmt = null;
+	    
+	}
+	
+	public void insert(CustomerView customer) 
+	{
+		Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -118,6 +123,45 @@ public class CustomerDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	public void update(CustomerView customer)
+	{
+		PreparedStatement stmt = null;
+		String query = "Update Customers set " +
+						"firstName = ?" +
+						", lastName = ?" +
+						", street = ?" +
+						", zip = ?" +
+						", city = ?" +
+						", phone = ?" +
+						" where firstName = ? AND lastName = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, customer.getFirstName());
+			stmt.setString(2, customer.getLastName());
+			stmt.setString(3, customer.getStreet());
+			stmt.setString(4, customer.getZIP());
+			stmt.setString(5, customer.getCity());
+			stmt.setString(6, customer.getPhone());
+			stmt.setString(6, customer.getFirstName());
+			stmt.setString(6, customer.getLastName());
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
 	}
 	
 	public void remove(CustomerView customer)

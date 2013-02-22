@@ -77,7 +77,40 @@ public class ItemDAO extends BaseDAO
 	
 	public void persist(ItemView item)
 	{
-	    Statement stmt = null;
+	    
+	}
+	
+	public void update(ItemView item) {
+		PreparedStatement stmt = null;
+		String query = "Update Items " +
+						"set name = ?" +
+						", description = ?" +
+						" where name = ?";
+		
+		try {
+			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, item.getName());
+			stmt.setString(2, item.getDescription());
+			stmt.setString(1, item.getName());
+			stmt.executeUpdate();
+			stmt.close();
+
+		} catch (SQLException e) 
+		{ 
+			JDBCUtilities.printSQLException(e); 
+		} 
+		
+		finally {
+			if(stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) { JDBCUtilities.printSQLException(e); }
+			}
+		}
+	}
+	
+	public void insert(ItemView item) {
+		Statement stmt = null;
 	    try 
 	    {
 	      stmt = App.DBConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
