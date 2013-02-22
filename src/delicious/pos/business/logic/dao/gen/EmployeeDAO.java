@@ -137,7 +137,7 @@ public class EmployeeDAO extends BaseDAO
 						", salary = ?" +
 						", phone = ?" +
 						", position = ?" +
-						" where username = ?";
+						" where userName = ?";
 		
 		try {
 			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);

@@ -151,8 +151,8 @@ public class CustomerDAO extends BaseDAO
 			stmt.setString(4, customer.getZIP());
 			stmt.setString(5, customer.getCity());
 			stmt.setString(6, customer.getPhone());
-			stmt.setString(6, customer.getFirstName());
-			stmt.setString(6, customer.getLastName());
+			stmt.setString(7, customer.getFirstName());
+			stmt.setString(8, customer.getLastName());
 			stmt.executeUpdate();
 			stmt.close();
 
