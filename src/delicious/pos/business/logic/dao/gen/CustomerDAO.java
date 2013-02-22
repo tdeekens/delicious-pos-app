@@ -85,7 +85,13 @@ public class CustomerDAO extends BaseDAO
 	
 	public void persist(CustomerView customer) 
 	{
-	    
+	    if(rowCount(customer.getFirstName(), customer.getLastName()) > 0) 
+	    {
+	    	this.update(customer);
+	    } else 
+	    {
+	    	this.insert(customer);
+	    }
 	}
 	
 	public void insert(CustomerView customer) 
@@ -200,5 +206,39 @@ public class CustomerDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(String primaryKeyPart1, String primaryKeyPart2)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM Customers WHERE firstName = ? AND lastName = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setString(1, primaryKeyPart1);
+		    stmt.setString(1, primaryKeyPart2);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }

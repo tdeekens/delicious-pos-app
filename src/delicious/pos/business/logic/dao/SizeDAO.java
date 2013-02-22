@@ -73,7 +73,13 @@ public class SizeDAO extends BaseDAO
 	
 	public void persist(SizeView size)
 	{
-	    
+		if(rowCount(size.getValue()) > 0) 
+	    {
+	    	this.update(size);
+	    } else 
+	    {
+	    	this.insert(size);
+	    }
 	}
 	
 	public void update(SizeView size)
@@ -170,5 +176,38 @@ public class SizeDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(String primaryKey)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM Sizes WHERE value = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setString(1, primaryKey);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }

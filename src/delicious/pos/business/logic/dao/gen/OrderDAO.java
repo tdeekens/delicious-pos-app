@@ -79,7 +79,13 @@ public class OrderDAO extends BaseDAO
 	
 	public void persist(OrderView order) 
 	{
-	    
+		if(rowCount(order.getId()) > 0) 
+	    {
+	    	this.update(order);
+	    } else 
+	    {
+	    	this.insert(order);
+	    }
 	}
 	
 	public void update(OrderView order)
@@ -180,5 +186,38 @@ public class OrderDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(Integer primaryKey)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM Orders WHERE id = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setInt(1, primaryKey);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }

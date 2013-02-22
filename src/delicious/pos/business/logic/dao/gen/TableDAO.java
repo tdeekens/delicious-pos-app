@@ -77,7 +77,13 @@ public class TableDAO extends BaseDAO
 	
 	public void persist(TableView table)
 	{
-	    
+		if(rowCount(table.getId()) > 0) 
+	    {
+	    	this.update(table);
+	    } else 
+	    {
+	    	this.insert(table);
+	    }
 	}
 	
 	public void update(TableView table)
@@ -175,5 +181,38 @@ public class TableDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(Integer primaryKey)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM Tables WHERE id = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setInt(1, primaryKey);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }

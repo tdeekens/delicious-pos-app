@@ -79,7 +79,13 @@ public class OrderTypeDAO extends BaseDAO
 	
 	public void persist(OrderTypeView orderType)
 	{
-	    
+		if(rowCount(orderType.getName()) > 0) 
+	    {
+	    	this.update(orderType);
+	    } else 
+	    {
+	    	this.insert(orderType);
+	    }
 	}
 	
 	public void insert(OrderTypeView orderType)
@@ -182,5 +188,38 @@ public class OrderTypeDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(String primaryKey)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM OrderTypes WHERE name = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setString(1, primaryKey);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }

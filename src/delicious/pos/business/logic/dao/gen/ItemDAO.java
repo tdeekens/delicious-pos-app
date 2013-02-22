@@ -77,7 +77,13 @@ public class ItemDAO extends BaseDAO
 	
 	public void persist(ItemView item)
 	{
-	    
+		if(rowCount(item.getName()) > 0) 
+	    {
+	    	this.update(item);
+	    } else 
+	    {
+	    	this.insert(item);
+	    }
 	}
 	
 	public void update(ItemView item) {
@@ -175,5 +181,38 @@ public class ItemDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(String primaryKey)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM Items WHERE name = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setString(1, primaryKey);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }

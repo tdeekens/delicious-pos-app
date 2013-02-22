@@ -86,7 +86,13 @@ public class EmployeeDAO extends BaseDAO
 	
 	public void persist(EmployeeView employee)
 	{
-	    
+		if(rowCount(employee.getUserName()) > 0) 
+	    {
+	    	this.update(employee);
+	    } else 
+	    {
+	    	this.insert(employee);
+	    }
 	}
 	
 	public void insert(EmployeeView employee)
@@ -191,5 +197,38 @@ public class EmployeeDAO extends BaseDAO
 				}
 	      }
 	    }
+	}
+	
+	private int rowCount(String primaryKey)
+	{
+		PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    String query = "SELECT COUNT(*) FROM Employees WHERE username = ?";
+	    int rowCount = -1;
+	    
+	    try 
+	    {
+	    	stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		    stmt.setString(1, primaryKey);
+		    
+		    rs = stmt.executeQuery();
+
+	    	rs.next();
+	    	rowCount = rs.getInt(1);
+	    } catch (SQLException e) {
+	    	JDBCUtilities.printSQLException(e);
+		} finally 
+	    {
+			if (stmt != null) 
+		    { 
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					JDBCUtilities.printSQLException(e);
+				}
+		    }
+	    }
+	    
+	    return rowCount;		
 	}
 }
