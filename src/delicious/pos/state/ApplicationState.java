@@ -1,9 +1,7 @@
 package delicious.pos.state;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 
-import delicious.pos.App;
 import delicious.pos.business.logic.dao.PriceDAO;
 import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.CustomerView;
@@ -17,6 +15,7 @@ public class ApplicationState {
 	private HashMap<PriceView, ItemView> orderItems;
 	private PriceDAO priceDAO;
 	private Float orderTypePrice;
+	private Integer orderTargetId;
 	
 	public ApplicationState() {
 		this.orderItems = new HashMap<PriceView, ItemView>();
@@ -86,5 +85,13 @@ public class ApplicationState {
 	
 	public Float getOrderTypePrice() {
 		return this.orderTypePrice;
+	}
+	
+	public void setOrderTargetId(Integer orderTargetId) {
+		this.orderTargetId = orderTargetId;
+	}
+	
+	public Integer getOrderTargetId() {
+		return this.orderTargetId;
 	}
 }

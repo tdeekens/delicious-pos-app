@@ -15,9 +15,9 @@ public class Labels {
 	}
 	
 	private void setup() {
-		this.labels.put("restaurant-name", "Greek Paradise");
+		this.labels.put("restaurant-name", "");
 		this.labels.put("order-summary", "Order summary");
-		this.labels.put("order-success", "Order placed [Kostas thanks you!]");
+		this.labels.put("order-success", "Order placed (Kostas thanks you!)");
 		this.labels.put("order-no-items", "Order does not contain items, add items!");
 		this.labels.put("order-no-type", "No order type, please select!");
 		this.labels.put("customer-details", "Customer details:");
@@ -25,7 +25,7 @@ public class Labels {
 		this.labels.put("our-menu", "Our menu:");
 		this.labels.put("close-dialog", "Yeah, yeah fag!");
 		this.labels.put("items-for", "items for:");
-		this.labels.put("currency", "Û");
+		this.labels.put("currency", "EUR");
 		this.labels.put("delivery", "delivery");
 		this.labels.put("takeaway", "take away");
 		this.labels.put("eathere", "eat here");

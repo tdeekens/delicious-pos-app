@@ -50,9 +50,9 @@ public class OrderPlacementScreen extends UIPanel {
 		/*OrderView orderView = new OrderView(
 			null,
 			App.orderState.getOrderType().getName(),
-			"Kostas",
-			0,
-			0
+			"Kostas", //TODO not always kostas!
+			App.orderState.getCustomer().getId(),
+			0 //TODO how to set right target value?
 		);
 		
 		for (Entry<PriceView, ItemView> item : App.orderState.getOrderedItems().entrySet()) {

@@ -1,15 +1,11 @@
 package delicious.pos.ui.components.order.type;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
@@ -22,12 +18,10 @@ import delicious.pos.business.logic.dao.gen.OrderTypeDAO;
 import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
+import delicious.pos.ui.components.order.target.*;
 import delicious.pos.ui.components.extensions.UIPanel;
-import delicious.pos.ui.components.order.target.CustomerFilterList;
-import delicious.pos.ui.components.order.target.OrderTargetTablePanel;
+import delicious.pos.ui.components.order.type.OrderTypeInfoPanel;
 import delicious.pos.ui.screens.OrderValidationScreen;
-import delicious.pos.util.ImageLoader;
-import java.awt.FlowLayout;
 
 public class OrderTypePanel extends UIPanel {
 	
@@ -123,16 +117,20 @@ public class OrderTypePanel extends UIPanel {
 	private void showOrderTarget(OrderTypeView orderType) {
 		this.orderTargetPanel.removeAll();
 		
-		if(orderType.getTarget() == null) return;
+		if(orderType.getTarget() == null) {}
 		
-		if(orderType.getTarget().equals("Target")) {
-			OrderTargetTablePanel orderTargetTablePanel = new OrderTargetTablePanel(orderType);
-			
-			this.orderTargetPanel.add(orderTargetTablePanel);
-		} else if(orderType.getTarget().equals("Customer")) {
+		else if(orderType.getTarget().equals("Customer")) {
 			CustomerFilterList customerFilterList = new CustomerFilterList();
 			
 			this.orderTargetPanel.add(customerFilterList.getPane());
+		}
+		else if(orderType.getTarget().equals("Table")) {
+			OrderTargetTablePanel 
+				orderTargetTablePanel 
+					= new OrderTargetTablePanel(new 
+						delicious.pos.business.logic.view.gen.TableView());
+			
+			this.orderTargetPanel.add(orderTargetTablePanel);
 		}
 		
 		this.orderTargetPanel.validate();
