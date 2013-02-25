@@ -156,7 +156,7 @@ public class ItemDAO extends BaseDAO
 	{
 	    PreparedStatement stmt = null;
 	    
-	    String query = "SELECT value FROM Items ";
+	    String query = "SELECT name FROM Items ";
 	    query += "WHERE name = ?";
 	    
 	    try 

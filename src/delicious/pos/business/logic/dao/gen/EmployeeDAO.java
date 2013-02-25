@@ -166,7 +166,7 @@ public class EmployeeDAO extends BaseDAO
 	{
 	    PreparedStatement stmt = null;
 	    
-	    String query = "SELECT value FROM Employees ";
+	    String query = "SELECT userName FROM Employees ";
 	    query += "WHERE userName = ?";
 	    
 	    try 

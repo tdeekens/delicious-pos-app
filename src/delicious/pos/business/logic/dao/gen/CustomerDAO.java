@@ -182,9 +182,9 @@ public class CustomerDAO extends BaseDAO
 	{
 	    PreparedStatement stmt = null;
 	    
-	    String query = "SELECT value FROM Customers ";
+	    String query = "SELECT id FROM Customers ";
 	    query += "WHERE id = ?";
-	    
+
 	    try 
 	    {
 	      stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
