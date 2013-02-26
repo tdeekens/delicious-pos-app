@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import delicious.pos.App;
 import delicious.pos.business.logic.view.gen.CustomerView;
 import delicious.pos.business.logic.view.gen.OrderTypeView;
 import delicious.pos.ui.components.extensions.UIHeaderPanel;
+import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
 
 public class OrderTypeInfoPanel extends UIPanel {
