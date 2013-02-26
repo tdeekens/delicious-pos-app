@@ -59,19 +59,14 @@ public class OrderedItemsPanel extends UIPanel {
 		if(this.orderSummaryHeader instanceof Component) this.remove(this.orderSummaryHeader);
 		
 		String orderSummaryLbl = 
-				this.orderedItems.size() + " " + App.labels.get("items-for") 
+				App.orderState.getOrderedItemsSize() + " " + App.labels.get("items-for") 
 				+ " " + 
 				App.orderState.getCompletePrice() 
-				+ " " + App.labels.get("currency")
-				+ " (incl.: " 
-				+ App.orderState.getOrderTypePrice()
-				+ " "
-				+ App.labels.get("currency")
-				+ ")";
+				+ " " + App.labels.get("currency");
 		
 		this.orderSummaryHeader = new UIHeaderPanel(
-				orderSummaryLbl, 
-				null, null
+			orderSummaryLbl, 
+			null, null
 		);
 						
 		this.orderSummaryHeader.setBackground(UIManager.getColor("Button.background"));

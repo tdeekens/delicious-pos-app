@@ -36,9 +36,11 @@ public class OrderTypeInfoPanel extends UIPanel {
 	public void renderOrderTypeDetails() {		
 		HashMap<String, String> orderTypeMap = new HashMap<String, String>(this.orderType.toMap());
 		
-		for (Map.Entry<String, String> entry : orderTypeMap.entrySet()) {
+		for (Map.Entry<String, String> entry : orderTypeMap.entrySet()) {			
 			String rowName = entry.getKey();
 			String rowValue = entry.getValue();
+			
+			if(rowName.toLowerCase().contains("id")) continue;
 
 		    this.add(new OrderTypeInfoItemPanel(rowName, rowValue));
 		}

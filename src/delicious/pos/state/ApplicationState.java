@@ -1,6 +1,7 @@
 package delicious.pos.state;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import delicious.pos.business.logic.dao.PriceDAO;
 import delicious.pos.business.logic.view.PriceView;
@@ -13,25 +14,43 @@ public class ApplicationState {
 	private OrderTypeView orderType;
 	private Float completePrice;
 	private HashMap<PriceView, ItemView> orderItems;
+	private HashMap<PriceView, Integer> orderedAmounts;
+	private HashMap<String, String> orderTargetInputs;
 	private PriceDAO priceDAO;
 	private Float orderTypePrice;
 	private Integer orderTargetId;
 	
 	public ApplicationState() {
 		this.orderItems = new HashMap<PriceView, ItemView>();
+		this.orderedAmounts = new HashMap<PriceView, Integer>();
+		this.orderTargetInputs = new HashMap<String, String>();
 		this.completePrice = (float) 0.0;
 		this.orderTypePrice = (float) 0.0;
 		this.priceDAO = new PriceDAO();
 	}
 	
 	public void addOrderItem(ItemView orderItem, PriceView priceItem) {
-		this.orderItems.put(priceItem, orderItem);
+		if( this.orderItems.containsKey(priceItem) ) {
+			this.orderedAmounts.put(priceItem, 
+				this.orderedAmounts.get(priceItem) + 1
+			);
+		} else {
+			this.orderItems.put(priceItem, orderItem);
+			this.orderedAmounts.put(priceItem, 1);
+		}
 		
 		this.addToCompletePrice(priceItem.getValue());
 	}
 	
 	public void removeOrderItem(ItemView orderItem, PriceView priceItem) {
-		this.orderItems.values().remove(orderItem);
+		if(this.orderedAmounts.get(priceItem) > 1) {
+			this.orderedAmounts.put(priceItem, 
+				this.orderedAmounts.get(priceItem) - 1
+			);
+		} else {
+			this.orderItems.values().remove(orderItem);
+			this.orderedAmounts.put(priceItem, 0);
+		}
 		
 		this.substractFromCompletePrice(priceItem.getValue());
 	}
@@ -46,6 +65,35 @@ public class ApplicationState {
 	
 	public HashMap<PriceView, ItemView> getOrderedItems() {
 		return this.orderItems;
+	}
+	
+	public Integer getOrderedItemsSize() {
+		Integer size = 0;
+		
+		HashMap<PriceView, Integer> sizeMap = new HashMap<PriceView, Integer>(this.orderedAmounts);
+		
+		for (Map.Entry<PriceView, Integer> entry : sizeMap.entrySet()) {
+			PriceView price = entry.getKey();
+			size += this.orderedAmounts.get(price);
+		}
+		
+		return size;
+	}
+	
+	public void setTargetInput(String ident, String input) {
+		this.orderTargetInputs.put(ident, input);
+	}
+	
+	public HashMap<String, String> getTargetInputs() {
+		return this.orderTargetInputs;
+	}
+	
+	public HashMap<PriceView, Integer> getOrderedAmounts() {
+		return this.orderedAmounts;
+	}
+	
+	public Integer getOrderedAmount(PriceView priceView) {
+		return this.orderedAmounts.get(priceView);
 	}
 	
 	public void setOrderType(OrderTypeView orderType) {
@@ -93,5 +141,15 @@ public class ApplicationState {
 	
 	public Integer getOrderTargetId() {
 		return this.orderTargetId;
+	}
+	
+	public void reset() {
+		this.orderItems = new HashMap<PriceView, ItemView>();
+		this.orderedAmounts = new HashMap<PriceView, Integer>();
+		this.orderTargetInputs = new HashMap<String, String>();
+		this.orderTargetId = null;
+		this.completePrice = (float) 0.0;
+		this.orderTypePrice = (float) 0.0;
+		this.priceDAO = new PriceDAO();
 	}
 }

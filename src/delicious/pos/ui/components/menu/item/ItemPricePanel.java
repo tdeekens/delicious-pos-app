@@ -55,12 +55,12 @@ public class ItemPricePanel extends UIPanel {
 	
 	private void setupLabels() {
 		priceBtn.setText(Float.toString(this.price.getValue()) + " " + App.labels.get("currency"));
-		sizeLbl.setText(this.price.getSizeValue() != "" ? this.price.getSizeValue() : "One size.");
+		sizeLbl.setText(this.price.getSizeValue() != null ? this.price.getSizeValue() : "");
 	}
 	
 	public void select() {
 		this.parentPanel.orderItem(this);
-		this.setBackground(Color.green);
+		//this.setBackground(Color.green);
 	}
 	
 	public UIButton getPriceBtn() {

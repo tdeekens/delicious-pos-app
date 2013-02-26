@@ -92,6 +92,7 @@ public class OrderTypePanel extends UIPanel {
 					setOrderType(orderType);
 					showOrderTypeInfo(orderType);
 					showOrderTarget(orderType);
+					App.orderState.setCustomer(null);
 				}
 			});
 			

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 
+import delicious.pos.App;
 import delicious.pos.ui.components.extensions.UILabel;
 import delicious.pos.ui.components.extensions.UIPanel;
 import delicious.pos.business.logic.view.gen.TableView;
@@ -33,24 +34,25 @@ public class OrderTargetTablePanel extends UIPanel {
 		
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-			UIPanel innerPanelNumber = new UIPanel();
-			innerPanelNumber.setLayout(new BorderLayout());
+			UIPanel innerPanelTableNumber = new UIPanel();
+			innerPanelTableNumber.setLayout(new BorderLayout());
 			
-			UILabel lblTargetNumber = new UILabel("Number" + ":");
-			final JTextField txtFieldNumber = new JTextField("", 15);
+			UILabel lblTargetTableNumber = new UILabel("Number" + ":");
+			final JTextField txtFieldTableNumber = new JTextField("", 15);
 			
-			txtFieldNumber.addKeyListener(new KeyAdapter() {
+			txtFieldTableNumber.addKeyListener(new KeyAdapter() {
 	            public void keyReleased(KeyEvent e) {
-	                JTextField textFieldNumber = (JTextField) e.getSource();
+	                JTextField textFieldTableNumber = (JTextField) e.getSource();
 	                
-	                targetView.setNumber(textFieldNumber.getText());
+	                targetView.setNumber(textFieldTableNumber.getText());
+	                App.orderState.setTargetInput("Table-Number", textFieldTableNumber.getText());
 	            }
 			});
 			
-			innerPanelNumber.add(lblTargetNumber, BorderLayout.WEST);
-			innerPanelNumber.add(txtFieldNumber, BorderLayout.CENTER);
+			innerPanelTableNumber.add(lblTargetTableNumber, BorderLayout.WEST);
+			innerPanelTableNumber.add(txtFieldTableNumber, BorderLayout.CENTER);
 			
-			this.add(innerPanelNumber);
+			this.add(innerPanelTableNumber);
 	}
 }
 

@@ -31,8 +31,11 @@ public class OrderItemPanel extends UIPanel {
 		
 		setLayout(new BorderLayout());
 		
-		String lblString = 
-				this.item.getName() 
+		Integer amount = App.orderState.getOrderedAmount(this.price);
+		
+		String lblString =
+				"" + amount + "x "
+				+ this.item.getName() 
 				+ " in " 
 				+ this.price.getSizeValue() 
 				+ " for " 

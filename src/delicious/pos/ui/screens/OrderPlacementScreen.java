@@ -40,6 +40,7 @@ public class OrderPlacementScreen extends UIPanel {
 	public void renderChildren() {
 		this.orderItemsPanel.renderOrderedItems();
 		this.customerDetailPanel.renderCustomerDetails();
+		this.customerDetailPanel.renderTargetDetails();
 	}
 	
 	public void setCustomer(CustomerView customer) {
@@ -64,6 +65,8 @@ public class OrderPlacementScreen extends UIPanel {
 			);
 		}*/
 		
+		App.orderState.reset();
+		App.mainScreen.showMenu();
 		new UIInfoDialog(App.labels.get("order-success"), App.labels.get("close-dialog"));
 	}
 }

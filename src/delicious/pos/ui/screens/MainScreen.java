@@ -48,8 +48,14 @@ public class MainScreen extends UIFrame {
 		getContentPane().add(contentPanelMain);
 	}
 	
-	private void showMenu() {
+	public void showMenu() {
+		if(this.contentPanelOrderPlacement != null) {
+			this.setupMenuPanel();
+			this.getContentPane().remove(this.contentPanelOrderPlacement);
+		}
+		
 		if(this.contentPanelMain != null) {
+			this.setupMenuPanel();
 			this.getContentPane().remove(this.contentPanelMain);
 		}
 		
@@ -94,12 +100,9 @@ public class MainScreen extends UIFrame {
 			this.getContentPane().remove(this.contentPanelOrderValidation);
 		}
 		
-		if(App.orderState.getCustomer() == null) {
-			System.out.println("No customer selected, can't go on ordering!");
-		} else {
-			this.orderPlacementScreen.setCustomer(App.orderState.getCustomer());
-			this.orderPlacementScreen.renderChildren();
-		}
+		this.orderPlacementScreen.setCustomer(App.orderState.getCustomer());
+		
+		this.orderPlacementScreen.renderChildren();
 		
 		this.getContentPane().add(this.contentPanelOrderPlacement);
 		
