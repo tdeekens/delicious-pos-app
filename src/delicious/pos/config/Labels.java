@@ -15,14 +15,12 @@ public class Labels {
 	}
 	
 	private void setup() {
-		this.labels.put("restaurant-name", "Greek paradise");
+		this.labels.put("restaurant-name", "Greek Paradise");
 		this.labels.put("order-summary", "Order summary");
 		this.labels.put("order-success", "Order placed!");
-		this.labels.put("order-no-customer", "No customer selected, please select one!");
 		this.labels.put("order-no-items", "Order does not contain items, add items!");
 		this.labels.put("order-no-type", "No order type, please select!");
 		this.labels.put("customer-details", "Customer details:");
-		this.labels.put("order-details", "Order details:");
 		this.labels.put("ordered-items", "Ordered items:");
 		this.labels.put("our-menu", "Our menu:");
 		this.labels.put("close-dialog", "OK. Will do.");

@@ -1,6 +1,5 @@
 package delicious.pos.ui.screens;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,10 +17,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import delicious.pos.business.logic.dao.PriceDAO;
 import delicious.pos.business.logic.dao.SizeDAO;
 import delicious.pos.business.logic.dao.gen.CustomerDAO;
 import delicious.pos.business.logic.dao.gen.EmployeeDAO;
 import delicious.pos.business.logic.dao.gen.ItemDAO;
+import delicious.pos.business.logic.view.PriceView;
 import delicious.pos.business.logic.view.SizeView;
 import delicious.pos.business.logic.view.gen.CustomerView;
 import delicious.pos.business.logic.view.gen.EmployeeView;
@@ -50,6 +51,7 @@ public class AdminScreen extends UIPanel {
 		tabbedPane.addTab("Items", null, items(), "Items");
 		tabbedPane.addTab("Customers", null, customers(), "Customers");
 		tabbedPane.addTab("Sizes", null, sizes(), "Sizes");
+		tabbedPane.addTab("Prices", null, prices(), "Prices");
 		
 		tabsPanel.add(tabbedPane);
 		
@@ -110,6 +112,10 @@ public class AdminScreen extends UIPanel {
 
 	private void updateEmployee() {
 		EmployeeDAO employeeDAO = new EmployeeDAO();
+
+		if(employees.isEditing())
+			employees.getCellEditor().stopCellEditing();
+
 		for(int row : touchedEmployeeRows) {
 			EmployeeView employee = new EmployeeView();
 			employee.setUserName((String)employeesModel.getValueAt(row, 0));
@@ -117,6 +123,8 @@ public class AdminScreen extends UIPanel {
 			employee.setPhone((String)employeesModel.getValueAt(row, 2));
 			employee.setPosition((String)employeesModel.getValueAt(row, 3));
 			employeeDAO.update(employee);
+			JOptionPane.showMessageDialog(this, "Employee " + employee.getUserName() 
+					+ " was successfully updated");
 		}
 	}
 
@@ -124,6 +132,9 @@ public class AdminScreen extends UIPanel {
 		EmployeeDAO employeeDAO = new EmployeeDAO();
 		EmployeeView employee = new EmployeeView();
 		
+		if(employees.isEditing())
+			employees.getCellEditor().stopCellEditing();
+
 		for(int row = employeeRows; row < employeesModel.getRowCount(); row++) {
 			for(int column = 0; column < employeesModel.getColumnCount(); column++) {
 				
@@ -136,7 +147,7 @@ public class AdminScreen extends UIPanel {
 				if("userName".equals(columnName))
 					employee.setUserName((String)value);
 				if("salary".equals(columnName)) {
-					if(!parseSalary(String.valueOf(value)))
+					if(!parseFloat(String.valueOf(value)))
 					return;
 					employee.setSalary(Float.parseFloat((String)value));
 				}
@@ -149,6 +160,9 @@ public class AdminScreen extends UIPanel {
 			}
 			employeeDAO.insert(employee);
 			employeeRows = employeeDAO.getAllAsArray().length;
+			JOptionPane.showMessageDialog(this, "Employee " + employee.getUserName() 
+					+ " was successfully saved");
+			touchedEmployeeRows.clear();
 		}
 	}
 
@@ -169,9 +183,9 @@ public class AdminScreen extends UIPanel {
 			if("userName".equals(columnName))
 				employee.setUserName((String)value);
 			if("salary".equals(columnName)) {
-				if(!parseSalary(String.valueOf(value)))
+				if(!parseFloat(String.valueOf(value)))
 					return;
-				employee.setSalary((Float)value);
+				employee.setSalary(Float.valueOf(String.valueOf(value)));
 			}
 			if("phone".equals(columnName)) {
 				employee.setPhone((String)value);
@@ -184,6 +198,9 @@ public class AdminScreen extends UIPanel {
 		employeeDAO.remove(employee);
 		employees.removeRow();
 		employeeRows = employeeDAO.getAllAsArray().length;
+		touchedEmployeeRows.clear();
+		JOptionPane.showMessageDialog(this, "Employee " + employee.getUserName() 
+					+ " was successfully deleted");
 	}
 	
 
@@ -225,18 +242,27 @@ public class AdminScreen extends UIPanel {
 
 	private void updateItem() {
 		ItemDAO itemDAO = new ItemDAO();
-		for(int row : touchedItemRows) {
 
+		if(items.isEditing())
+			items.getCellEditor().stopCellEditing();
+
+		for(int row : touchedItemRows) {
 			ItemView item = new ItemView();
 			item.setName((String)itemsModel.getValueAt(row, 0));
 			item.setDescription((String)itemsModel.getValueAt(row, 1));
 			itemDAO.update(item);
+			JOptionPane.showMessageDialog(this, "Item " + item.getName() 
+					+ " was successfully updated");
 		}
+		touchedItemRows.clear();
 	}
 
 	private void insertItem() {
 		ItemDAO itemDAO = new ItemDAO();
 		ItemView item = new ItemView();
+
+		if(items.isEditing())
+			items.getCellEditor().stopCellEditing();
 		
 		for(int row = itemRows; row < itemsModel.getRowCount(); row++) {
 			for(int column = 0; column < itemsModel.getColumnCount(); column++) {
@@ -255,6 +281,9 @@ public class AdminScreen extends UIPanel {
 			}
 			itemDAO.insert(item);
 			itemRows = itemDAO.getAllAsArray().length;
+			JOptionPane.showMessageDialog(this, "Item " + item.getName()
+					+ " was successfully saved");
+			touchedItemRows.clear();
 		}
 	}
 
@@ -282,6 +311,9 @@ public class AdminScreen extends UIPanel {
 		itemDAO.remove(item);
 		items.removeRow();
 		itemRows = itemDAO.getAllAsArray().length;
+		touchedItemRows.clear();
+		JOptionPane.showMessageDialog(this, "Item " + item.getName() 
+					+ " was successfully deleted");
 	}
 
 	private int customerRows;
@@ -321,6 +353,10 @@ public class AdminScreen extends UIPanel {
 
 	private void updateCustomer() {
 		CustomerDAO customerDAO = new CustomerDAO();
+
+		if(customers.isEditing())
+			customers.getCellEditor().stopCellEditing();
+
 		for(int row : touchedCustomerRows) {
 			CustomerView customer = new CustomerView();
 											
@@ -332,12 +368,20 @@ public class AdminScreen extends UIPanel {
 			customer.setCity((String)employeesModel.getValueAt(row, 3+2));
 			customer.setPhone((String)employeesModel.getValueAt(row, 4+2));
 			customerDAO.update(customer);
+			JOptionPane.showMessageDialog(this, "Customer " 
+					+ customer.getFirstName() 
+					+ " " + customer.getLastName() 
+					+ " was successfully updated");
 		}
+		touchedCustomerRows.clear();
 	}
 
 	private void insertCustomer() {
 		CustomerDAO customerDAO = new CustomerDAO();
 		CustomerView customer = new CustomerView();
+
+		if(customers.isEditing())
+			customers.getCellEditor().stopCellEditing();
 		
 		for(int row = customerRows; row < customersModel.getRowCount(); row++) {
 			for(int column = 0; column < customersModel.getColumnCount(); column++) {
@@ -365,6 +409,11 @@ public class AdminScreen extends UIPanel {
 			}
 			customerDAO.insert(customer);
 			customerRows = customerDAO.getAllAsArray().length;
+			JOptionPane.showMessageDialog(this, "Customer " 
+					+ customer.getFirstName() 
+					+ " " + customer.getLastName() 
+					+ " was successfully saved");
+			touchedCustomerRows.clear();
 		}
 	}
 
@@ -396,6 +445,10 @@ public class AdminScreen extends UIPanel {
 				customer.setCity((String)value);
 			if("phone".equals(columnName))
 				customer.setPhone((String)value);
+			JOptionPane.showMessageDialog(this, "Customer " 
+					+ customer.getFirstName() 
+					+ " " + customer.getLastName() 
+					+ " was successfully deleted");
 		}
 		
 		customers.removeRow();
@@ -403,6 +456,7 @@ public class AdminScreen extends UIPanel {
 			return;
 		customerDAO.remove(customer);
 		customerRows = customerDAO.getAllAsArray().length;
+		touchedCustomerRows.clear();
 	}
 	
 
@@ -443,18 +497,12 @@ public class AdminScreen extends UIPanel {
 		return new UIScrollPane(sizes);
 	}
 
-	private void updateSize() {
-		SizeDAO sizeDAO = new SizeDAO();
-		for(int row : touchedSizeRows) {
-			SizeView size = new SizeView();
-			size.setValue((String)itemsModel.getValueAt(row, 0));
-			sizeDAO.update(size);
-		}
-	}
-	
 	private void insertSize() {
 		SizeDAO sizeDAO = new SizeDAO();
 		SizeView size = new SizeView();
+
+		if(sizes.isEditing())
+			sizes.getCellEditor().stopCellEditing();
 		
 		for(int row = sizeRows; row < sizesModel.getRowCount(); row++) {
 			for(int column = 0; column < sizesModel.getColumnCount(); column++) {
@@ -470,32 +518,148 @@ public class AdminScreen extends UIPanel {
 			}
 			sizeDAO.insert(size);
 			sizeRows = sizeDAO.getAllAsArray().length;
+
+			JOptionPane.showMessageDialog(this, "Size " + size.getValue() 
+					+ " was successfully saved");
+	
+			touchedSizeRows.clear();
 		}
 	}
 
-	private void removeSize() {
-		SizeDAO sizeDAO = new SizeDAO();
-		SizeView size = new SizeView();
+	private int priceRows;
+	private UITable prices;
+	private DefaultTableModel pricesModel;
+	private List<Integer> touchedPriceRows;
+	private UIScrollPane prices() {
+		PriceDAO priceDAO = new PriceDAO();
+		touchedPriceRows = new Vector<Integer>();
+
+		priceRows = priceDAO.getAllAsArray().length;
 		
-		int row = sizes.getSelectedRow();
+		pricesModel = new DefaultTableModel(priceDAO.getAllAsArray(), 
+						priceDAO.getColumnNames());
+		prices = new UITable(pricesModel) {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				if(priceRows > prices.getSelectedRow())
+					if(colIndex == 0)
+						return false;
+				return true;
+		    }
+		};
+		
+		ListSelectionModel rowSelectionModel = prices.getSelectionModel();
+		rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(e.getValueIsAdjusting())
+					return;
+
+				if(prices.getSelectedRow() < priceRows) 
+					touchedPriceRows.add(prices.getSelectedRow());
+			}
+		});
+		
+		return new UIScrollPane(prices);
+	}
+	
+	private void updatePrice() {
+		PriceDAO priceDAO = new PriceDAO();
+
+		if(prices.isEditing())
+			prices.getCellEditor().stopCellEditing();
+
+		for(int row : touchedPriceRows) {
+			PriceView price = new PriceView();
+			price.setId((Integer)pricesModel.getValueAt(row, 0));
+			price.setValue(Float.valueOf(pricesModel.getValueAt(row, 1).toString()));
+			price.setSizeValue((String)pricesModel.getValueAt(row, 2));
+			price.setItemName((String)pricesModel.getValueAt(row, 3));
+			priceDAO.update(price);
+
+			JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
+					+ " " + " for " + price.getItemName()
+					+ " " + price.getSizeValue() 
+					+ " was successfully updated");
+		}
+		touchedPriceRows.clear();
+	}
+	
+	private void insertPrice() {
+		PriceDAO priceDAO = new PriceDAO();
+		PriceView price = new PriceView();
+		
+		for(int row = priceRows; row < pricesModel.getRowCount(); row++) {
+			for(int column = 0; column < pricesModel.getColumnCount(); column++) {
+				
+				String columnName = pricesModel.getColumnName(column);
+				Object value = pricesModel.getValueAt(row, column);
+
+				if(value == null)
+					return;
+
+				if("id".equals(columnName))
+					price.setId(Integer.parseInt(String.valueOf(value)));
+				if("value".equals(columnName)) {
+					if(!parseFloat(String.valueOf(value)))
+					return;
+					price.setValue(Float.parseFloat((String)value));
+				}
+				if("size_value".equals(columnName))
+					price.setItemName((String)value);
+				if("item_name".equals(columnName))
+					price.setSizeValue((String)value);
+			}
+			priceDAO.insert(price);
+			priceRows = priceDAO.getAllAsArray().length;
+			JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
+					+ " " + " for " + price.getItemName()
+					+ " " + price.getSizeValue() 
+					+ " was successfully saved");
+			touchedPriceRows.clear();
+		}
+	}
+	
+	private void removePrice() {
+		PriceDAO priceDAO = new PriceDAO();
+		PriceView price = new PriceView();
+		
+		int row = prices.getSelectedRow();
 
 		if(row == -1)
 			return;
 		
-		for(int column = 0; column < sizesModel.getColumnCount(); column++) {
-
-			String columnName = sizesModel.getColumnName(column);
-			Object value = sizesModel.getValueAt(row, column);
+		for(int column = 0; column < pricesModel.getColumnCount(); column++) {
 			
-			if("value".equals(columnName))
-				size.setValue((String)value);
+			String columnName = pricesModel.getColumnName(column);
+			Object value = pricesModel.getValueAt(row, column);
+
+			if("id".equals(columnName))
+				price.setId(Integer.parseInt(String.valueOf(value)));
+			if("value".equals(columnName)) {
+				if(!parseFloat(String.valueOf(value)))
+				return;
+				price.setValue(Float.parseFloat((String)value));
+			}
+			if("size_value".equals(columnName))
+				price.setItemName((String)value);
+			if("item_name".equals(columnName))
+				price.setSizeValue((String)value);
 		}
 		
-		sizeDAO.remove(size);
-		sizes.removeRow();
-		sizeRows = sizeDAO.getAllAsArray().length;
+		prices.removeRow();
+		if(price.getId() == null)
+			return;
+		priceDAO.remove(price);
+		priceRows = priceDAO.getAllAsArray().length;
+		touchedPriceRows.clear();
+
+		JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
+					+ " " + " for " + price.getItemName()
+					+ " " + price.getSizeValue() 
+					+ " was successfully deleted");
+		touchedPriceRows.clear();
 	}
-	
+
 	private void save() {
 		if (tabbedPane.getSelectedIndex() == 0) {
 			insertEmployee();
@@ -511,11 +675,14 @@ public class AdminScreen extends UIPanel {
 		}
 		else if (tabbedPane.getSelectedIndex() == 3) {
 			insertSize();
-			updateSize();
+		}
+		else if (tabbedPane.getSelectedIndex() == 4) {
+			insertPrice();
+			updatePrice();
 		}
 	}
 	
-
+	private UIPanel panel = this;
 	private UIButton deleteButton() {
 		UIButton deleteBtn = new UIButton("Delete");
 		deleteBtn.addActionListener(new ActionListener() {
@@ -528,7 +695,10 @@ public class AdminScreen extends UIPanel {
 				else if (tabbedPane.getSelectedIndex() == 2)
 					removeCustomer();
 				else if (tabbedPane.getSelectedIndex() == 3)
-					removeSize();
+					JOptionPane.showMessageDialog(panel,
+                             "Your cannot delete a size");
+				else if (tabbedPane.getSelectedIndex() == 4)
+					removePrice();
 			}
 		});
 		return deleteBtn;
@@ -547,6 +717,8 @@ public class AdminScreen extends UIPanel {
 					customers.removeRows(customerRows);
 				else if (tabbedPane.getSelectedIndex() == 3)
 					sizes.removeRows(sizeRows);
+				else if (tabbedPane.getSelectedIndex() == 4)
+					prices.removeRows(priceRows);
 			}
 		});
 		return cancelBtn;
@@ -577,6 +749,8 @@ public class AdminScreen extends UIPanel {
 					customers.insertRow();
 				else if (tabbedPane.getSelectedIndex() == 3)
 					sizes.insertRow();
+				else if (tabbedPane.getSelectedIndex() == 4)
+					prices.insertRow();
 			}
 		});
 
@@ -593,7 +767,7 @@ public class AdminScreen extends UIPanel {
 		return btnsPanel;
 	}
 
-	private boolean parseSalary(String value) {
+	private boolean parseFloat(String value) {
 		boolean hasString = false;
 		for(int index = 0; index < value.length(); index++) {
 			if(Character.isDigit(value.charAt(index)) || '.' == value.charAt(index))
@@ -605,7 +779,7 @@ public class AdminScreen extends UIPanel {
 		}
 		
 		if(hasString) {
-			JOptionPane.showMessageDialog(this, "Salary format is wrong");
+			JOptionPane.showMessageDialog(this, "Value format is wrong");
 			return false;
 		}
 		

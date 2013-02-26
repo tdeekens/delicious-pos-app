@@ -18,7 +18,7 @@ public class PriceDAO extends BaseDAO
 		columnNames.add("id");
 		columnNames.add("value");
 		columnNames.add("size_value");
-		columnNames.add("item_value");
+		columnNames.add("item_name");
 		return columnNames.toArray();
 	}
 	
@@ -30,7 +30,10 @@ public class PriceDAO extends BaseDAO
 		for(int i = 0;i < priceViews.size();i++) 
 		{
 			List<Object> price = new ArrayList<Object>();
+			price.add(priceViews.get(i).getId());
 			price.add(priceViews.get(i).getValue());
+			price.add(priceViews.get(i).getSizeValue());
+			price.add(priceViews.get(i).getItemName());
 			prices[i] = price.toArray();
 		}
 		
@@ -101,8 +104,8 @@ public class PriceDAO extends BaseDAO
 			stmt = App.DBConnection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			stmt.setFloat(1, price.getValue());
 			stmt.setString(2, price.getSizeValue());
-			stmt.setString(1, price.getItemName());
-			stmt.setInt(1, price.getId());
+			stmt.setString(3, price.getItemName());
+			stmt.setInt(4, price.getId());
 			stmt.executeUpdate();
 			stmt.close();
 
