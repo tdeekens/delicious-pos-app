@@ -216,7 +216,7 @@ public class MainScreen extends UIFrame {
 						App.orderState.getCustomer() == null
 					) {
 						new UIInfoDialog(App.labels.get("order-no-customer"), App.labels.get("close-dialog"), "kostasicous-error");
-					} else if(App.orderState.getOrderType() != null) {
+					} else if(App.orderState.getOrderType() == null) {
 						new UIInfoDialog(App.labels.get("order-no-type"), App.labels.get("close-dialog"), "kostasicous-error");
 					} else {
 						showOrderPlacement();
