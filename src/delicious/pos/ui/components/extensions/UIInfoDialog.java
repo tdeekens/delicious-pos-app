@@ -14,10 +14,10 @@ import delicious.pos.App;
 import delicious.pos.util.ImageLoader;
 
 public class UIInfoDialog extends JDialog implements ActionListener {
-   public UIInfoDialog(String msg, String closeBtnLabel) {
+   public UIInfoDialog(String msg, String closeBtnLabel, String icon) {
       super();
       
-      ImageIcon myIcon = new ImageIcon(this.getClass().getResource("../icons/kostasicous-success.png"));
+      ImageIcon myIcon = new ImageIcon(this.getClass().getResource("../icons/" + icon + ".png"));
 
       getContentPane().setLayout(new BorderLayout());
 

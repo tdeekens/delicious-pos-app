@@ -48,25 +48,9 @@ public class OrderPlacementScreen extends UIPanel {
 	}
 
 	public void persistOrder() {
-		/*OrderView orderView = new OrderView(
-			null,
-			App.orderState.getOrderType().getName(),
-			"Kostas", //TODO not always kostas!
-			App.orderState.getCustomer().getId(),
-			0 //TODO how to set right target value?
-		);
-		
-		for (Entry<PriceView, ItemView> item : App.orderState.getOrderedItems().entrySet()) {
-			OrderedItemView orderedItem = new OrderedItemView(
-				null,
-				orderView.getId(),
-				item.getValue().getName(),
-				item.getKey().getId()
-			);
-		}*/
-		
+		//No not persisting, we're not showing it anywhere. Group decision.
 		App.orderState.reset();
 		App.mainScreen.showMenu();
-		new UIInfoDialog(App.labels.get("order-success"), App.labels.get("close-dialog"));
+		new UIInfoDialog(App.labels.get("order-success"), App.labels.get("close-dialog"), "kostasicous-success");
 	}
 }

@@ -51,6 +51,7 @@ public class MainScreen extends UIFrame {
 	public void showMenu() {
 		if(this.contentPanelOrderPlacement != null) {
 			this.setupMenuPanel();
+			this.setupOrderValidationPanel();
 			this.getContentPane().remove(this.contentPanelOrderPlacement);
 		}
 		
@@ -186,7 +187,7 @@ public class MainScreen extends UIFrame {
 					if(App.orderState.getOrderedItems().size() > 0) {
 						showOrderValidation();
 					} else {
-						new UIInfoDialog(App.labels.get("order-no-items"), App.labels.get("close-dialog"));
+						new UIInfoDialog(App.labels.get("order-no-items"), App.labels.get("close-dialog"), "kostasicous-error");
 					}
 				}
 				
@@ -209,10 +210,16 @@ public class MainScreen extends UIFrame {
 			"2 " + App.labels.get("step-of") + " 3",
 			new SwitchPanel() {
 				public void next() {
-					if(App.orderState.getOrderType() != null) {
-						showOrderPlacement();
+					if(
+						App.orderState.getOrderType() != null &&
+						App.orderState.getOrderType().getTarget().equals("Customer") &&
+						App.orderState.getCustomer() == null
+					) {
+						new UIInfoDialog(App.labels.get("order-no-customer"), App.labels.get("close-dialog"), "kostasicous-error");
+					} else if(App.orderState.getOrderType() != null) {
+						new UIInfoDialog(App.labels.get("order-no-type"), App.labels.get("close-dialog"), "kostasicous-error");
 					} else {
-						new UIInfoDialog(App.labels.get("order-no-type"), App.labels.get("close-dialog"));
+						showOrderPlacement();
 					}
 				}
 				
