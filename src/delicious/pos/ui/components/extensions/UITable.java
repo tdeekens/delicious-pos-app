@@ -20,9 +20,9 @@ public class UITable extends JTable {
 	
 	private void init() {
 		model = (DefaultTableModel)(getModel());
+		model.addTableModelListener(this);
 		setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//		setPreferredScrollableViewportSize(getParent().getSize());
 	}
 	
 	public void insertRow() {

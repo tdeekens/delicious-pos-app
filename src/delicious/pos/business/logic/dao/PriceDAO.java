@@ -16,12 +16,13 @@ public class PriceDAO extends BaseDAO
 	{
 		List<String> columnNames = new ArrayList<String>();
 		columnNames.add("id");
-		columnNames.add("value");
-		columnNames.add("size_value");
 		columnNames.add("item_name");
+		columnNames.add("size_value");
+		columnNames.add("value");
 		return columnNames.toArray();
 	}
 	
+	private static int maxId = 0;
 	public Object[][] getAllAsArray()
 	{
 		ArrayList<PriceView> priceViews = findAll();
@@ -31,12 +32,14 @@ public class PriceDAO extends BaseDAO
 		{
 			List<Object> price = new ArrayList<Object>();
 			price.add(priceViews.get(i).getId());
-			price.add(priceViews.get(i).getValue());
-			price.add(priceViews.get(i).getSizeValue());
 			price.add(priceViews.get(i).getItemName());
+			price.add(priceViews.get(i).getSizeValue());
+			price.add(priceViews.get(i).getValue());
 			prices[i] = price.toArray();
 		}
 		
+		maxId = priceViews.get(prices.length-1).getId();
+
 		return prices;
 	}
 	
@@ -132,8 +135,9 @@ public class PriceDAO extends BaseDAO
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Prices");
 
 	      uprs.moveToInsertRow();
+	      maxId++;
 
-	      uprs.updateInt("id", price.getId());
+	      uprs.updateInt("id", maxId);
 	      uprs.updateFloat("value", price.getValue());
 	      uprs.updateString("size_value", price.getSizeValue());
 	      uprs.updateString("item_name", price.getItemName());

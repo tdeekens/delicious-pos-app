@@ -27,6 +27,7 @@ public class CustomerDAO extends BaseDAO
 		return columnNames.toArray();
 	}
 	
+	private static int maxId = 0;
 	public Object[][] getAllAsArray()
 	{
 		ArrayList<CustomerView> customerViews = findAll();
@@ -45,6 +46,8 @@ public class CustomerDAO extends BaseDAO
 			customers[i] = customer.toArray();
 		}
 		
+		maxId = customerViews.get(customers.length-1).getId();
+
 		return customers;
 	}
 
@@ -106,7 +109,10 @@ public class CustomerDAO extends BaseDAO
 
 	      uprs.moveToInsertRow();
 			
-		  uprs.updateInt("id", customer.getId());
+
+		  maxId++;
+	      
+		  uprs.updateInt("id", maxId);
 	      uprs.updateString("firstName", customer.getFirstName());
 	      uprs.updateString("lastName", customer.getLastName());
 
@@ -140,7 +146,7 @@ public class CustomerDAO extends BaseDAO
 		PreparedStatement stmt = null;
 		String query = "Update Customers set " +
 						"id = ?" +
-						"firstName = ?" +
+						", firstName = ?" +
 						", lastName = ?" +
 				      	", street = ?" +
 				      	", zip = ?" +

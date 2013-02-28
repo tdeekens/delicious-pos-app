@@ -3,11 +3,14 @@ package delicious.pos.ui.screens;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -15,7 +18,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import delicious.pos.business.logic.dao.PriceDAO;
 import delicious.pos.business.logic.dao.SizeDAO;
@@ -205,6 +210,7 @@ public class AdminScreen extends UIPanel {
 	
 
 
+	private ArrayList<ItemView> itemList;
 	private int itemRows;
 	private UITable items;
 	private DefaultTableModel itemsModel;
@@ -214,6 +220,8 @@ public class AdminScreen extends UIPanel {
 		touchedItemRows = new Vector<Integer>();	
 	
 		itemRows = itemDAO.getAllAsArray().length;
+
+		itemList = itemDAO.findAll();
 		
 		itemsModel = new DefaultTableModel(itemDAO.getAllAsArray(), 
 					itemDAO.getColumnNames());
@@ -284,6 +292,9 @@ public class AdminScreen extends UIPanel {
 			JOptionPane.showMessageDialog(this, "Item " + item.getName()
 					+ " was successfully saved");
 			touchedItemRows.clear();
+
+			itemList = itemDAO.findAll();
+			setItemsColumn(items, itemList);
 		}
 	}
 
@@ -314,6 +325,14 @@ public class AdminScreen extends UIPanel {
 		touchedItemRows.clear();
 		JOptionPane.showMessageDialog(this, "Item " + item.getName() 
 					+ " was successfully deleted");
+
+		itemList = itemDAO.findAll();
+		setItemsColumn(items, itemList);
+
+		PriceDAO priceDAO = new PriceDAO();
+		pricesModel.setDataVector(priceDAO.getAllAsArray(), 
+				priceDAO.getColumnNames());
+		prices.setModel(pricesModel);
 	}
 
 	private int customerRows;
@@ -337,6 +356,11 @@ public class AdminScreen extends UIPanel {
 		    }
 		};
 		
+		//hide the id column
+		customers.getColumn("id").setWidth(0);
+		customers.getColumn("id").setMinWidth(0);
+		customers.getColumn("id").setMaxWidth(0);
+
 		ListSelectionModel rowSelectionModel = customers.getSelectionModel();
 		rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -363,10 +387,10 @@ public class AdminScreen extends UIPanel {
 			customer.setId((Integer)customersModel.getValueAt(row, 0));
 			customer.setFirstName((String)customersModel.getValueAt(row, 1));
 			customer.setLastName((String)customersModel.getValueAt(row, 2));
-			customer.setStreet((String)employeesModel.getValueAt(row, 1+2));
-			customer.setZIP((String)employeesModel.getValueAt(row, 2+2));
-			customer.setCity((String)employeesModel.getValueAt(row, 3+2));
-			customer.setPhone((String)employeesModel.getValueAt(row, 4+2));
+			customer.setStreet((String)customersModel.getValueAt(row, 1+2));
+			customer.setZIP((String)customersModel.getValueAt(row, 2+2));
+			customer.setCity((String)customersModel.getValueAt(row, 3+2));
+			customer.setPhone((String)customersModel.getValueAt(row, 4+2));
 			customerDAO.update(customer);
 			JOptionPane.showMessageDialog(this, "Customer " 
 					+ customer.getFirstName() 
@@ -390,10 +414,9 @@ public class AdminScreen extends UIPanel {
 				Object value = customersModel.getValueAt(row, column);
 
 				if(value == null)
-					return;
+					if(!"id".equals(columnName))
+						return;
 
-				if("id".equals(columnName))
-					customer.setId(Integer.parseInt(String.valueOf(value)));
 				if("firstName".equals(columnName))
 					customer.setFirstName((String)value);
 				if("lastName".equals(columnName))
@@ -445,21 +468,19 @@ public class AdminScreen extends UIPanel {
 				customer.setCity((String)value);
 			if("phone".equals(columnName))
 				customer.setPhone((String)value);
-			JOptionPane.showMessageDialog(this, "Customer " 
-					+ customer.getFirstName() 
-					+ " " + customer.getLastName() 
-					+ " was successfully deleted");
 		}
-		
 		customers.removeRow();
-		if(customer.getId() == null)
-			return;
 		customerDAO.remove(customer);
 		customerRows = customerDAO.getAllAsArray().length;
 		touchedCustomerRows.clear();
+		JOptionPane.showMessageDialog(this, "Customer " 
+				+ customer.getFirstName() 
+				+ " " + customer.getLastName() 
+				+ " was successfully deleted");
 	}
 	
 
+	private ArrayList<SizeView> sizeList;
 	private int sizeRows;
 	private UITable sizes;
 	private DefaultTableModel sizesModel;
@@ -469,6 +490,8 @@ public class AdminScreen extends UIPanel {
 		touchedSizeRows = new Vector<Integer>();
 
 		sizeRows = sizeDAO.getAllAsArray().length;
+
+		sizeList = sizeDAO.findAll();
 
 		sizesModel = new DefaultTableModel(sizeDAO.getAllAsArray(), 
 					sizeDAO.getColumnNames());
@@ -523,6 +546,8 @@ public class AdminScreen extends UIPanel {
 					+ " was successfully saved");
 	
 			touchedSizeRows.clear();
+			sizeList = sizeDAO.findAll();
+			setSizesColumn(sizes, sizeList);
 		}
 	}
 
@@ -546,6 +571,14 @@ public class AdminScreen extends UIPanel {
 				return true;
 		    }
 		};
+
+		//hide the id column
+		prices.getColumn("id").setWidth(0);
+		prices.getColumn("id").setMinWidth(0);
+		prices.getColumn("id").setMaxWidth(0);
+
+		setItemsColumn(prices, itemList);
+		setSizesColumn(prices, sizeList);
 		
 		ListSelectionModel rowSelectionModel = prices.getSelectionModel();
 		rowSelectionModel.addListSelectionListener(new ListSelectionListener() {
@@ -571,15 +604,22 @@ public class AdminScreen extends UIPanel {
 		for(int row : touchedPriceRows) {
 			PriceView price = new PriceView();
 			price.setId((Integer)pricesModel.getValueAt(row, 0));
-			price.setValue(Float.valueOf(pricesModel.getValueAt(row, 1).toString()));
+			price.setItemName((String)pricesModel.getValueAt(row, 1));
 			price.setSizeValue((String)pricesModel.getValueAt(row, 2));
-			price.setItemName((String)pricesModel.getValueAt(row, 3));
-			priceDAO.update(price);
+			price.setValue(Float.valueOf(pricesModel.getValueAt(row, 3).toString()));
+			
+			if(isValid(price)) {
+				priceDAO.update(price);
 
-			JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
+				JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
 					+ " " + " for " + price.getItemName()
 					+ " " + price.getSizeValue() 
 					+ " was successfully updated");
+			}
+			else
+				JOptionPane.showMessageDialog(this, "There is already a " 
+						+ price.getItemName() + " " + price.getSizeValue()
+						+ " record. The update was not successful");
 		}
 		touchedPriceRows.clear();
 	}
@@ -595,26 +635,33 @@ public class AdminScreen extends UIPanel {
 				Object value = pricesModel.getValueAt(row, column);
 
 				if(value == null)
-					return;
+					if(!"id".equals(columnName))
+						return;
 
-				if("id".equals(columnName))
-					price.setId(Integer.parseInt(String.valueOf(value)));
 				if("value".equals(columnName)) {
 					if(!parseFloat(String.valueOf(value)))
 					return;
 					price.setValue(Float.parseFloat((String)value));
 				}
-				if("size_value".equals(columnName))
-					price.setItemName((String)value);
 				if("item_name".equals(columnName))
+					price.setItemName((String)value);
+				if("size_value".equals(columnName))
 					price.setSizeValue((String)value);
 			}
-			priceDAO.insert(price);
-			priceRows = priceDAO.getAllAsArray().length;
-			JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
-					+ " " + " for " + price.getItemName()
-					+ " " + price.getSizeValue() 
-					+ " was successfully saved");
+			
+			if(isValid(price)) {
+				priceDAO.insert(price);
+				priceRows = priceDAO.getAllAsArray().length;
+				JOptionPane.showMessageDialog(this, "Price " + price.getValue() 
+						+ " " + " for " + price.getItemName()
+						+ " " + price.getSizeValue() 
+						+ " was successfully saved");
+			}
+			else
+				JOptionPane.showMessageDialog(this, "There is already a " 
+						+ price.getItemName() + " " + price.getSizeValue()
+						+ " record! The insert was not successful!");
+			
 			touchedPriceRows.clear();
 		}
 	}
@@ -638,7 +685,7 @@ public class AdminScreen extends UIPanel {
 			if("value".equals(columnName)) {
 				if(!parseFloat(String.valueOf(value)))
 				return;
-				price.setValue(Float.parseFloat((String)value));
+				price.setValue(Float.valueOf(String.valueOf(value)));
 			}
 			if("size_value".equals(columnName))
 				price.setItemName((String)value);
@@ -647,8 +694,6 @@ public class AdminScreen extends UIPanel {
 		}
 		
 		prices.removeRow();
-		if(price.getId() == null)
-			return;
 		priceDAO.remove(price);
 		priceRows = priceDAO.getAllAsArray().length;
 		touchedPriceRows.clear();
@@ -785,6 +830,52 @@ public class AdminScreen extends UIPanel {
 		
 		return true;
 	}
+
+	private void setItemsColumn(UITable table, ArrayList<ItemView> menuItems) {
+		
+		JComboBox comboBox = new JComboBox();
+		TableColumn itemsColumn = prices.getColumnModel().getColumn(prices.getColumnCount()-3);
+		
+		for(ItemView item : menuItems)
+			comboBox.addItem(item.getName());
+		itemsColumn.setCellEditor(new DefaultCellEditor(comboBox));
+		
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setToolTipText("Click items");
+		itemsColumn.setCellRenderer(renderer);
+	}
+	
+	private void setSizesColumn(UITable table, ArrayList<SizeView> menuSizes) {
+		
+		JComboBox comboBox = new JComboBox();
+		TableColumn sizesColumn = prices.getColumnModel().getColumn(prices.getColumnCount()-2);
+		
+		for(SizeView size : menuSizes)
+			comboBox.addItem(size.getValue());
+		sizesColumn.setCellEditor(new DefaultCellEditor(comboBox));
+		
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setToolTipText("Click for sizes");
+		sizesColumn.setCellRenderer(renderer);
+	}
+	
+	private boolean isValid(PriceView price) {
+		PriceDAO priceDAO = new PriceDAO();
+		List<PriceView> prices = priceDAO.findAll();
+		
+		for(PriceView p : prices) {
+			if(p.getId() != price.getId()) {
+				if(p.getItemName().equals(price.getItemName())) {
+					if(p.getSizeValue().equals(price.getSizeValue())) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+
 
 }
 
