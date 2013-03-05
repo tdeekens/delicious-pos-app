@@ -22,7 +22,6 @@ public class PriceDAO extends BaseDAO
 		return columnNames.toArray();
 	}
 	
-	private static int maxId = 0;
 	public Object[][] getAllAsArray()
 	{
 		ArrayList<PriceView> priceViews = findAll();
@@ -37,8 +36,6 @@ public class PriceDAO extends BaseDAO
 			price.add(priceViews.get(i).getValue());
 			prices[i] = price.toArray();
 		}
-		
-		maxId = priceViews.get(prices.length-1).getId();
 
 		return prices;
 	}
@@ -135,9 +132,7 @@ public class PriceDAO extends BaseDAO
 	      ResultSet uprs = stmt.executeQuery("SELECT * FROM Prices");
 
 	      uprs.moveToInsertRow();
-	      maxId++;
 
-	      uprs.updateInt("id", maxId);
 	      uprs.updateFloat("value", price.getValue());
 	      uprs.updateString("size_value", price.getSizeValue());
 	      uprs.updateString("item_name", price.getItemName());
